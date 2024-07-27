@@ -1,9 +1,5 @@
 cask_args appdir: "/Applications"
 
-tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
-
 # Language
 brew "go"
 brew "rust"
@@ -52,7 +48,7 @@ cask "notion-calendar"
 cask "raycast"
 cask "slack"
 cask "spotify"
-cask "visual-studio-code-insiders"
+cask "visual-studio-code"
 cask "zoom"
 cask "wezterm"
 
