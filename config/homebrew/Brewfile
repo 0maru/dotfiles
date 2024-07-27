@@ -27,6 +27,7 @@ brew "tmux"
 brew "tokei"
 brew "wget"
 brew "wrk"
+brew "zoxide"
 brew "z"
 
 # Application
