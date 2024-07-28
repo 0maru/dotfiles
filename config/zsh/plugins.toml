@@ -1,10 +1,17 @@
 shell = "zsh"
 
-[defer]
+apply = ["defer"]
+
+[templates]
 defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
 
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
+apply = ["source"]
+
+[plugins.lazy]
+local = "~/.config/zsh"
+use = ["lazy.zsh"]
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
@@ -14,3 +21,8 @@ apply = ["defer"]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
 
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.asdf]
+inline = "source $(brew --prefix asdf)/libexec/asdf.sh"

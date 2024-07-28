@@ -7,4 +7,4 @@ else
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-brew bundle --file "$REPO_DIR/config/homebrew/Brewfile"
+brew bundle --file "$REPO_DIR/config/homebrew/Brewfile --no-lock"

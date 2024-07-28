@@ -7,7 +7,9 @@ echo "run preset.sh"
 
 set -x
 
-export SCRIPTS_DIR REPO_DIR
+#export SCRIPTS_DIR REPO_DIR
 
-SCRIPTS_DIR="$(cd "$(dirname $0)" || exit && pwd)"
-REPO_DIR="$(cd "$(dirname $0)/.." || exit && pwd)"
+export SCRIPTS_DIR="$(cd "$(dirname $0)" || exit && pwd)"
+export REPO_DIR="$(cd "$(dirname $0)/.." || exit && pwd)"
+
+export XDG_CONFIG_HOME="$HOME/.config"
