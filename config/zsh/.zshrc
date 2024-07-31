@@ -1,6 +1,12 @@
 # git
 GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
 
+source "$ZDOTDIR/nonlazy.zsh"
+
+# brew でインストールしたsheldon を使いたいので先にbrew を有効化する
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(sheldon source)"
+
 # history
 export HISTFILE="$XDG_STATE_HOME/zsh_history"
 export HISTSIZE=1000
@@ -12,12 +18,10 @@ setopt hist_ignore_space
 setopt hist_verify
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
-
-source "$ZDOTDIR/nonlazy.zsh"
-
-# brew でインストールしたsheldon を使いたいので先にbrew を有効化する
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(sheldon source)"
+setopt hist_no_store
+setopt hist_expand
+setopt share_history
+setopt no_beep
 
 zstyle ':completion:*:setopt:*' menu true select
 
