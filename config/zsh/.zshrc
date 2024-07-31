@@ -1,3 +1,6 @@
+# git
+GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
+
 # history
 export HISTFILE="$XDG_STATE_HOME/zsh_history"
 export HISTSIZE=1000
