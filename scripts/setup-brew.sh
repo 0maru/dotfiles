@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$(dirname "$0")/preset.sh"
+
 if hash brew 2>/dev/null; then
   echo -e "\033[32mHomebrew already installed\033[m"
 else
