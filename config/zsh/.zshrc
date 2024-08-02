@@ -1,10 +1,12 @@
 # git
-GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
+export GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
 
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 source "$ZDOTDIR/nonlazy.zsh"
 
 # brew でインストールしたsheldon を使いたいので先にbrew を有効化する
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(starship init zsh)"
 eval "$(sheldon source)"
 
 # history
