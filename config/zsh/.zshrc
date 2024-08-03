@@ -1,5 +1,5 @@
 # git
-export GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
+GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
 
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 source "$ZDOTDIR/nonlazy.zsh"
