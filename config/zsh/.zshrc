@@ -27,7 +27,7 @@ setopt no_beep
 
 zstyle ':completion:*:setopt:*' menu true select
 
-# ghq + fzf でgit のブランチを一覧で表示してブランチを切り替える
+# ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
 function ghq-fzf() {
   local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
   if [ -n "$src" ]; then
@@ -38,3 +38,20 @@ function ghq-fzf() {
 }
 zle -N ghq-fzf
 bindkey '^g' ghq-fzf
+
+# fzf でgit のブランチを一覧で表示してブランチを切り替える
+function git-branches-fzf() {
+  local branch=$(
+    git branch -a |
+    fzf --preview="echo {} | tr -d ' *' | xargs git plog --color=always" |
+    head -n 1 |
+    perl -pe "s/\s//g; s/\*//g; s/remotes\/origin\///g"
+  )
+  if [ -n "$branch" ]; then
+    BUFFER="git switch $branch"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N git-branches-fzf
+bindkey '^b' git-branches-fzf
