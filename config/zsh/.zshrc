@@ -28,6 +28,9 @@ setopt hist_expand
 setopt share_history
 setopt no_beep
 
+autoload -U compinit
+compinit
+zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*:setopt:*' menu true select
 
 # ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
