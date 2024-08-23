@@ -12,3 +12,6 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 # sheldon (https://sheldon.cli.rs/)
 export SHELDON_CONFIG_DIR="$ZDOTDIR"
 
+# git
+GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
+
