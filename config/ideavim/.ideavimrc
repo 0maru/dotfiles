@@ -1,0 +1,20 @@
+" Vim の設定を読み込む
+source ~/.config/vim/.vimrc
+
+"" -- Suggested options --
+set scrolloff=5
+set incsearch
+
+map Q gq
+
+"" プラグインの設定
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+"" キーマッピングの設定
+" Space をリーダーキーに設定する
+let mapleader = ' '
+" Debug の実行 (space + d)
+map <leader>d <Action>(Debug)

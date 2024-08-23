@@ -1,5 +1,8 @@
-export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 source "$ZDOTDIR/nonlazy.zsh"
+
+# export
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # brew でインストールしたsheldon を使いたいので先にbrew を有効化する
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -22,9 +25,12 @@ setopt hist_expand
 setopt share_history
 setopt no_beep
 
+autoload -U compinit
+compinit
+zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*:setopt:*' menu true select
 
-# ghq + fzf でgit のブランチを一覧で表示してブランチを切り替える
+# ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
 function ghq-fzf() {
   local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
   if [ -n "$src" ]; then
@@ -35,3 +41,20 @@ function ghq-fzf() {
 }
 zle -N ghq-fzf
 bindkey '^g' ghq-fzf
+
+# fzf でgit のブランチを一覧で表示してブランチを切り替える
+function git-branches-fzf() {
+  local branch=$(
+    git branch -a |
+    fzf --preview="echo {} | tr -d ' *' | xargs git plog --color=always" |
+    head -n 1 |
+    perl -pe "s/\s//g; s/\*//g; s/remotes\/origin\///g"
+  )
+  if [ -n "$branch" ]; then
+    BUFFER="git switch $branch"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N git-branches-fzf
+bindkey '^b' git-branches-fzf
