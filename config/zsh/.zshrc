@@ -1,6 +1,3 @@
-# git
-GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
-
 source "$ZDOTDIR/nonlazy.zsh"
 
 # export
