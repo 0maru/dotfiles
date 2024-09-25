@@ -58,3 +58,7 @@ function git-branches-fzf() {
 }
 zle -N git-branches-fzf
 bindkey '^b' git-branches-fzf
+
+alias d='docker'
+alias diclean='d image prune'
+alias dcclean='d container prune'
