@@ -7,7 +7,7 @@ return {
     -- [CMD + SHIFT + r] Reload Configuration
     {
         key = 'r',
-        mods = 'CMD|SHIFT',
+        mods = 'SUPER|SHIFT',
         action = wezterm.action.ReloadConfiguration,
     },
     -- [CMD + p] Command Palette
@@ -19,8 +19,20 @@ return {
     -- [CMD + q] QuitApplication
     {
       key = 'q',
-      mods = 'CMD',
+      mods = 'SUPER',
       action = act.QuitApplication
+    },
+    -- [CMD + c] Copy
+    {
+      key = 'c',
+      mods = 'SUPER',
+      action = act.CopyTo("Clipboard")
+    },
+    -- [CMD + v] Paste
+    {
+      key = 'v',
+      mods = 'SUPER',
+      action = act.PasteFrom("Clipboard")
     },
     -- [CTRL + Tab] Next Tab
     {
@@ -67,7 +79,7 @@ return {
     -- [CMD + w] Close Tab
     {
       key = 'w',
-      mods = 'CMD',
+      mods = 'SUPER',
       action = act.CloseCurrentTab { confirm = true },
     },
     -- [CTRL + w] Close Pane
