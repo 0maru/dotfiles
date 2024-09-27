@@ -1,33 +1,76 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+-- SUPER = CMD
 return {
   keys = {
-    -- [ctrl + a, s] Split Vertical
+    -- [CMD + SHIFT + r] Reload Configuration
+    {
+        key = 'r',
+        mods = 'CMD|SHIFT',
+        action = wezterm.action.ReloadConfiguration,
+    },
+    -- [CMD + p] Command Palette
+    {
+      key = 'p',
+      mods = 'SUPER',
+      action = act.ActivateCommandPalette
+    },
+    -- [CMD + q] QuitApplication
+    {
+      key = 'q',
+      mods = 'CMD',
+      action = act.QuitApplication
+    },
+    -- [CTRL + Tab] Next Tab
+    {
+      key = 'Tab',
+      mods = 'CTRL',
+      action = act.ActivateTabRelative(1)
+    },
+    -- [CTRL + SHIFT + Tab] Previous Tab
+    {
+      key = 'Tab',
+      mods = 'CTRL|SHIFT',
+      action = act.ActivateTabRelative(-1)
+    },
+    -- [CMD + t] New Tab
+    {
+      key = 't',
+      mods = 'SUPER',
+      action = act({ SpawnTab = "CurrentPaneDomain" })
+    },
+    -- [CMD + w]
+    {
+      key = 'w',
+      mods = 'SUPER',
+      action = act.CloseCurrentTab { confirm = true }
+    },
+    -- [CTRL + a, s] Split Vertical
     {
       key = 's',
       mods = 'LEADER',
       action = act.SplitVertical { domain = 'CurrentPaneDomain' }
     },
-    -- [ctrl + a, v] Split Horizontal
+    -- [CTRL + a, v] Split Horizontal
     {
       key = 'v',
       mods = 'LEADER',
       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }
     },
-    -- [ctrl + a, w] Select Next Pane
+    -- [CTRL + a, w] Select Next Pane
     {
       key = 'w',
       mods = 'LEADER',
       action = act.ActivatePaneDirection "Next"
     },
-    -- [cmd + w] Close Tab
+    -- [CMD + w] Close Tab
     {
       key = 'w',
       mods = 'CMD',
       action = act.CloseCurrentTab { confirm = true },
     },
-    -- [ctrl + w] Close Pane
+    -- [CTRL + w] Close Pane
     {
       key = 'w',
       mods = 'CTRL',
