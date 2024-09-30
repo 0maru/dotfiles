@@ -22,6 +22,12 @@ return {
       mods = 'SUPER',
       action = act.QuitApplication
     },
+    -- [CMD + f] serch
+    {
+      key = 'f',<Down>
+      mods = 'SUPER',
+      action = act.Search={ CaseSensitiveString="" }
+    },
     -- [CMD + c] Copy
     {
       key = 'c',
@@ -88,5 +94,59 @@ return {
       mods = 'CTRL',
       action = act.CloseCurrentPane { confirm = true },
     },
+    -- [CMD + 1] Active Tab 1
+    {
+      key = '1',
+      mods = 'SUPER',
+      action = act.ActivateTab(0)
+    },
+    -- [CMD + 2] Active Tab 2
+    {
+      key = '2',
+      mods = 'SUPER',
+      action = act.ActivateTab(1)
+    },
+    -- [CMD + 3] Active Tab 3
+    {
+      key = '3',
+      mods = 'SUPER',
+      action = act.ActivateTab(2)
+    },
+    -- [CMD + 4] Active Tab 4
+    {
+      key = '4',
+      mods = 'SUPER',
+      action = act.ActivateTab(3)
+    },
+    -- [CMD + 5] Active Tab 5
+    {
+      key = '5',
+      mods = 'SUPER',
+      action = act.ActivateTab(4)
+    },
+    -- [CMD + 6] Active Tab 6
+    {
+      key = '6',
+      mods = 'SUPER',
+      action = act.ActivateTab(5)
+    },
+    -- [CMD + 7] Active Tab 7
+    {
+      key = '7',
+      mods = 'SUPER',
+      action = act.ActivateTab(6)
+    },
+    -- [CMD + 8] Active Tab 8
+    {
+      key = '8',
+      mods = 'SUPER',
+      action = act.ActivateTab(7)
+    },
+    -- [CMD + 9] Active Tab 9
+    {
+      key = '9',
+      mods = 'SUPER',
+      action = act.ActivateTab(8)
+    }
   }
 }
