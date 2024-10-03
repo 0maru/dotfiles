@@ -24,9 +24,9 @@ return {
     },
     -- [CMD + f] serch
     {
-      key = 'f',<Down>
+      key = 'f',
       mods = 'SUPER',
-      action = act.Search={ CaseSensitiveString="" }
+      action = act.Search{ CaseSensitiveString="" }
     },
     -- [CMD + c] Copy
     {
