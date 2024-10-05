@@ -33,6 +33,7 @@ brew "z"
 
 # Application
 cask "1password"
+cask "1password-cli"
 cask "arc"
 cask "charles"
 cask "docker"
