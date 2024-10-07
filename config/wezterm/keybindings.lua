@@ -24,21 +24,21 @@ return {
     },
     -- [CMD + f] serch
     {
-      key = 'f',<Down>
+      key = 'f',
       mods = 'SUPER',
-      action = act.Search={ CaseSensitiveString="" }
+      action = act.Search{ CaseSensitiveString='' }
     },
     -- [CMD + c] Copy
     {
       key = 'c',
       mods = 'SUPER',
-      action = act.CopyTo("Clipboard")
+      action = act.CopyTo('Clipboard')
     },
     -- [CMD + v] Paste
     {
       key = 'v',
       mods = 'SUPER',
-      action = act.PasteFrom("Clipboard")
+      action = act.PasteFrom('Clipboard')
     },
     -- [CTRL + Tab] Next Tab
     {
@@ -56,7 +56,7 @@ return {
     {
       key = 't',
       mods = 'SUPER',
-      action = act({ SpawnTab = "CurrentPaneDomain" })
+      action = act({ SpawnTab = 'CurrentPaneDomain' })
     },
     -- [CMD + w]
     {
@@ -80,7 +80,7 @@ return {
     {
       key = 'w',
       mods = 'LEADER',
-      action = act.ActivatePaneDirection "Next"
+      action = act.ActivatePaneDirection 'Next'
     },
     -- [CMD + w] Close Tab
     {
