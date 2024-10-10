@@ -3,6 +3,7 @@ source "$ZDOTDIR/nonlazy.zsh"
 # export
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$HOME/workspaces/github.com/0maru/tools/go/build:$PATH"
 
 # brew でインストールしたsheldon を使いたいので先にbrew を有効化する
 eval "$(/opt/homebrew/bin/brew shellenv)"
