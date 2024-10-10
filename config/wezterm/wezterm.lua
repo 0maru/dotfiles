@@ -6,7 +6,13 @@ if wezterm.config_builder then
 end
 
 config.use_ime = true
-config.font = wezterm.font("HackGen35 Console NF")
+config.font = wezterm.font("Berkeley Mono", {
+    weight = "Regular",
+    stretch = "Normal",
+    style = "Normal"
+})
+config.font = weztem.font_with_fallback {'HackGen35 Console NF'}
+
 config.font_size = 12.0
 config.adjust_window_size_when_changing_font_size = false
 
