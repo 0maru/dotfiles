@@ -9,7 +9,7 @@ config.use_ime = true
 
 -- themes
 config.color_scheme = 'GitHub Dark'
-config.font = weztem.font_with_fallback {
+config.font = wezterm.font_with_fallback {
   { family = 'Berkeley Mono', weight = 'Regular', stretch = 'Normal', style = 'Normal'},
   'HackGen35 Console NF'
 }
