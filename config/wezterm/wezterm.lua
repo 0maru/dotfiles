@@ -6,17 +6,17 @@ if wezterm.config_builder then
 end
 
 config.use_ime = true
-config.font = wezterm.font("Berkeley Mono", {
-    weight = "Regular",
-    stretch = "Normal",
-    style = "Normal"
-})
-config.font = weztem.font_with_fallback {'HackGen35 Console NF'}
 
-config.font_size = 12.0
-config.adjust_window_size_when_changing_font_size = false
-
+-- themes
 config.color_scheme = 'GitHub Dark'
+config.font = weztem.font_with_fallback {
+  { family = 'Berkeley Mono', weight = 'Regular', stretch = 'Normal', style = 'Normal'},
+  'HackGen35 Console NF'
+}
+config.font_size = 12.0
+
+config.adjust_window_size_when_changing_font_size = false
+config.automatically_reload_config = true
 config.window_background_opacity = 0.9
 config.show_new_tab_button_in_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
