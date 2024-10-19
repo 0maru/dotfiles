@@ -147,6 +147,12 @@ return {
       key = '9',
       mods = 'SUPER',
       action = act.ActivateTab(8)
-    }
+    },
+    -- [CTRL + L] Debug Overlay
+    {
+      key = 'L',
+      mods = 'CTRL',
+      action = wezterm.action.ShowDebugOverlay
+    },
   }
 }
