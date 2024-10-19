@@ -26,12 +26,12 @@ config.initial_cols = 140
 config.window_decorations = 'RESIZE'
 config.tab_bar_at_bottom = true
 config.window_frame = {
-  inactive_titlebar_bg = "none",
-  active_titlebar_bg = "none"
+  inactive_titlebar_bg = 'none',
+  active_titlebar_bg = 'none'
 }
 config.colors = {
   tab_bar = {
-    inactive_tab_edge = "none"
+    inactive_tab_edge = 'none'
   }
 }
 
@@ -46,30 +46,46 @@ config.leader = {
 
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-  local background = "#FFDBED"
-  local foreground = "#333333"
-  local edge_background = "none"
 
-  if tab.is_active then
-    background = "#0067C0"
-    foreground = "#E0FFFF"
+-- ghq で管理しているプロジェクトフォルダ以下にいる場合はプロジェクト名を取得してタブのタイトルに設定する
+function tab_name(tab)
+  local workspaces_dir = os.getenv('HOME')..'/workspaces/github.com'
+  local full_path = tab.active_pane.current_working_dir.path
+  if string.sub(full_path, 1, #workspaces_dir) == workspaces_dir then
+    -- $HOME/workspaces/github.com/organization/<project_name> のproject_name を抽出する
+    local project_name = full_path:match('^/[^/]+/[^/]+/[^/]+/[^/]+/[^/]+/([^/]+)')
+    return project_name
   end
 
-  local edge_foreground = background
-  local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+  return tab.active_pane.title
+end
 
-  return {
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = SOLID_LEFT_ARROW },
-    { Background = { Color = background } },
-    { Foreground = { Color = foreground } },
-    { Text = title },
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = SOLID_RIGHT_ARROW },
-  }
-end)
+wezterm.on(
+  'format-tab-title',
+  function(tab, tabs, panes, config, hover, max_width)
+    local background = '#FFDBED'
+    local foreground = '#333333'
+    local edge_background = 'none'
+    if tab.is_active then
+      background = '#0067C0'
+      foreground = '#E0FFFF'
+    end
+    local edge_foreground = background
+    local title = tab_name(tab)
+  
+    return {
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = SOLID_LEFT_ARROW },
+      { Background = { Color = background } },
+      { Foreground = { Color = foreground } },
+      { Text = ' ' .. title .. ' ' },
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = SOLID_RIGHT_ARROW },
+    }
+  end
+)
+  
 
 return config
