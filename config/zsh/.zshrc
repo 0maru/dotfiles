@@ -63,3 +63,4 @@ bindkey '^b' git-branches-fzf
 alias d='docker'
 alias diclean='d image prune'
 alias dcclean='d container prune'
+export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
