@@ -14,4 +14,3 @@ export SHELDON_CONFIG_DIR="$ZDOTDIR"
 
 # git
 GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
-
