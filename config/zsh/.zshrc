@@ -32,6 +32,7 @@ autoload -U compinit
 compinit
 zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*:setopt:*' menu true select
+source <(fzf --zsh)
 
 # ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
 function ghq-fzf() {
