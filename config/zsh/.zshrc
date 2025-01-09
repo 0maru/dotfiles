@@ -32,8 +32,9 @@ autoload -U compinit
 compinit
 zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*:setopt:*' menu true select
-source <(fzf --zsh)
 
+# fzf のシェル統合
+source <(fzf --zsh)
 # ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
 function ghq-fzf() {
   local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
