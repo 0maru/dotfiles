@@ -1,3 +1,4 @@
+# ~/.zshenvが読み込まれてから~/.config/sh 内のファイルの順番で読み込まれる
 export LANG="en_US.UTF-8"
 
 # XDG Base Directory (https://wiki.archlinux.jp/index.php/XDG_Base_Directory)
