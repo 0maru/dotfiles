@@ -11,7 +11,7 @@ config.use_ime = true
 config.color_scheme = 'GitHub Dark'
 config.font = wezterm.font_with_fallback {
   { family = 'Berkeley Mono', weight = 'Regular', stretch = 'Normal', style = 'Normal'},
-  'HackGen35 Console NF'
+  'BIZ UDGothic'
 }
 config.font_size = 12.0
 
