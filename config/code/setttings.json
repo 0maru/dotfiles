@@ -1,0 +1,126 @@
+{
+  "editor.snippetSuggestions": "top",
+  "editor.renderWhitespace": "all",
+  "editor.minimap.enabled": false,
+  "files.autoSave": "afterDelay",
+  "editor.formatOnType": false,
+  "editor.fontSize": 11,
+  "files.encoding": "utf8",
+  "screencastMode.fontSize": 20,
+  "git.openRepositoryInParentFolders": "never",
+  "dart.flutterHotReloadOnSave": "all",
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "editor.fontFamily": "'Berkeley Mono', Menlo, Monaco, 'Courier New', monospace",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
+  "workbench.startupEditor": "newUntitledFile",
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSmoothCaretAnimation": "explicit",
+  "editor.inlineSuggest.enabled": true,
+  "editor.tabSize": 2,
+  "workbench.layoutControl.enabled": false,
+  "window.commandCenter": false,
+  "window.title": "${dirty}${activeEditorMedium}",
+  "workbench.editor.enablePreview": false,
+  "editor.rulers": [
+    100
+  ],
+  "explorer.confirmDelete": false,
+  "scm.inputFontSize": 11,
+  "debug.console.fontSize": 11,
+  "editor.wordWrapColumn": 100,
+  "editor.renderControlCharacters": false,
+  "editor.fontLigatures": false,
+  "git.autofetch": true,
+  "editor.largeFileOptimizations": false,
+  "workbench.editorAssociations": {
+    "*.so": "default"
+  },
+  "python.venvFolders": [
+    ".venv"
+  ],
+  "[yaml]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off",
+    "files.insertFinalNewline": true
+  },
+  "explorer.confirmDragAndDrop": false,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "python.languageServer": "Default",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  "prettier.singleQuote": true,
+  "prettier.packageManager": "yarn",
+  "javascript.preferences.quoteStyle": "double",
+  "typescript.preferences.quoteStyle": "double",
+  "mssql.connections": [
+    {
+      "server": "{{put-server-name-here}}",
+      "database": "{{put-database-name-here}}",
+      "user": "{{put-username-here}}",
+      "password": ""
+    }
+  ],
+  "security.workspace.trust.untrustedFiles": "open",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/.idea": true,
+    "**/node_modules": true
+  },
+  "redhat.telemetry.enabled": true,
+  "yaml.format.printWidth": 100,
+  "dart.lineLength": 100,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.formatOnSave": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  }
+}

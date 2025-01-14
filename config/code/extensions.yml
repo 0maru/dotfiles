@@ -1,0 +1,26 @@
+extensions:
+  # theme
+  - ardonplay.jetbrains-idea-product-icon-theme
+  - catppuccin.catppuccin-vsc-icons
+  # keybinding
+  - vscodevim.vim
+  # git
+  - eamodio.gitlens
+  # github
+  - github.copilot
+  - github.copilot-chat
+  - github.github-vscode-theme
+  - github.vscode-github-actions
+  - github.vscode-pull-request-github
+  # docker
+  - ms-azuretools.vscode-docker
+  # k8s
+  - ms-kubernetes-tools.vscode-kubernetes-tools
+  # others
+  - be5invis.vscode-custom-css
+  - brandonkirbyson.vscode-animations
+  - drcika.apc-extension
+  - ms-vscode-remote.remote-containers
+  - ms-vsliveshare.vsliveshare
+  - postman.postman-for-vscode
+  - redhat.vscode-yaml
