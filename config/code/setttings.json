@@ -22,6 +22,8 @@
   "window.commandCenter": false,
   "window.title": "${dirty}${activeEditorMedium}",
   "workbench.editor.enablePreview": false,
+  "gitlens.currentLine.format": "${date} ${author}${' via  'pullRequest}${ • message|50?}",
+  "gitlens.currentLine.dateFormat": "YYYY/MM/DD",
   "editor.rulers": [
     100
   ],
