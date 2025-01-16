@@ -9,4 +9,5 @@ extensions=$(yq '.extensions[]' "$REPO_DIR/config/code/extensions.yml")
 # 拡張機能をインストールする
 for extension in $extensions; do
   code --install-extension $extension
+  cursor --install-extension $extension
 done
