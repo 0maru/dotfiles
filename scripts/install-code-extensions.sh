@@ -8,6 +8,11 @@ extensions=$(yq '.extensions[]' "$REPO_DIR/config/code/extensions.yml")
 
 # 拡張機能をインストールする
 for extension in $extensions; do
-  code --install-extension $extension
-  cursor --install-extension $extension
+  if hash code 2>/dev/null; then
+    code --install-extension $extension
+  fi
+  if hash cursor 2>/dev/null; then
+    cursor --install-extension $extension
+  fi
 done
+
