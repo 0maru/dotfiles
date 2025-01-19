@@ -32,3 +32,7 @@ alias update='ghq list | ghq get --update --parallel'
 # tmux
 alias t='tmux attach || tmux'
 
+# flutter
+alias fcg='flutter clean && flutter pub get'
+alias fbb='flutter pub run build_runner build --delete-conflicting-outputs'
+alias fbw='flutter pub run build_runner watch'
