@@ -32,3 +32,5 @@ alias update='ghq list | ghq get --update --parallel'
 # tmux
 alias t='tmux attach || tmux'
 
+# lazygit
+# alias lg=lazygit
