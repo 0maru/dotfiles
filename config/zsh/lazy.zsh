@@ -33,4 +33,10 @@ alias update='ghq list | ghq get --update --parallel'
 alias t='tmux attach || tmux'
 
 # lazygit
-# alias lg=lazygit
+alias lg=lazygit
+
+# flutter
+alias fcg='flutter clean && flutter pub get'
+alias fbb='flutter pub run build_runner build --delete-conflicting-outputs'
+alias fbw='flutter pub run build_runner watch'
+
