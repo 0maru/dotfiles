@@ -64,6 +64,13 @@ function git-branches-fzf() {
 zle -N git-branches-fzf
 bindkey '^b' git-branches-fzf
 
+
+function open_lazygit() {
+  lazygit
+}
+zle -N open_lazygit
+bindkey '^l' open_lazygit
+
 alias d='docker'
 alias diclean='d image prune'
 alias dcclean='d container prune'
