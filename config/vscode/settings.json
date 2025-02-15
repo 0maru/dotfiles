@@ -124,5 +124,6 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
-  }
+  },
+  "workbench.activityBar.orientation": "vertical"
 }
