@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "arhonplay.jetbrains-idea-product-icon-theme",
+    "catppuccin.catppuccin-vsc-icons",
+    "vscodevim.vim",
+    "eamodio.gitlens",
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "GitHub.github-vscode-theme",
+    "GitHub.vscode-github-actions",
+    "ms-azuretools.vscode-docker",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "be5invis.vscode-custom-css",
+    "brandonkirbyson.vscode-animations",
+    "drcika.apc-extension",
+    "ms-vscode-remote.remote-containers",
+    "ms-vsliveshare.vsliveshare",
+    "postman.postman-for-vscode",
+    "redhat.vscode-yaml"
+  ]
+}
