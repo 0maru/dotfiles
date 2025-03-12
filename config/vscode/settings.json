@@ -38,9 +38,7 @@
   "workbench.editorAssociations": {
     "*.so": "default"
   },
-  "python.venvFolders": [
-    ".venv"
-  ],
+  "python.venvFolders": [".venv"],
   "[yaml]": {
     "editor.quickSuggestions": {
       "other": true,
