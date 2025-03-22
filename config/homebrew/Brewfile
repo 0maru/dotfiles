@@ -42,7 +42,6 @@ cask "1password"
 cask "1password-cli"
 cask "arc"
 cask "charles"
-cask "docker"
 cask "figma"
 cask "finch"
 cask "google-chrome"
@@ -59,6 +58,7 @@ cask "visual-studio-code"
 cask "visual-studio-code-insiders"
 cask "wezterm"
 cask "zoom"
+cask "orbstack"
 
 mas "Messenger", id: 1480068668
 mas "Skitch", id: 425955336
