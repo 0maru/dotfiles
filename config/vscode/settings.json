@@ -24,9 +24,7 @@
   "workbench.editor.enablePreview": false,
   "gitlens.currentLine.format": "${date} ${author}${' via  'pullRequest}${ • message|50?}",
   "gitlens.currentLine.dateFormat": "YYYY/MM/DD",
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "explorer.confirmDelete": false,
   "scm.inputFontSize": 11,
   "debug.console.fontSize": 11,
@@ -38,9 +36,7 @@
   "workbench.editorAssociations": {
     "*.so": "default"
   },
-  "python.venvFolders": [
-    ".venv"
-  ],
+  "python.venvFolders": [".venv"],
   "[yaml]": {
     "editor.quickSuggestions": {
       "other": true,
@@ -73,9 +69,6 @@
     "editor.tabSize": 2,
     "editor.formatOnSave": true
   },
-  "files.associations": {
-    "*.vue": "vue"
-  },
   "prettier.singleQuote": true,
   "prettier.packageManager": "yarn",
   "javascript.preferences.quoteStyle": "double",
@@ -105,25 +98,19 @@
     "**/bower_components": true,
     "**/*.code-search": true
   },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
   "editor.formatOnSave": true,
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.formatOnSave": false
-  },
-  "[python]": {
-    "editor.formatOnType": true
-  },
   "github.copilot.enable": {
     "*": true,
     "yaml": true,
     "plaintext": false,
-    "markdown": false,
+    "markdown": true,
     "scminput": false
   },
-  "workbench.activityBar.orientation": "vertical"
+  "workbench.activityBar.orientation": "vertical",
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Please use Japanese in commit message."
+    }
+  ],
+  "github.copilot.chat.localeOverride": "ja"
 }
