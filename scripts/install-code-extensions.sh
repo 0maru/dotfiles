@@ -4,7 +4,7 @@ set -x
 source "$(dirname "$0")/preset.sh"
 
 # config/code/extensions.ymlを読み込む
-extensions=$(yq '.extensions[]' "$REPO_DIR/config/code/extensions.yml")
+extensions=$(yq '.extensions[]' "$REPO_DIR/config/vscode/extensions.yml")
 
 # 拡張機能をインストールする
 for extension in $extensions; do
