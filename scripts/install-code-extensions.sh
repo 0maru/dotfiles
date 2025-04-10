@@ -11,6 +11,9 @@ for extension in $extensions; do
   if hash code 2>/dev/null; then
     code --install-extension $extension
   fi
+  if hash code-insiders 2>/dev/null; then
+    code-insiders --install-extension $extension
+  fi
   if hash cursor 2>/dev/null; then
     cursor --install-extension $extension
   fi
