@@ -112,5 +112,6 @@
       "text": "Please use Japanese in commit message."
     }
   ],
-  "github.copilot.chat.localeOverride": "ja"
+  "github.copilot.chat.localeOverride": "ja",
+  "github.copilot.nextEditSuggestions.enabled": true,
 }

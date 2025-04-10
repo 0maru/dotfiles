@@ -9,6 +9,10 @@
     "command": "explorer.newFolder"
   },
   {
+    "key": "cmd+shift+w",
+    "command": "workbench.action.closeAllEditors"
+  },
+  {
     "key": "shift shift",
     "command": "workbench.action.quickOpen"
   },
@@ -27,5 +31,13 @@
   {
     "key": "cmd+1",
     "command": "workbench.view.explorer"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "workbench.view.extension.claude-dev-ActivityBar"
+  },
+  {
+    "key": "cmd+shift+t",
+    "command": "cline.plusButtonClicked"
   }
 ]
