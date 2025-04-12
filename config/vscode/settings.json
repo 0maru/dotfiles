@@ -133,9 +133,7 @@
   "trailing-spaces.includeEmptyLines": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "terminal.integrated.enablePersistentSessions": false,
-  "cursor.cpp.disabledLanguages": [
-    "plaintext"
-  ],
+  "cursor.cpp.disabledLanguages": ["plaintext"],
   "update.releaseTrack": "prerelease",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
