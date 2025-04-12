@@ -1,7 +1,7 @@
 {
   "editor.fontFamily": "'Berkeley Mono', Menlo, Monaco, 'Courier New', monospace",
   "editor.bracketPairColorization.enabled": true,
-  "editor.dragAndDrop": true,
+  "editor.dragAndDrop": false,
   "workbench.iconTheme": "catppuccin-macchiato",
   "workbench.colorTheme": "GitHub Dark Dimmed",
   "workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
