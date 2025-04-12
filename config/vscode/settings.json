@@ -1,4 +1,10 @@
 {
+  "editor.fontFamily": "'Berkeley Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.dragAndDrop": true,
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
   "editor.snippetSuggestions": "top",
   "editor.renderWhitespace": "all",
   "editor.minimap.enabled": false,
@@ -7,13 +13,8 @@
   "editor.fontSize": 11,
   "files.encoding": "utf8",
   "screencastMode.fontSize": 20,
-  "editor.renderWhitespace": "all",
   "git.openRepositoryInParentFolders": "never",
   "dart.flutterHotReloadOnSave": "all",
-  "workbench.iconTheme": "catppuccin-macchiato",
-  "editor.fontFamily": "'Berkeley Mono', Menlo, Monaco, 'Courier New', monospace",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
-  "workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
   "workbench.startupEditor": "newUntitledFile",
   "editor.cursorBlinking": "solid",
   "editor.cursorSmoothCaretAnimation": "explicit",
@@ -123,25 +124,10 @@
     "scminput": false
   },
   "workbench.activityBar.orientation": "vertical",
-  "vs-kubernetes": {
-    "vscode-kubernetes.helm-path-mac": "/Users/0maru/.vs-kubernetes/tools/helm/darwin-arm64/helm",
-    "vscode-kubernetes.kubectl-path-mac": "/Users/0maru/.vs-kubernetes/tools/kubectl/kubectl",
-    "vscode-kubernetes.minikube-path-mac": "/Users/0maru/.vs-kubernetes/tools/minikube/darwin-arm64/minikube"
-  },
   "kotlin.languageServer.enabled": false,
   "kotlin.debugAdapter.enabled": false,
   "editor.linkedEditing": true,
   "editor.unicodeHighlight.includeComments": true,
-  "workbench.colorCustomizations": {
-    "[Default Dark Modern]": {
-      "tab.activeBorderTop": "#00FF00",
-      "tab.unfocusedActiveBorderTop": "#00FF0088",
-      "textCodeBlock.background": "#00000055"
-    },
-    "editor.wordHighlightStrongBorder": "#FF6347",
-    "editor.wordHighlightBorder": "#FFD700",
-    "editor.selectionHighlightBorder": "#A9A9A9"
-  },
   "workbench.editor.revealIfOpen": true,
   "emmet.variables": {
     "lang": "en"
@@ -151,92 +137,6 @@
   "trailing-spaces.includeEmptyLines": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "terminal.integrated.enablePersistentSessions": false,
-  "java.compile.nullAnalysis.mode": "automatic",
-  "java.configuration.detectJdksAtStart": false,
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.debug.settings.hotCodeReplace": "auto",
-  "java.dependency.packagePresentation": "hierarchical",
-  "java.maxConcurrentBuilds": 8,
-  "java.sources.organizeImports.staticStarThreshold": 1,
-  "java.configuration.runtimes": [
-    {
-      "name": "JavaSE-1.8",
-      "path": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/8"
-    },
-    {
-      "name": "JavaSE-11",
-      "path": "/Users/0maru/.asdf/installs/java/zulu-11.78.15"
-    },
-    {
-      "name": "JavaSE-17",
-      "path": "/Users/0maru/.asdf/installs/java/zulu-17.56.15"
-    },
-    {
-      "name": "JavaSE-21",
-      "path": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/21"
-    },
-    {
-      "name": "JavaSE-23",
-      "path": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/latest",
-      "default": true
-    }
-  ],
-  "terminal.integrated.profiles.osx": {
-    "zsh": {
-      "path": "zsh",
-      "env": {
-        "JAVA_HOME": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/21"
-      }
-    },
-    "JavaSE-1.8 LTS": {
-      "overrideName": true,
-      "env": {
-        "JAVA_HOME": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/8"
-      },
-      "path": "zsh"
-    },
-    "JavaSE-11 LTS": {
-      "overrideName": true,
-      "env": {
-        "JAVA_HOME": "/Users/0maru/.asdf/installs/java/zulu-11.78.15"
-      },
-      "path": "zsh"
-    },
-    "JavaSE-17 LTS": {
-      "overrideName": true,
-      "env": {
-        "JAVA_HOME": "/Users/0maru/.asdf/installs/java/zulu-17.56.15"
-      },
-      "path": "zsh"
-    },
-    "JavaSE-21 LTS": {
-      "overrideName": true,
-      "env": {
-        "JAVA_HOME": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/21"
-      },
-      "path": "zsh"
-    },
-    "JavaSE-23": {
-      "overrideName": true,
-      "env": {
-        "JAVA_HOME": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/latest"
-      },
-      "path": "zsh"
-    }
-  },
-  "maven.executable.path": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/maven/latest/bin/mvn",
-  "java.import.gradle.home": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/gradle/latest",
-  "terminal.integrated.defaultProfile.osx": "JavaSE-23",
-  "maven.terminal.customEnv": [
-    {
-      "environmentVariable": "JAVA_HOME",
-      "value": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/21"
-    }
-  ],
-  "java.import.gradle.java.home": "/Users/0maru/Library/Application Support/Cursor/User/globalStorage/pleiades.java-extension-pack-jdk/java/21",
-  "vscode_custom_css.imports": [
-    "file:///Users/0maru/.cursor/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
-  ],
   "cursor.cpp.disabledLanguages": ["plaintext"],
   "update.releaseTrack": "prerelease"
 }
