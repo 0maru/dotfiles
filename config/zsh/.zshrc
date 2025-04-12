@@ -75,3 +75,4 @@ alias d='docker'
 alias diclean='d image prune'
 alias dcclean='d container prune'
 export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
+export PATH="$PATH:$HOME/workspaces/github.com/0maru/cwm"
