@@ -12,7 +12,7 @@ alias .....='cd ../../../..'
 alias v=nvim
 alias vim=v
 alias vi=v
-alias e=code
+alias e='code-insiders'
 
 # ls
 alias ei='eza --icons'
