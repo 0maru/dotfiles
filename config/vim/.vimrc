@@ -1,6 +1,8 @@
 set fileencodings=utf-8
 set fenc=utf-8
-
+autocmd InsertLeave *
+set iminsert=0
+set imsearch=0
 set number
 set expandtab
 set tabstop=2
