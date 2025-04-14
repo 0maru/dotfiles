@@ -106,11 +106,7 @@
   },
   "editor.formatOnSave": true,
   "github.copilot.enable": {
-    "*": true,
-    "yaml": true,
-    "plaintext": false,
-    "markdown": true,
-    "scminput": false
+    "*": true
   },
   "workbench.activityBar.orientation": "vertical",
   "github.copilot.chat.commitMessageGeneration.instructions": [
@@ -133,7 +129,9 @@
   "trailing-spaces.includeEmptyLines": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "terminal.integrated.enablePersistentSessions": false,
-  "cursor.cpp.disabledLanguages": ["plaintext"],
+  "cursor.cpp.disabledLanguages": [
+    "plaintext"
+  ],
   "update.releaseTrack": "prerelease",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
