@@ -5,10 +5,6 @@
     "command": "explorer.newFile"
   },
   {
-    "key": "ctrl+shift+n",
-    "command": "explorer.newFolder"
-  },
-  {
     "key": "cmd+shift+w",
     "command": "workbench.action.closeAllEditors"
   },
@@ -23,6 +19,10 @@
   {
     "key": "cmd+n",
     "command": "-workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+cmd+n",
+    "command": "explorer.newFolder"
   },
   {
     "key": "cmd+alt",
