@@ -32,5 +32,5 @@ inline = "source $(brew --prefix asdf)/libexec/asdf.sh"
 github = "olivierverdier/zsh-git-prompt"
 apply = ["defer"]
 
-[plugin.orbstack]
+[plugins.orbstack]
 inline = "source ~/.orbstack/shell/init.zsh 2>/dev/null || :"
