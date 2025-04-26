@@ -3,8 +3,6 @@ extensions:
   - ardonplay.jetbrains-idea-product-icon-theme
   - catppuccin.catppuccin-vsc-icons
   - github.github-vscode-theme
-  # keybinding
-  - vscodevim.vim
   # git
   - eamodio.gitlens
   # github
@@ -18,8 +16,6 @@ extensions:
   # k8s
   - ms-kubernetes-tools.vscode-kubernetes-tools
   # others
-  - be5invis.vscode-custom-css
-  - brandonkirbyson.vscode-animations
   - drcika.apc-extension
   - ms-vscode-remote.remote-containers
   - postman.postman-for-vscode
