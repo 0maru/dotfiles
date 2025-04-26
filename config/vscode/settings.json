@@ -106,7 +106,11 @@
   },
   "editor.formatOnSave": true,
   "github.copilot.enable": {
-    "*": true
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "jsonc": false
   },
   "workbench.activityBar.orientation": "vertical",
   "github.copilot.chat.commitMessageGeneration.instructions": [
