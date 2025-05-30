@@ -39,5 +39,9 @@
   {
     "key": "cmd+shift+t",
     "command": "cline.plusButtonClicked"
+  },
+  {
+    "key": "cmd+ctrl+t",
+    "command": "workbench.action.terminal.new"
   }
 ]
