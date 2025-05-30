@@ -3,3 +3,24 @@
 
 # zsh cache
 .zcompdump
+.zsh_sessions/
+
+# VSCode local settings
+settings.local.json
+
+# Editor temporary files
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+
+# macOS
+.localized
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
