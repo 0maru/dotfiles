@@ -20,3 +20,5 @@ ln -sfv "$XDG_CONFIG_HOME/vscode/settings.json" "$HOME/Library/Application Suppo
 # Cursor
 ln -sfv "$XDG_CONFIG_HOME/vscode/keybindings.json" "$HOME/Library/Application Support/Cursor/User/keybindings.json"
 ln -sfv "$XDG_CONFIG_HOME/vscode/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
+# Claude Code
+cp "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
