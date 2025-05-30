@@ -3,3 +3,5 @@
 
 # vim
 .*.swp
+
+**/.claude/settings.local.json
