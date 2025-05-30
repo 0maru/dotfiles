@@ -81,7 +81,7 @@ CLAUDE.md 作成時は以下の要素を含める：
 
 このファイルは、Claude Code (claude.ai/code) がこのリポジトリのコードを扱う際のガイダンスを提供します。
 
-> 共通指示事項は ~/.claude/global_instructions.md を参照
+> 共通指示事項は ~/.claude/CLAUDE.md を参照
 
 ## プロジェクト概要
 ...
