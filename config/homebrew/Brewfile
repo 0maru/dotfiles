@@ -59,6 +59,7 @@ cask "visual-studio-code-insiders"
 cask "wezterm"
 cask "zoom"
 cask "orbstack"
+cask "gpg-suite"
 
 mas "Messenger", id: 1480068668
 mas "Skitch", id: 425955336
