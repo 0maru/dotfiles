@@ -41,3 +41,6 @@ alias fbb='flutter pub run build_runner build --delete-conflicting-outputs'
 alias fbw='flutter pub run build_runner watch'
 
 alias globalip='curl -s https://inet-ip.info'
+
+# docker
+alias dredis='docker run -d --rm -p 6379:6379 redis:latest'

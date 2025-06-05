@@ -22,7 +22,7 @@
   "editor.tabSize": 2,
   "workbench.layoutControl.enabled": false,
   "window.commandCenter": false,
-  "window.title": "${dirty}${activeEditorMedium}",
+  "window.title": "${rootName}",
   "workbench.editor.enablePreview": false,
   "gitlens.currentLine.format": "${date} ${author}${' via  'pullRequest}${ • message|50?}",
   "gitlens.currentLine.dateFormat": "YYYY/MM/DD",

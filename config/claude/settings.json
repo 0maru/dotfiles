@@ -1,0 +1,15 @@
+{
+  "model": "Opus",
+  "permissions": {
+    "allow": [
+      "Bash(ls)",
+      "Bash(touch)",
+      "Bash(pnpm run lint)",
+      "Bash(pnpm run test:*)",
+      "Read(~/.zshrc)"
+    ],
+    "deny": [
+      "Bash(curl:*)"
+    ]
+  }
+}
