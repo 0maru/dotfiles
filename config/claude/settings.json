@@ -2,14 +2,15 @@
   "model": "Opus",
   "permissions": {
     "allow": [
-      "Bash(ls)",
-      "Bash(touch)",
-      "Bash(pnpm run lint)",
-      "Bash(pnpm run test:*)",
-      "Read(~/.zshrc)"
-    ],
-    "deny": [
-      "Bash(curl:*)"
+      "Bash(ls:*)",
+      "Bash(touch:*)",
+      "Bash(pnpm:*)",
+      "Bash(git:*)",
+      "Read(~/.zshrc)",
+      "WebFetch(domain:github.com)"
     ]
+  },
+  "env": {
+    "DISABLE_COST_WARNINGS": "0"
   }
 }
