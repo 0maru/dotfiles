@@ -43,4 +43,4 @@ alias fbw='flutter pub run build_runner watch'
 alias globalip='curl -s https://inet-ip.info'
 
 # docker
-alias dredis='docker run -d --rm -p 6379:6379 redis:latest's
+alias dredis='docker run -d --rm -p 6379:6379 redis:latest'
