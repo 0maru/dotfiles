@@ -38,9 +38,10 @@ config.colors = {
 -- keybindings
 config.disable_default_key_bindings = true
 config.keys = require('keybindings').keys
--- Leader key `
+-- Leader key ctrl+a
 config.leader = {
-  key = '`',
+  key = 'a',
+  mods = 'CTRL',
   timeout_milliseconds = 1000
 }
 
