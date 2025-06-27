@@ -73,7 +73,7 @@ wezterm.on(
     end
     local edge_foreground = background
     local title = tab_name(tab)
-  
+
     return {
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
@@ -87,6 +87,6 @@ wezterm.on(
     }
   end
 )
-  
+
 
 return config
