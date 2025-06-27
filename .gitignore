@@ -3,6 +3,7 @@
 
 # zsh cache
 .zcompdump
+.zcompdump.*
 .zsh_sessions/
 
 # VSCode local settings
@@ -24,3 +25,8 @@ settings.local.json
 # Temporary files
 *.tmp
 *.temp
+
+config/claude
+!config/claude/CLAUDE.md
+!config/claude/settings.json
+x
