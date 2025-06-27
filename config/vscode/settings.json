@@ -145,5 +145,6 @@
   "eslint.format.enable": true,
   "window.newWindowDimensions": "maximized",
   "window.customTitleBarVisibility": "windowed",
-  "workbench.editor.decorations.colors": false
+"workbench.editor.decorations.colors": false,
+"docker.extension.enableComposeLanguageServer": false
 }
