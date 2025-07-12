@@ -77,3 +77,5 @@ alias dcclean='d container prune'
 alias ccu='npx ccusage@latest'
 export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
 export PATH="$PATH:$HOME/workspaces/github.com/0maru/cwm"
+
+alias claude="/Users/4maru/.claude/local/claude"

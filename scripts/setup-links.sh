@@ -23,3 +23,4 @@ ln -sfv "$XDG_CONFIG_HOME/vscode/settings.json" "$HOME/Library/Application Suppo
 # Claude Code
 ln -sfv "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sfv "$XDG_CONFIG_HOME/claude/settings.json" "$HOME/.claude/settings.json"
+ln -sfv "$XDG_CONFIG_HOME/claude/commands/"* "$HOME/.claude/commands/"
