@@ -110,7 +110,7 @@
     "plaintext": false,
     "markdown": true,
     "scminput": false,
-    "jsonc": false
+    "jsonc": true
   },
   "workbench.activityBar.orientation": "vertical",
   "github.copilot.chat.commitMessageGeneration.instructions": [
@@ -145,6 +145,19 @@
   "eslint.format.enable": true,
   "window.newWindowDimensions": "maximized",
   "window.customTitleBarVisibility": "windowed",
-"workbench.editor.decorations.colors": false,
-"docker.extension.enableComposeLanguageServer": false
+  "workbench.editor.decorations.colors": false,
+  "nxConsole.commonNxCommands": [
+    "run",
+    "run-many",
+    "affected",
+    "affected --graph",
+    "list",
+    "dev:all"
+  ],
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-post-response.instructions.md": true,
+    "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-pre-request.instructions.md": true
+  },
+  "docker.extension.enableComposeLanguageServer": false
 }

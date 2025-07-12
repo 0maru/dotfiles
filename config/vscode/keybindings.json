@@ -43,5 +43,13 @@
   {
     "key": "cmd+ctrl+t",
     "command": "workbench.action.terminal.new"
-  }
+},
+{
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+        "text": "\\\r\n"
+    },
+    "when": "terminalFocus"
+}
 ]
