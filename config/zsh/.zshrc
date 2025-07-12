@@ -74,5 +74,6 @@ bindkey '^l' open_lazygit
 alias d='docker'
 alias diclean='d image prune'
 alias dcclean='d container prune'
+alias ccu='npx ccusage@latest'
 export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
 export PATH="$PATH:$HOME/workspaces/github.com/0maru/cwm"
