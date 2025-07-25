@@ -10,6 +10,7 @@ export PIPENV_VENV_IN_PROJECT=1
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 eval "$(sheldon source)"
+eval "$(mise activate zsh)"
 
 # history
 export HISTFILE="$XDG_STATE_HOME/zsh_history"
