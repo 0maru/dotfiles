@@ -17,6 +17,9 @@ export HISTFILE="$XDG_STATE_HOME/zsh_history"
 export HISTSIZE=1000
 export SAVEHIST=30000
 
+# gpg
+export GPG_TTY=$(tty)
+
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 setopt hist_ignore_all_dups
