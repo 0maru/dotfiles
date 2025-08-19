@@ -1,11 +1,5 @@
 source "$ZDOTDIR/nonlazy.zsh"
 
-# export
-export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-export PATH="$HOME/workspaces/github.com/0maru/tools/go/build:$PATH"
-export PIPENV_VENV_IN_PROJECT=1
-
 # brew でインストールしたsheldon を使いたいので先にbrew を有効化する
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
@@ -76,6 +70,3 @@ alias d='docker'
 alias diclean='d image prune'
 alias dcclean='d container prune'
 alias ccu='npx ccusage@latest'
-export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
-export PATH="$PATH:$HOME/workspaces/github.com/0maru/cwm"
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"

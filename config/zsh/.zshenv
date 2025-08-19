@@ -2,7 +2,6 @@
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-
 # XDG Base Directory (https://wiki.archlinux.jp/index.php/XDG_Base_Directory)
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -17,3 +16,15 @@ export SHELDON_CONFIG_DIR="$ZDOTDIR"
 
 # git
 GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
+
+# starship
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+
+# venv
+export PIPENV_VENV_IN_PROJECT=1
+
+# brew でインストールしたsheldon を使いたいので先にbrew を有効化する
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(starship init zsh)"
+eval "$(sheldon source)"
+eval "$(mise activate zsh)"
