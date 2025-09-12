@@ -26,9 +26,7 @@
   "workbench.editor.enablePreview": false,
   "gitlens.currentLine.format": "${date} ${author}${' via  'pullRequest}${ • message|50?}",
   "gitlens.currentLine.dateFormat": "YYYY/MM/DD",
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "explorer.confirmDelete": false,
   "scm.inputFontSize": 11,
   "debug.console.fontSize": 11,
@@ -40,9 +38,7 @@
   "workbench.editorAssociations": {
     "*.so": "default"
   },
-  "python.venvFolders": [
-    ".venv"
-  ],
+  "python.venvFolders": [".venv"],
   "[yaml]": {
     "editor.quickSuggestions": {
       "other": true,
@@ -133,9 +129,7 @@
   "trailing-spaces.includeEmptyLines": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "terminal.integrated.enablePersistentSessions": false,
-  "cursor.cpp.disabledLanguages": [
-    "plaintext"
-  ],
+  "cursor.cpp.disabledLanguages": ["plaintext"],
   "update.releaseTrack": "prerelease",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
