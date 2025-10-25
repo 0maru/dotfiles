@@ -1,5 +1,7 @@
 {
-  "model": "Opus",
+  "env": {
+    "DISABLE_COST_WARNINGS": "0"
+  },
   "permissions": {
     "allow": [
       "Bash(ls:*)",
@@ -9,8 +11,5 @@
       "Read(~/.zshrc)",
       "WebFetch(domain:github.com)"
     ]
-  },
-  "env": {
-    "DISABLE_COST_WARNINGS": "0"
   }
 }
