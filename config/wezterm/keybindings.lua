@@ -154,5 +154,12 @@ return {
       mods = 'CTRL',
       action = wezterm.action.ShowDebugOverlay
     },
+    -- [SHIFT + ENTER] SendString "\x1b\r"
+    -- Claude Code の改行
+    {
+      key="Enter",
+      mods="SHIFT",
+      action=wezterm.action{SendString="\x1b\r"}
+    },
   }
 }

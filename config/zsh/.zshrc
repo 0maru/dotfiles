@@ -1,11 +1,5 @@
 source "$ZDOTDIR/nonlazy.zsh"
 
-# export
-export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-export PATH="$HOME/workspaces/github.com/0maru/tools/go/build:$PATH"
-export PIPENV_VENV_IN_PROJECT=1
-
 # brew でインストールしたsheldon を使いたいので先にbrew を有効化する
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
@@ -16,6 +10,9 @@ eval "$(mise activate zsh)"
 export HISTFILE="$XDG_STATE_HOME/zsh_history"
 export HISTSIZE=1000
 export SAVEHIST=30000
+
+# gpg
+export GPG_TTY=$(tty)
 
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY

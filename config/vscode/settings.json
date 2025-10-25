@@ -26,9 +26,7 @@
   "workbench.editor.enablePreview": false,
   "gitlens.currentLine.format": "${date} ${author}${' via  'pullRequest}${ • message|50?}",
   "gitlens.currentLine.dateFormat": "YYYY/MM/DD",
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "explorer.confirmDelete": false,
   "scm.inputFontSize": 11,
   "debug.console.fontSize": 11,
@@ -40,9 +38,7 @@
   "workbench.editorAssociations": {
     "*.so": "default"
   },
-  "python.venvFolders": [
-    ".venv"
-  ],
+  "python.venvFolders": [".venv"],
   "[yaml]": {
     "editor.quickSuggestions": {
       "other": true,
@@ -133,9 +129,7 @@
   "trailing-spaces.includeEmptyLines": false,
   "terminal.integrated.tabs.hideCondition": "never",
   "terminal.integrated.enablePersistentSessions": false,
-  "cursor.cpp.disabledLanguages": [
-    "plaintext"
-  ],
+  "cursor.cpp.disabledLanguages": ["plaintext"],
   "update.releaseTrack": "prerelease",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -157,7 +151,29 @@
   "chat.instructionsFilesLocations": {
     ".github/instructions": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-post-response.instructions.md": true,
-    "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-pre-request.instructions.md": true
+    "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-pre-request.instructions.md": true,
+    "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-collections-post-response.instructions.md": true,
+    "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-collections-pre-request.instructions.md": true,
+    "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-folder-post-response.instructions.md": true,
+    "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-folder-pre-request.instructions.md": true,
+    "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-http-request-post-response.instructions.md": true,
+    "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-http-request-pre-request.instructions.md": true
   },
-  "docker.extension.enableComposeLanguageServer": false
+  "docker.extension.enableComposeLanguageServer": false,
+  "window.confirmBeforeClose": "keyboardOnly",
+  "python.terminal.activateEnvironment": false,
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "markdown.marp.diagnostics.slideContentOverflow": true
+  // "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  // "terminal.integrated.automationProfile.osx": {
+  //   "path": "/bin/zsh",
+  //   "args": ["-l"]
+  // },
+  // "terminal.integrated.profiles.osx": {
+  //   "zsh": {
+  //     "path": "/bin/zsh",
+  //     "args": ["-l"]
+  //   }
+  // },
+  // "terminal.integrated.defaultProfile.osx": "zsh"
 }
