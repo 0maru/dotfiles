@@ -163,7 +163,8 @@
   "window.confirmBeforeClose": "keyboardOnly",
   "python.terminal.activateEnvironment": false,
   "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
-  "markdown.marp.diagnostics.slideContentOverflow": true
+  "markdown.marp.diagnostics.slideContentOverflow": true,
+  "terminal.integrated.suggest.enabled": false 
   // "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
   // "terminal.integrated.automationProfile.osx": {
   //   "path": "/bin/zsh",
