@@ -24,6 +24,9 @@ export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 # venv
 export PIPENV_VENV_IN_PROJECT=1
 
+# mysql-client
+export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client@8.0/lib/pkgconfig"
+
 # brew でインストールしたsheldon を使いたいので先にbrew を有効化する
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"

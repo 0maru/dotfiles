@@ -162,8 +162,29 @@
   "docker.extension.enableComposeLanguageServer": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "python.terminal.activateEnvironment": false,
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
-  "markdown.marp.diagnostics.slideContentOverflow": true
+  "markdown.marp.diagnostics.slideContentOverflow": true,
+  "window.newWindowProfile": null,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "terminal.integrated.suggest.enabled": false,
+  "editor.defaultFormatter": "biomejs.biome",
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.useCtrlEnterToSend": true,
+  "claudeCode.respectGitIgnore": false,
+  "claudeCode.selectedModel": "default"
   // "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
   // "terminal.integrated.automationProfile.osx": {
   //   "path": "/bin/zsh",

@@ -43,13 +43,22 @@
   {
     "key": "cmd+ctrl+t",
     "command": "workbench.action.terminal.new"
-},
-{
+  },
+  {
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
-        "text": "\\\r\n"
+      "text": "\\\r\n"
     },
     "when": "terminalFocus"
-}
+  },
+  {
+    "key": "shift+cmd+escape",
+    "command": "workbench.view.extension.codexViewContainer"
+  },
+  {
+    "key": "alt+cmd+l",
+    "command": "-bookmarks.jumpToNext",
+    "when": "editorTextFocus"
+  }
 ]
