@@ -1,8 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "env": {
-    "DISABLE_COST_WARNINGS": "0"
-  },
+  "language": "japanese",
   "permissions": {
     "allow": [
       "Bash(ls:*)",
@@ -11,10 +9,21 @@
       "Bash(git:*)",
       "Read(~/.zshrc)",
       "WebFetch(domain:github.com)"
-    ]
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(./.env.*)",
+      "Read(~/.aws/**)",
+      "Bash(curl:*)"
+    ],
+    "defaultMode": "acceptEdits"
   },
+  "enableAllProjectMcpServers": true,
   "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  }
+  },
+  "env": {
+    "DISABLE_COST_WARNINGS": "0"
+  },
 }
