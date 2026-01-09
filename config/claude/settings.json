@@ -25,5 +25,5 @@
   },
   "env": {
     "DISABLE_COST_WARNINGS": "0"
-  },
+  }
 }
