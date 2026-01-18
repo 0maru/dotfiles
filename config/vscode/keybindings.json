@@ -1,50 +1,52 @@
 // Place your key bindings in this file to override the defaults
 [
   {
+    // エクスプローラーで新規ファイルを作成
     "key": "cmd+n",
     "command": "explorer.newFile"
   },
   {
+    // 開いているエディタをすべて閉じる
     "key": "cmd+shift+w",
     "command": "workbench.action.closeAllEditors"
   },
   {
+    // クイックオープン（ファイル検索）をShift2回で起動（IntelliJ風）
     "key": "shift shift",
     "command": "workbench.action.quickOpen"
   },
   {
+    // デフォルトのクイックオープンを無効化
     "key": "cmd+p",
     "command": "-workbench.action.quickOpen"
   },
   {
+    // デフォルトの新規ファイル作成を無効化（cmd+nをexplorer.newFileに割り当てるため）
     "key": "cmd+n",
     "command": "-workbench.action.files.newUntitledFile"
   },
   {
+    // エクスプローラーで新規フォルダを作成
     "key": "ctrl+cmd+n",
     "command": "explorer.newFolder"
   },
   {
+    // クイックフィックス（コード修正候補）を表示
     "key": "cmd+alt",
     "command": "editor.action.quickFixes"
   },
   {
+    // サイドバーのエクスプローラーを表示
     "key": "cmd+1",
     "command": "workbench.view.explorer"
   },
   {
-    "key": "ctrl+i",
-    "command": "workbench.view.extension.claude-dev-ActivityBar"
-  },
-  {
-    "key": "cmd+shift+t",
-    "command": "cline.plusButtonClicked"
-  },
-  {
+    // 新しいターミナルを開く
     "key": "cmd+ctrl+t",
     "command": "workbench.action.terminal.new"
   },
   {
+    // ターミナルで改行を入力（コマンドを実行せずに改行）
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
@@ -53,12 +55,15 @@
     "when": "terminalFocus"
   },
   {
-    "key": "shift+cmd+escape",
-    "command": "workbench.view.extension.codexViewContainer"
+    // エディタにいる場合、ターミナルにフォーカスを当てる
+    "key": "shift+cmd+;",
+    "command": "workbench.action.terminal.focus",
+    "when": "editorTextFocus"
   },
   {
-    "key": "alt+cmd+l",
-    "command": "-bookmarks.jumpToNext",
-    "when": "editorTextFocus"
+    // ターミナルにいる場合、エディタにフォーカスを当てる
+    "key": "shift+cmd+;",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
   }
 ]
