@@ -7,6 +7,7 @@ brew "rust"
 # Tools
 brew "awscli"
 brew "aws-cdk"
+brew "azookey"
 brew "bat"
 brew "bun"
 brew "codex"
