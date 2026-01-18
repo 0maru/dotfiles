@@ -1,10 +1,14 @@
 cask_args appdir: "/Applications"
 
+tap "FelixKratz/formulae"
+tap "nikitabobko/tap"
+
 # Language
 brew "go"
 brew "rust"
 
 # Tools
+brew "aerospace"
 brew "awscli"
 brew "aws-cdk"
 brew "azookey"
@@ -35,6 +39,7 @@ brew "ripgrep"
 brew "rust"
 brew "sd"
 brew "sheldon"
+brew "sketchybar"
 brew "starship"
 brew "tmux"
 brew "tokei"
