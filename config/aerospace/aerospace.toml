@@ -72,7 +72,7 @@ on-mode-changed = []
     inner.vertical =   0
     outer.left =       0
     outer.bottom =     0
-    outer.top =        [{monitor.EV2750 = 41}, {monitor.SDM27Q10S = 41}, 10]
+    outer.top =        [{monitor.EV2750 = 41}, {monitor.SDM27Q10S = 41}, 0]
     outer.right =      0
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -216,3 +216,21 @@ on-mode-changed = []
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+# Application-specific rules
+# See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected
+[[on-window-detected]]
+    if.app-id = 'com.1password.1password'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.anthropic.claude'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.github.wez.wezterm'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = 'layout floating'
