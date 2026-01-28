@@ -80,5 +80,8 @@ cask "zen"
 cask "zoom"
 cask "gpg-suite"
 
+# Fonts
+cask "font-zen-kaku-gothic-new"
+
 mas "Messenger", id: 1480068668
 mas "Xcode", id: 497799835
