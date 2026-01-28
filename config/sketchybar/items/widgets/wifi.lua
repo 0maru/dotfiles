@@ -10,40 +10,6 @@ sbar.exec(
 
 local popup_width = 250
 
-local wifi_up_graph = sbar.add("graph", "widgets.wifi1_graph", 42, {
-	position = "right",
-	align = "right",
-	graph = {
-		color = colors.tn_red,
-		fill_color = colors.tn_red,
-		fill = true,
-		height = 17,
-		line_width = 1,
-		padding_left = 0,
-		padding_right = 0,
-	},
-	padding_left = -64.5,
-	padding_right = 0,
-	y_offset = 21,
-})
-
-local wifi_down_graph = sbar.add("graph", "widgets.wifi2_graph", 42, {
-	position = "right",
-	graph = {
-		color = colors.tn_cyan,
-		fill_color = colors.tn_cyan,
-		fill = true,
-		height = 17,
-		line_width = 1,
-		padding_left = 0,
-		padding_right = 0,
-	},
-	height = 17,
-	padding_left = -20,
-	padding_right = 0,
-	y_offset = 9,
-})
-
 local wifi_up = sbar.add("item", "widgets.wifi1", {
 	position = "right",
 	padding_left = -8,
@@ -64,6 +30,8 @@ local wifi_up = sbar.add("item", "widgets.wifi1", {
 		},
 		color = colors.tn_red,
 		string = "??? Bps",
+		width = 50,
+		align = "right",
 	},
 	y_offset = 6,
 })
@@ -87,6 +55,8 @@ local wifi_down = sbar.add("item", "widgets.wifi2", {
 		},
 		color = colors.tn_cyan,
 		string = "??? Bps",
+		width = 50,
+		align = "right",
 	},
 	y_offset = -6,
 })
@@ -101,9 +71,7 @@ local wifi = sbar.add("item", "widgets.wifi.padding", {
 -- Background around the item
 local wifi_bracket = sbar.add("bracket", "widgets.wifi.bracket", {
 	wifi.name,
-	wifi_up_graph.name,
 	wifi_up.name,
-	wifi_down_graph.name,
 	wifi_down.name,
 }, {
 	background = { color = colors.tn_black3, border_color = colors.tn_magenta, border_width = 2 },
@@ -240,10 +208,6 @@ wifi_up:subscribe("network_update", function(env)
 	-- Set the color
 	local up_color = (upload_value == 0) and colors.tn_black1 or colors.tn_red
 	local down_color = (download_value == 0) and colors.tn_black1 or colors.tn_cyan
-
-	-- Add data to the graph
-	wifi_up_graph:push({ upload_value / (2 * 100 * 1024 ^ 2) })
-	wifi_down_graph:push({ download_value / (2 * 100 * 1024 ^ 2) })
 
 	-- Set the label
 	wifi_up:set({
