@@ -10,7 +10,8 @@
       "Bash(pnpm:*)",
       "Bash(git:*)",
       "Read(~/.zshrc)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(gh pr:*)"
     ],
     "deny": [
       "Read(.env)",
