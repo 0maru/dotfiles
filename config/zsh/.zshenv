@@ -16,7 +16,6 @@ export SHELDON_CONFIG_DIR="$ZDOTDIR"
 
 # git
 GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
-export GITHUB_TOKEN=$(security find-generic-password -a "$USER" -s "GITHUB_TOKEN" -w 2>/dev/null)
 
 # starship
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
