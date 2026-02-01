@@ -71,7 +71,6 @@ cask "raycast"
 cask "slack"
 cask "visual-studio-code"
 cask "wezterm@nightly"
-cask "zen"
 cask "zoom"
 
 # Fonts
