@@ -75,7 +75,6 @@ cask "visual-studio-code"
 cask "wezterm@nightly"
 cask "zen"
 cask "zoom"
-cask "gpg-suite"
 
 # Fonts
 cask "font-zen-kaku-gothic-new"
