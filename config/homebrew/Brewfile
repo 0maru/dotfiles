@@ -45,7 +45,6 @@ brew "vim"
 brew "wget"
 brew "wrk"
 brew "yq"
-brew "z"
 brew "zoxide"
 
 # Application
