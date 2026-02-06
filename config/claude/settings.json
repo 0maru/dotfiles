@@ -23,8 +23,9 @@
       "Read(~/.aws/**)",
       "Bash(curl:*)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "plan"
   },
+  "hooks": {},
   "model": "opus",
   "enableAllProjectMcpServers": true,
   "enabledPlugins": {
@@ -48,6 +49,9 @@
     "slack@claude-plugins-official": true
   },
   "language": "japanese",
+  "theme": "dark-colorblind",
+  "notifications": false,
+  "autoCompact": true,
   "alwaysThinkingEnabled": true,
   "plansDirectory": "./plans",
   "feedbackSurveyState": {
