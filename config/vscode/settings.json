@@ -184,7 +184,8 @@
   "claudeCode.preferredLocation": "sidebar",
   "claudeCode.useCtrlEnterToSend": true,
   "claudeCode.respectGitIgnore": false,
-  "claudeCode.selectedModel": "opus"
+  "claudeCode.selectedModel": "opus",
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.13"
   // "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
   // "terminal.integrated.automationProfile.osx": {
   //   "path": "/bin/zsh",
