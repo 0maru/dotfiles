@@ -11,9 +11,9 @@
       "Bash(touch:*)",
       "Bash(pnpm:*)",
       "Bash(git:*)",
+      "Bash(gh:*)",
       "Read(~/.zshrc)",
-      "WebFetch(domain:github.com)",
-      "Bash(gh pr:*)"
+      "WebFetch(domain:github.com)"
     ],
     "deny": [
       "Read(.env)",
@@ -23,6 +23,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
@@ -46,8 +47,8 @@
   },
   "language": "japanese",
   "alwaysThinkingEnabled": true,
+  "plansDirectory": "./plans",
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  },
-  "plansDirectory": "./plans"
+  }
 }
