@@ -45,9 +45,8 @@ automatically-unhide-macos-hidden-apps = true
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
-                         "C", "D", "E", "F", "G", "I", "M", "N", "O", "P", "Q",
-                         "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9",
+                         "B", "E", "S", "T"]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -74,6 +73,25 @@ on-mode-changed = []
     outer.bottom =     0
     outer.top =        [{monitor.EV2750 = 41}, {monitor.SDM27Q10S = 41}, 0]
     outer.right =      0
+
+[workspace-to-monitor-force-assignment]
+    # EV2750（EIZO/メイン）: 文字入力系
+    1 = 'EV2750'
+    2 = 'EV2750'
+    3 = 'EV2750'
+    4 = 'EV2750'
+    5 = 'EV2750'
+    E = 'EV2750'   # Editor (VS Code)
+    T = 'EV2750'   # Terminal (WezTerm)
+    S = 'EV2750'   # Slack
+
+    # SDM27Q10S（Sony/サブ）: 調べ物・参照系
+    6 = 'SDM27Q10S'
+    7 = 'SDM27Q10S'
+    8 = 'SDM27Q10S'
+    9 = 'SDM27Q10S'
+    B = 'SDM27Q10S'  # Browser (Arc/Chrome)
+
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' binding mode must be always presented
@@ -193,6 +211,10 @@ on-mode-changed = []
     alt-shift-y = 'move-node-to-workspace Y'
     alt-shift-z = 'move-node-to-workspace Z'
 
+    # Monitor focus
+    alt-shift-left = 'focus-monitor left'
+    alt-shift-right = 'focus-monitor right'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
@@ -219,16 +241,38 @@ on-mode-changed = []
 
 # Application-specific rules
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected
+
+# -- 開発ツール → EV2750（メイン） --
+[[on-window-detected]]
+    if.app-id = 'com.microsoft.VSCode'
+    if.during-aerospace-startup = true
+    run = 'move-node-to-workspace E'
+
+[[on-window-detected]]
+    if.app-id = 'com.github.wez.wezterm'
+    run = ['layout floating', 'move-node-to-workspace T']
+
+# -- コミュニケーション → EV2750（メイン） --
+[[on-window-detected]]
+    if.app-id = 'com.tinyspeck.slackmacgap'
+    run = 'move-node-to-workspace S'
+
+# -- ブラウザ → SDM27Q10S（サブ） --
+[[on-window-detected]]
+    if.app-id = 'company.thebrowser.Browser'
+    run = 'move-node-to-workspace B'
+
+[[on-window-detected]]
+    if.app-id = 'com.google.Chrome.canary'
+    run = 'move-node-to-workspace B'
+
+# -- Floating のみ（ワークスペース指定なし） --
 [[on-window-detected]]
     if.app-id = 'com.1password.1password'
     run = 'layout floating'
 
 [[on-window-detected]]
-    if.app-id = 'com.anthropic.claude'
-    run = 'layout floating'
-
-[[on-window-detected]]
-    if.app-id = 'com.github.wez.wezterm'
+    if.app-id = 'com.anthropic.claudefordesktop'
     run = 'layout floating'
 
 [[on-window-detected]]
