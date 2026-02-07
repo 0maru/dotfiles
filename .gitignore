@@ -1,10 +1,12 @@
 .idea
-.DS_Store
+**/.DS_Store
 
 # zsh cache
 .zcompdump
 .zcompdump.*
 .zsh_sessions/
+.zcompcache/
+.zsh_history
 
 # VSCode local settings
 settings.local.json
@@ -26,7 +28,14 @@ settings.local.json
 *.tmp
 *.temp
 
+# Compiled binaries
+**/bin/
+
+# Claude Code local settings (in subdirectories)
+**/.claude/settings.local.json
+
 config/claude/*
 !config/claude/CLAUDE.md
 !config/claude/commands/
 !config/claude/settings.json
+plans/
