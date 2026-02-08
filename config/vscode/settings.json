@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "'Berkeley Mono', 'Zen Kaku Gothic New', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'Berkeley Mono', 'LINE Seed JP App_TTF', Menlo, Monaco, 'Courier New', monospace",
   "editor.bracketPairColorization.enabled": true,
   "editor.dragAndDrop": false,
   "workbench.iconTheme": "catppuccin-macchiato",
