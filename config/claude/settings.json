@@ -25,9 +25,8 @@
     ],
     "defaultMode": "plan"
   },
-  "hooks": {},
-  "model": "opus",
   "enableAllProjectMcpServers": true,
+  "hooks": {},
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": true,
@@ -49,12 +48,13 @@
     "slack@claude-plugins-official": true
   },
   "language": "japanese",
+  "alwaysThinkingEnabled": true,
+  "plansDirectory": "./plans",
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
-  "alwaysThinkingEnabled": true,
-  "plansDirectory": "./plans",
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  }
+  },
+  "model": "opus"
 }
