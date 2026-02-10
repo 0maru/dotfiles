@@ -71,7 +71,7 @@ on-mode-changed = []
     inner.vertical =   0
     outer.left =       0
     outer.bottom =     0
-    outer.top =        [{monitor.EV2750 = 41}, {monitor.SDM27Q10S = 41}, {monitor.'EX-LDQ273DS' = 41}, {monitor.'Sidecar Display' = 41}, 0]
+    outer.top =        [{monitor.EV2750 = 41}, {monitor.SDM27Q10S = 41}, {monitor.'EX-LDQ273DS' = 41}, {monitor.'Sidecar Display (AirPlay)' = 41}, {monitor.'Sidecar Display' = 41}, {monitor.'DELL S2721DS' = 41}, {monitor.'T27h-30' = 41}, 0]
     outer.right =      0
 
 [workspace-to-monitor-force-assignment]
@@ -93,7 +93,8 @@ on-mode-changed = []
 
     # iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
     T = ['Sidecar Display', 'EV2750', 'EX-LDQ273DS (2)', '1']   # Terminal (WezTerm)
-    C = ['Sidecar Display', 'EV2750', 'EX-LDQ273DS (2)', '1']   # AI Tools (Claude Desktop / Codex)
+    X = ['Sidecar Display', 'EV2750', 'EX-LDQ273DS (2)', '1']   # Claude Desktop
+    Z = ['Sidecar Display', 'EV2750', 'EX-LDQ273DS (2)', '1']   # Codex
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -276,11 +277,11 @@ on-mode-changed = []
 
 [[on-window-detected]]
     if.app-id = 'com.anthropic.claudefordesktop'
-    run = ['layout floating', 'move-node-to-workspace C']
+    run = ['layout floating', 'move-node-to-workspace X']
 
 [[on-window-detected]]
     if.app-id = 'com.openai.codex'
-    run = ['layout floating', 'move-node-to-workspace C']
+    run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
     if.app-id = 'com.apple.finder'
