@@ -2,5 +2,25 @@
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#0055ff",  // タイトルバーの背景色
     "titleBar.activeForeground": "#D8DEE9",  // タイトルバーのテキスト色
+  },
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/.idea": true,
+    "**/node_modules": true,
+    "**/.DS_Store": true,
+    "**/.zcompdump*": true,
+    "**/.zsh_sessions": true,
+    "**/.zcompcache": true,
+    "**/.zsh_history": true,
+    "**/*.swp": true,
+    "**/*.swo": true,
+    "**/*~": true,
+    "**/.localized": true,
+    "**/*.log": true,
+    "**/*.tmp": true,
+    "**/*.temp": true,
   }
 }
