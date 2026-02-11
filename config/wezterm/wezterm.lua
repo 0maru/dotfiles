@@ -80,7 +80,7 @@ wezterm.on(
       { Text = SOLID_LEFT_ARROW },
       { Background = { Color = background } },
       { Foreground = { Color = foreground } },
-      { Text = ' ' .. title .. ' ' },
+      { Text = ' ' .. (tab.tab_index + 1) .. ': ' .. title .. ' ' },
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
       { Text = SOLID_RIGHT_ARROW },
