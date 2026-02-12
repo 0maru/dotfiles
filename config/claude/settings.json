@@ -25,6 +25,7 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {},
   "enabledPlugins": {
@@ -45,7 +46,9 @@
     "plugin-dev@claude-plugins-official": true,
     "linear@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "slack@claude-plugins-official": true
+    "slack@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true
   },
   "language": "japanese",
   "alwaysThinkingEnabled": true,
@@ -55,6 +58,5 @@
   "autoCompact": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  },
-  "model": "opus"
+  }
 }
