@@ -150,6 +150,7 @@
   ],
   "chat.instructionsFilesLocations": {
     ".github/instructions": true,
+    ".claude/rules": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-post-response.instructions.md": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-http-request-pre-request.instructions.md": true,
     "/var/folders/yp/srbj4vyx7_vbdy2l2ls4tbd40000gn/T/postman-collections-post-response.instructions.md": true,
@@ -162,7 +163,7 @@
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-collections-pre-request.instructions.md": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-folder-post-response.instructions.md": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-folder-pre-request.instructions.md": true
-  },
+},
   "docker.extension.enableComposeLanguageServer": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "python.terminal.activateEnvironment": false,
@@ -189,7 +190,7 @@
   "claudeCode.useCtrlEnterToSend": true,
   "claudeCode.respectGitIgnore": false,
   "claudeCode.selectedModel": "default",
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.13",
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
   "json.schemaDownload.trustedDomains": {
     "https://schemastore.azurewebsites.net/": true,
     "https://raw.githubusercontent.com/": true,
