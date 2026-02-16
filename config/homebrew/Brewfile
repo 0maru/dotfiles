@@ -1,6 +1,7 @@
 cask_args appdir: "/Applications"
 
 tap "FelixKratz/formulae"
+tap "0maru/formulae"
 tap "nikitabobko/tap"
 
 # Language
@@ -32,6 +33,7 @@ brew "lazygit"
 brew "mas"
 brew "mise"
 brew "nvim"
+brew "ou"
 brew "ripgrep"
 brew "sd"
 brew "sheldon"
