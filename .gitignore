@@ -38,4 +38,7 @@ config/claude/*
 !config/claude/CLAUDE.md
 !config/claude/commands/
 !config/claude/settings.json
+
+# ou (Git worktree manager)
+.ou/
 plans/
