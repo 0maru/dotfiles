@@ -28,10 +28,13 @@ Based on the above context, execute the following steps:
    - Group changed files by purpose, tool, or feature
      - e.g. aerospace config changes, Claude config changes, zsh config changes should be separate commits
      - Related changes for the same purpose (e.g. multiple files for one tool) can be in a single commit
-   - For each commit:
-     - Write a concise Japanese commit message following the existing style
-     - Use a short title line, and add detail in the body if needed
-     - End with: `Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>`
+   - For each commit, write a comprehensive Japanese commit message:
+     - Analyze `git diff` thoroughly to understand what changed and why
+     - Title: concise summary (50文字以内), following existing style (e.g. "Brewfile に ou を追加", "aerospaceモニター設定を修正")
+     - Body (if the change is non-trivial):
+       - What was changed and why
+       - Key details from the diff (e.g. added/removed configs, changed values)
+       - Do NOT just repeat the title — add context that helps future readers
    - If all changes belong to a single logical unit, a single commit is fine
 3. **Push**: Push the branch to origin with `-u` flag
 4. **PR**: Create a pull request with `gh pr create`. The PR should:
