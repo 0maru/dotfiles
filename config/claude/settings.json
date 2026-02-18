@@ -3,7 +3,9 @@
   "env": {
     "DISABLE_COST_WARNINGS": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "ENABLE_TOOL_SEARCH": "1"
+    "ENABLE_TOOL_SEARCH": "1",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]"
   },
   "permissions": {
     "allow": [
@@ -25,7 +27,6 @@
     ],
     "defaultMode": "plan"
   },
-  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {},
   "enabledPlugins": {
