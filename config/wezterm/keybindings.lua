@@ -148,6 +148,12 @@ return {
       mods = 'SUPER',
       action = act.ActivateTab(8)
     },
+    -- [CMD + e] Tab Navigator (fuzzy tab switcher)
+    {
+      key = 'e',
+      mods = 'SUPER',
+      action = act.ShowTabNavigator
+    },
     -- [CTRL + L] Debug Overlay
     {
       key = 'L',
