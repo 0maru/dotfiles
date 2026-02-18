@@ -39,6 +39,9 @@ config/claude/*
 !config/claude/commands/
 !config/claude/settings.json
 
+# zsh local settings
+config/zsh/local.zsh
+
 # ou (Git worktree manager)
 .ou/
 plans/
