@@ -77,3 +77,6 @@ export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
 export PATH="$PATH:$HOME/workspaces/github.com/0maru/cwm"
 
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# Load local settings (not tracked by git)
+[[ -f "$ZDOTDIR/local.zsh" ]] && source "$ZDOTDIR/local.zsh"
