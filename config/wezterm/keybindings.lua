@@ -76,9 +76,9 @@ return {
       mods = 'LEADER',
       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }
     },
-    -- [CTRL + a, w] Select Next Pane
+    -- [CTRL + a, ;] Select Next Pane
     {
-      key = 'w',
+      key = ';',
       mods = 'LEADER',
       action = act.ActivatePaneDirection 'Next'
     },
