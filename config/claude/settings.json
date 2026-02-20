@@ -114,7 +114,7 @@
           },
           {
             "type": "command",
-            "command": "{ [ \"$TERM_PROGRAM\" = \"vscode\" ] || [ -n \"$VSCODE_PID\" ]; } && osascript -e 'display notification \"応答完了\" with title \"Claude Code\"' 2>/dev/null; true"
+            "command": "{ [ \"$TERM_PROGRAM\" = \"vscode\" ] || [ -n \"$VSCODE_PID\" ]; } && osascript -e \"display notification \\\"応答完了\\\" with title \\\"Claude Code\\\" subtitle \\\"$(basename \"$PWD\")\\\"\" 2>/dev/null; true"
           }
         ]
       }
