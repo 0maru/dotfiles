@@ -74,13 +74,20 @@ wezterm.on(
     local edge_foreground = background
     local title = tab_name(tab)
 
+    -- Claude Code の実行状態をタブに表示
+    local status_icon = ''
+    local claude_status = tab.active_pane.user_vars.claude_status or ''
+    if claude_status == 'running' then
+      status_icon = ' ' .. wezterm.nerdfonts.cod_loading
+    end
+
     return {
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
       { Text = SOLID_LEFT_ARROW },
       { Background = { Color = background } },
       { Foreground = { Color = foreground } },
-      { Text = ' ' .. (tab.tab_index + 1) .. ': ' .. title .. ' ' },
+      { Text = ' ' .. (tab.tab_index + 1) .. ': ' .. title .. status_icon .. ' ' },
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
       { Text = SOLID_RIGHT_ARROW },
