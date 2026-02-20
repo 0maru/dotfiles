@@ -1,5 +1,5 @@
 ---
-allowed-tools: WebFetch, WebSearch
+allowed-tools: Bash, Read, Glob, Grep, WebFetch, WebSearch
 description: Summarize URLs, files, or search results
 ---
 
@@ -10,7 +10,8 @@ Extract and summarize content from URLs, local files, or web search results.
 ## Arguments
 
 Parse the text after `/summarize`:
-- **URL** → fetch and summarize the web page
+- **GitHub Repository URL** (`https://github.com/{owner}/{repo}`) → `ghq get` してコードを直接調査
+- **URL** (GitHub リポジトリ以外) → fetch and summarize the web page
 - **File path** → read and summarize the local file
 - **Search query** (prefixed with `?`) → search the web first, then summarize top results
 - **No argument** → ask the user what to summarize
@@ -28,7 +29,19 @@ Default: medium-length summary in the same language as the source.
 
 ## Process
 
-### For URLs
+### For GitHub Repositories
+
+GitHub リポジトリ URL（`https://github.com/{owner}/{repo}`）の場合、WebFetch ではなく実際のコードを調査する。
+
+1. `ghq get {url}` でリポジトリを取得（既に取得済みならスキップされる）
+2. `ghq list -p -e {owner}/{repo}` でローカルの絶対パスを取得
+3. README.md を読んでプロジェクト概要を把握
+4. Glob でディレクトリ構造を確認
+5. 依存関係ファイル（package.json, Cargo.toml, go.mod, pubspec.yaml 等）を確認し技術スタックを把握
+6. Glob/Grep/Read で主要なソースコードを調査
+7. 結果をまとめて出力
+
+### For URLs (GitHub リポジトリ以外)
 
 1. Fetch the URL content using WebFetch
 2. Extract the main content (skip navigation, ads, footers)
