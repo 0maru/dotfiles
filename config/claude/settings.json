@@ -93,6 +93,26 @@
   },
   "enableAllProjectMcpServers": true,
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n running | base64)\" > /dev/tty 2>/dev/null; true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n idle | base64)\" > /dev/tty 2>/dev/null; true"
+          }
+        ]
+      }
+    ],
     "PermissionRequest": [
       {
         "matcher": "Bash",
