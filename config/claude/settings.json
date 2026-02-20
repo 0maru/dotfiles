@@ -28,7 +28,20 @@
     "defaultMode": "plan"
   },
   "enableAllProjectMcpServers": true,
-  "hooks": {},
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "You are a security evaluator for shell commands in a macOS/Linux development environment (dotfiles repository).\n\nA permission dialog is about to be shown to the user for this command. Evaluate whether it should be auto-approved or blocked.\n\n$ARGUMENTS\n\n## Classification Rules\n\n### SAFE (return {\"ok\": true}) - Auto-approve:\n- Read-only commands: cat, head, tail, less, file, wc, du, df, which, where, type, echo, printf, find, grep, rg, fd, tree, stat\n- Build/dev/test: make, pnpm run, pnpm dev, pnpm build, pnpm test, npm run, npm test, npx, cargo build, cargo test, cargo run, go build, go test, go run, flutter, dart, python, ruby, swift, javac, java, gradle, mvn\n- Package manager install: brew install, brew bundle, brew upgrade, pnpm install, pnpm add, npm install, npm ci, cargo add, go get, pip install, gem install\n- Editor/tool launch: code, cursor, nvim, vim, open\n- Symlink creation: ln -s, ln -sf\n- File creation: touch, mkdir, mkdir -p\n- File copy/move within project: cp, mv (when target is within project or home directory)\n- Development tools: ghq, lazygit, starship, sheldon, docker, docker-compose, kubectl\n- Shell utilities: sort, uniq, cut, tr, xargs, tee, diff, comm, join, paste, column, jq, yq, sed (read/transform), awk\n- Dotfiles setup: stow, chezmoi, mackup\n- chmod with reasonable permissions (644, 755, +x)\n\n### DANGEROUS (return {\"ok\": false, \"reason\": \"...\"}) - Block:\n- Broad destructive deletion: rm -rf /, rm -rf ~, rm -rf *, rm -rf /* (without specific safe target)\n- System modification: sudo with destructive commands, chmod 777, chown on system files\n- Data exfiltration: commands piping sensitive data to network (curl -X POST with file data, nc, netcat)\n- Disk operations: dd, mkfs, fdisk, diskutil eraseDisk\n- rm -rf on important directories without clear intent (e.g., rm -rf /usr, /etc, /System)\n\n### WHEN UNCERTAIN - err on the side of approval ({\"ok\": true}):\n- Since this command would otherwise require user confirmation anyway, it's better to auto-approve borderline cases\n- The user can always add explicit deny rules for commands they want blocked\n\nRespond with ONLY valid JSON. No explanation outside the JSON.",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": true,
