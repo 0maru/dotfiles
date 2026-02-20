@@ -15,7 +15,6 @@
       "Bash(cp:*)",
       "Bash(mv:*)",
       "Bash(ln:*)",
-      "Bash(rm:*)",
       "Bash(chmod:*)",
       "Bash(echo:*)",
       "Bash(which:*)",
