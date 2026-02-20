@@ -109,6 +109,10 @@
           {
             "type": "command",
             "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n idle | base64)\" > /dev/tty 2>/dev/null; true"
+          },
+          {
+            "type": "command",
+            "command": "{ [ \"$TERM_PROGRAM\" = \"vscode\" ] || [ -n \"$VSCODE_PID\" ]; } && osascript -e 'display notification \"応答完了\" with title \"Claude Code\"' 2>/dev/null; true"
           }
         ]
       }
