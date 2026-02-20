@@ -78,7 +78,9 @@
       "Read(~/.zshrc)",
       "Read(~/.claude/commands)",
       "Write(~/.claude/commands)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(* --version)",
+      "Bash(* --help *)"
     ],
     "deny": [
       "Read(.env)",
@@ -126,7 +128,8 @@
     "hookify@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true
+    "pr-review-toolkit@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
   "language": "japanese",
   "alwaysThinkingEnabled": true,
