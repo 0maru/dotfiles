@@ -75,12 +75,6 @@ local keys = {
       mods = 'LEADER',
       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }
     },
-    -- [CTRL + a, ;] Select Next Pane
-    {
-      key = ';',
-      mods = 'LEADER',
-      action = act.ActivatePaneDirection 'Next'
-    },
     -- [CTRL + w] Close Pane
     {
       key = 'w',
@@ -93,25 +87,25 @@ local keys = {
       mods = 'LEADER',
       action = act.TogglePaneZoomState
     },
-    -- [LEADER + h/j/k/l] Pane Direction Navigation
+    -- [CTRL + h/j/k/l] Pane Direction Navigation
     {
       key = 'h',
-      mods = 'LEADER',
+      mods = 'CTRL',
       action = act.ActivatePaneDirection 'Left'
     },
     {
       key = 'j',
-      mods = 'LEADER',
+      mods = 'CTRL',
       action = act.ActivatePaneDirection 'Down'
     },
     {
       key = 'k',
-      mods = 'LEADER',
+      mods = 'CTRL',
       action = act.ActivatePaneDirection 'Up'
     },
     {
       key = 'l',
-      mods = 'LEADER',
+      mods = 'CTRL',
       action = act.ActivatePaneDirection 'Right'
     },
     -- [LEADER + SHIFT + h/j/k/l] Pane Resize
