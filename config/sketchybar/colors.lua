@@ -92,6 +92,10 @@ return {
 	cmap_8 = 0xff38e6d7,
 	cmap_9 = 0xff0abfe8,
 	cmap_10 = 0xff2388f4,
+	cmap_11 = 0xff5f63f4,
+	cmap_12 = 0xff8e4ce6,
+	cmap_13 = 0xffbb42d6,
+	cmap_14 = 0xffde3fb0,
 
 	accent1 = 0xff00ffff,
 	accent2 = 0xff0DB9D7,
