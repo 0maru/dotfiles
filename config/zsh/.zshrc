@@ -67,7 +67,7 @@ function open_lazygit() {
   lazygit
 }
 zle -N open_lazygit
-bindkey '^l' open_lazygit
+bindkey '^o' open_lazygit
 
 alias d='docker'
 alias diclean='d image prune'

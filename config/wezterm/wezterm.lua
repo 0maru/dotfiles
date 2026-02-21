@@ -48,7 +48,7 @@ config.keys = require('keybindings').keys
 config.leader = {
   key = 'a',
   mods = 'CTRL',
-  timeout_milliseconds = 1000
+  timeout_milliseconds = 2000
 }
 
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle

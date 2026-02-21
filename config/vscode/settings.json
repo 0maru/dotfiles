@@ -163,7 +163,7 @@
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-collections-pre-request.instructions.md": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-folder-post-response.instructions.md": true,
     "/var/folders/kd/h9p1ntmx4jxc0h9kh_xzllfc0000gn/T/postman-folder-pre-request.instructions.md": true
-},
+  },
   "docker.extension.enableComposeLanguageServer": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "python.terminal.activateEnvironment": false,
