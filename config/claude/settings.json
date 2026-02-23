@@ -4,7 +4,7 @@
     "DISABLE_COST_WARNINGS": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "ENABLE_TOOL_SEARCH": "1",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6[1m]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5-20251001",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]"
   },
   "permissions": {
@@ -75,6 +75,26 @@
       "Bash(vim:*)",
       "Bash(sheldon:*)",
       "Bash(starship:*)",
+      "Bash(pod:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(fastlane:*)",
+      "Bash(tar:*)",
+      "Bash(zip:*)",
+      "Bash(unzip:*)",
+      "Bash(gzip:*)",
+      "Bash(gunzip:*)",
+      "Bash(fzf:*)",
+      "Bash(bat:*)",
+      "Bash(eza:*)",
+      "Bash(mise:*)",
+      "Bash(uv:*)",
+      "Bash(uvx:*)",
+      "Bash(biome:*)",
+      "Bash(prettier:*)",
+      "Bash(eslint:*)",
+      "Bash(ruff:*)",
+      "Bash(rustfmt:*)",
+      "Bash(gofmt:*)",
       "Read(~/.zshrc)",
       "Read(~/.claude/commands)",
       "Write(~/.claude/commands)",
@@ -88,10 +108,8 @@
       "Read(~/.aws/**)",
       "Read(~/.ssh/**)",
       "Read(~/.gnupg/**)",
-      "Bash(curl:*)",
       "Bash(sudo:*)"
-    ],
-    "defaultMode": "plan"
+    ]
   },
   "enableAllProjectMcpServers": true,
   "hooks": {
@@ -171,8 +189,10 @@
   "alwaysThinkingEnabled": true,
   "plansDirectory": "./plans",
   "theme": "dark-colorblind",
-  "notifications": false,
+  "notifications": true,
   "autoCompact": true,
+  "cleanupPeriodDays": 30,
+  "showTurnDuration": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
   }
