@@ -37,6 +37,7 @@ settings.local.json
 config/claude/*
 !config/claude/CLAUDE.md
 !config/claude/commands/
+!config/claude/hooks/
 !config/claude/settings.json
 
 # zsh local settings
