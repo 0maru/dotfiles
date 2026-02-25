@@ -175,5 +175,6 @@
   "autoCompact": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  }
+  },
+  "model": "opus[1m]"
 }
