@@ -1,5 +1,4 @@
 ---
-allowed-tools: Bash(ls:*)
 description: Create a new Claude Code custom command (.md file)
 ---
 
@@ -9,7 +8,6 @@ Guide for creating effective Claude Code custom commands. Commands are markdown 
 
 ## Context
 
-- Existing project commands: !`ls ~/.claude/commands/ 2>/dev/null; echo "---"; ls .claude/commands/ 2>/dev/null`
 - User commands dir: `~/.claude/commands/`
 - Project commands dir: `.claude/commands/`
 
