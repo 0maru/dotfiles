@@ -39,6 +39,7 @@ config/claude/*
 !config/claude/commands/
 !config/claude/hooks/
 !config/claude/settings.json
+!config/claude/statusline.sh
 
 # zsh local settings
 config/zsh/local.zsh

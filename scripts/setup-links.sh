@@ -23,6 +23,7 @@ ln -sfv "$XDG_CONFIG_HOME/vscode/settings.json" "$HOME/Library/Application Suppo
 # Claude Code
 ln -sfv "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sfv "$XDG_CONFIG_HOME/claude/settings.json" "$HOME/.claude/settings.json"
+ln -sfv "$XDG_CONFIG_HOME/claude/statusline.sh" "$HOME/.claude/statusline.sh"
 mkdir -p "$HOME/.claude/commands" "$HOME/.claude/hooks"
-ln -sfv "$XDG_CONFIG_HOME/claude/commands/"* "$HOME/.claude/commands/"
-ln -sfv "$XDG_CONFIG_HOME/claude/hooks/"* "$HOME/.claude/hooks/"
+ln -sfv "$XDG_CONFIG_HOME/claude/commands"* "$HOME/.claude/commands"
+ln -sfv "$XDG_CONFIG_HOME/claude/hooks"* "$HOME/.claude/hooks"
