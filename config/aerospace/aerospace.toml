@@ -81,25 +81,25 @@ on-mode-changed = []
 
 [workspace-to-monitor-force-assignment]
     # メインモニター: 文字入力系（開発）
-    1 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    2 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    3 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    4 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    5 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    6 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    7 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    8 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    9 = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']
-    E = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']   # Editor (VS Code)
-    S = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', '1']   # Slack
+    1 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    2 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    3 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    4 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    5 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    6 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    7 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    8 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    9 = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']
+    E = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']   # Editor (VS Code)
+    S = ['EV2750', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', '1']   # Slack
 
     # サブモニター: 調べ物・参照系
-    A = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', '2']
-    B = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', '2']  # Browser (Arc/Chrome)
-    C = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', '2']
-    D = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', '2']
-    F = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', '2']
-    G = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', '2']
+    A = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'T27h-30', '2']
+    B = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'T27h-30', '2']  # Browser (Arc/Chrome)
+    C = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'T27h-30', '2']
+    D = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'T27h-30', '2']
+    F = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'T27h-30', '2']
+    G = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'T27h-30', '2']
 
     # iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
     T = ['KA270H', 'Sidecar Display', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Terminal (WezTerm)
