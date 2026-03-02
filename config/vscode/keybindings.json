@@ -65,5 +65,40 @@
     "key": "shift+cmd+;",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "terminalFocus"
+  },
+  {
+    // [Ctrl+H] 左のエディタグループにフォーカス
+    "key": "ctrl+h",
+    "command": "workbench.action.focusLeftGroup"
+  },
+  {
+    // [Ctrl+J] 下のエディタグループにフォーカス
+    "key": "ctrl+j",
+    "command": "workbench.action.focusBelowGroup"
+  },
+  {
+    // [Ctrl+K] 上のエディタグループにフォーカス
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup"
+  },
+  {
+    // [Ctrl+L] 右のエディタグループにフォーカス
+    "key": "ctrl+l",
+    "command": "workbench.action.focusRightGroup"
+  },
+  {
+    // デフォルトの検索と置換を無効化
+    "key": "ctrl+h",
+    "command": "-editor.action.startFindReplaceAction"
+  },
+  {
+    // デフォルトのパネル切り替えを無効化
+    "key": "ctrl+j",
+    "command": "-workbench.action.togglePanel"
+  },
+  {
+    // デフォルトの行選択を無効化
+    "key": "ctrl+l",
+    "command": "-expandLineSelection"
   }
 ]
