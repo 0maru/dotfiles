@@ -93,11 +93,8 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  },
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -148,6 +145,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": true,
@@ -169,7 +170,9 @@
     "slack@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true,
+    "agent-skills@0maru-private-agent-skills": true
   },
   "language": "japanese",
   "alwaysThinkingEnabled": true,
@@ -179,6 +182,5 @@
   "autoCompact": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  },
-  "model": "opus[1m]"
+  }
 }
