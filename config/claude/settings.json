@@ -80,7 +80,13 @@
       "Write(~/.claude/commands)",
       "WebFetch(domain:github.com)",
       "Bash(* --version)",
-      "Bash(* --help *)"
+      "Bash(* --help *)",
+      "Read(//Users/4maru/.claude/hooks/**)",
+      "Bash(op read \"op://torico/torico-blog-prod/server\")",
+      "Bash(lsof -ti:13306)",
+      "Read(//Users/4maru/.claude/**)",
+      "Edit(/Users/4maru/workspaces/**)",
+      "Write(/Users/4maru/workspaces/**)"
     ],
     "deny": [
       "Read(.env)",
