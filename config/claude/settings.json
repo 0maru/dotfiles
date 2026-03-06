@@ -86,7 +86,17 @@
       "Bash(lsof -ti:13306)",
       "Read(//Users/4maru/.claude/**)",
       "Edit(/Users/4maru/workspaces/**)",
-      "Write(/Users/4maru/workspaces/**)"
+      "Write(/Users/4maru/workspaces/**)",
+      "mcp__claude_ai_Atlassian__atlassianUserInfo",
+      "WebFetch(domain:fonts.google.com)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__take_snapshot",
+      "Bash(GIT_EDITOR=\"true\" git rebase --continue)",
+      "Skill(commit-push-pr)",
+      "Skill(commit-push-pr:*)"
     ],
     "deny": [
       "Read(.env)",
@@ -178,7 +188,8 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "example-skills@anthropic-agent-skills": true,
-    "agent-skills@0maru-private-agent-skills": true
+    "agent-skills@0maru-private-agent-skills": true,
+    "superpowers@claude-plugins-official": true
   },
   "language": "japanese",
   "alwaysThinkingEnabled": true,
@@ -188,5 +199,6 @@
   "autoCompact": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
-  }
+  },
+  "effortLevel": "high"
 }
