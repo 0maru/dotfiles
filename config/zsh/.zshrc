@@ -1,7 +1,5 @@
 source "$ZDOTDIR/nonlazy.zsh"
 
-# brew でインストールしたsheldon を使いたいので先にbrew を有効化する
-eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 eval "$(sheldon source)"
 eval "$(mise activate zsh)"
