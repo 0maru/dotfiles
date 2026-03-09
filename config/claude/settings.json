@@ -203,7 +203,8 @@
       "git commit",
       "Read",
       "Edit",
-      "Write"
+      "Write",
+      "Update"
     ]
   },
   "alwaysThinkingEnabled": true,
