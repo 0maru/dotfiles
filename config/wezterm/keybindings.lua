@@ -159,9 +159,9 @@ local keys = {
       key = 'g',
       mods = 'LEADER',
       action = act.Multiple({
-        act.SplitHorizontal { domain = 'CurrentPaneDomain', size = 0.67 },
-        act.SplitHorizontal { domain = 'CurrentPaneDomain', size = 0.5 },
-        act.SplitVertical { domain = 'CurrentPaneDomain' },
+        act.SplitPane { direction = 'Right', size = { Percent = 67 } },
+        act.SplitPane { direction = 'Right', size = { Percent = 50 } },
+        act.SplitPane { direction = 'Down' },
         act.ActivatePaneDirection 'Left',
         act.ActivatePaneDirection 'Left',
       }),
