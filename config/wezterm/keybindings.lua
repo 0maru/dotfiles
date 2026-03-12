@@ -158,13 +158,12 @@ local keys = {
     {
       key = 'g',
       mods = 'LEADER',
-      action = act.Multiple({
-        act.SplitPane { direction = 'Right', size = { Percent = 67 } },
-        act.SplitPane { direction = 'Right', size = { Percent = 50 } },
-        act.SplitPane { direction = 'Down' },
-        act.ActivatePaneDirection 'Left',
-        act.ActivatePaneDirection 'Left',
-      }),
+      action = wezterm.action_callback(function(window, pane)
+        local right_pane = pane:split { direction = 'Right', size = 0.67 }
+        local mid_pane = right_pane:split { direction = 'Right', size = 0.5 }
+        mid_pane:split { direction = 'Bottom' }
+        pane:activate()
+      end),
     },
 }
 
