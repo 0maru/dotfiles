@@ -154,16 +154,18 @@ local keys = {
       mods="SHIFT",
       action=wezterm.action{SendString="\x1b\r"}
     },
-    -- [LEADER + g] Grid layout (3 columns, right split)
+    -- [LEADER + g] Grid layout (3 columns, left split)
     {
       key = 'g',
       mods = 'LEADER',
       action = act.Multiple({
         act.SplitHorizontal { domain = 'CurrentPaneDomain', size = 0.67 },
         act.SplitHorizontal { domain = 'CurrentPaneDomain', size = 0.5 },
+        act.ActivatePaneDirection 'Left',
+        act.ActivatePaneDirection 'Left',
         act.SplitVertical { domain = 'CurrentPaneDomain' },
-        act.ActivatePaneDirection 'Left',
-        act.ActivatePaneDirection 'Left',
+        act.ActivatePaneDirection 'Right',
+        act.ActivatePaneDirection 'Right',
       }),
     },
 }

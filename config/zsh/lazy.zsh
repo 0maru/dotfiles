@@ -46,4 +46,4 @@ alias globalip='curl -s https://inet-ip.info'
 alias dredis='docker run -d --rm -p 6379:6379 redis:latest'
 
 # wezterm pane layout
-alias 4pane='wezterm cli split-pane --right --percent 67 && wezterm cli split-pane --right --percent 50 && wezterm cli split-pane --bottom && wezterm cli activate-pane-direction Left && wezterm cli activate-pane-direction Left'
+alias 4pane='wezterm cli split-pane --right --percent 67 && wezterm cli split-pane --right --percent 50 && wezterm cli activate-pane-direction Left && wezterm cli activate-pane-direction Left && wezterm cli split-pane --bottom && wezterm cli activate-pane-direction Right && wezterm cli activate-pane-direction Right'
