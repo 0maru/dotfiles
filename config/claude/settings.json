@@ -102,7 +102,7 @@
       "Bash(curl:*)",
       "Bash(sudo:*)"
     ],
-    "defaultMode": "plan"
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
@@ -208,12 +208,14 @@
     ]
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
   "plansDirectory": "./plans",
+  "skipDangerousModePermissionPrompt": true,
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754058283709
   },
-  "effortLevel": "high"
+  "skipAutoPermissionPrompt": true
 }
