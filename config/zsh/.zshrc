@@ -1,5 +1,6 @@
 source "$ZDOTDIR/nonlazy.zsh"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 eval "$(sheldon source)"
 eval "$(mise activate zsh)"
