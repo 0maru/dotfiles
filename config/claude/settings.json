@@ -37,7 +37,7 @@
       "Bash(curl *)",
       "Bash(sudo *)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "plan"
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
