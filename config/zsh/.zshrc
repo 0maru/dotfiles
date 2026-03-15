@@ -70,7 +70,7 @@ bindkey '^o' open_lazygit
 
 # claude
 function run_claude() {
-  BUFFER="claude --permissions auto"
+  BUFFER="claude ----permission-mode auto"
   zle accept-line
 }
 zle -N run_claude
