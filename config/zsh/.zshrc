@@ -74,14 +74,14 @@ function run_claude() {
   zle accept-line
 }
 zle -N run_claude
-bindkey '\ec' run_claude
+bindkey 'c;' run_claude
 
 function run_claude_danger() {
   BUFFER="claude --dangerously-skip-permissions"
   zle accept-line
 }
 zle -N run_claude_danger
-bindkey '\eC' run_claude_danger
+bindkey 'c;d' run_claude_danger
 
 alias d='docker'
 alias diclean='d image prune'
