@@ -68,6 +68,21 @@ function open_lazygit() {
 zle -N open_lazygit
 bindkey '^o' open_lazygit
 
+# claude
+function run_claude() {
+  BUFFER="claude"
+  zle accept-line
+}
+zle -N run_claude
+bindkey '\ec' run_claude
+
+function run_claude_danger() {
+  BUFFER="claude --dangerously-skip-permissions"
+  zle accept-line
+}
+zle -N run_claude_danger
+bindkey '\eC' run_claude_danger
+
 alias d='docker'
 alias diclean='d image prune'
 alias dcclean='d container prune'
