@@ -141,7 +141,13 @@
     },
     "excludedCommands": [
       "git",
-      "gh"
+      "gh",
+      "ou",
+      "dart",
+      "flutter",
+      "cargo",
+      "go",
+      "swift"
     ]
   },
   "alwaysThinkingEnabled": true,
