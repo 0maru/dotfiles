@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(ou add:*), Bash(ou list:*), Bash(cd:*), mcp__claude_ai_Atlassian__getJiraIssue, AskUserQuestion, EnterPlanMode
+allowed-tools: Bash(ou add:*), Bash(ou list:*), Bash(cd:*), mcp__claude_ai_Atlassian__getJiraIssue, AskUserQuestion, Skill
 description: Jiraチケットからworktreeを作成し、実装計画を立てる
 arguments:
   - name: ticket_id
@@ -44,9 +44,7 @@ ou add {確定したブランチ名}
 
 作成後、`ou list` でworktreeのパスを確認し、そのディレクトリに移動してください。
 
-### 4. 実装計画の作成
+### 4. 設計・実装計画の作成
 
-EnterPlanMode で plan mode に入り、Jiraチケットの要件に基づいて:
-- コードベースを探索して影響範囲を特定
-- 具体的な実装ステップを設計
-- 計画をユーザーに提示して確認を取る
+superpowers:brainstorming スキルを使用して、Jiraチケットの要件に基づいて設計・計画を作成する。
+brainstorming スキルが完了したら、自動的に writing-plans → 実装フローへ移行する。
