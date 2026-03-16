@@ -27,4 +27,4 @@ ln -sfv "$XDG_CONFIG_HOME/claude/statusline.sh" "$HOME/.claude/statusline.sh"
 mkdir -p "$HOME/.claude/commands" "$HOME/.claude/hooks" "$HOME/.claude/skills"
 ln -sfv "$XDG_CONFIG_HOME/claude/commands"* "$HOME/.claude/commands"
 ln -sfv "$XDG_CONFIG_HOME/claude/hooks"* "$HOME/.claude/hooks"
-ln -sfv "$XDG_CONFIG_HOME/claude/skills/"* "$HOME/.claude/skills/" 2>/dev/null
+ln -sfv "$XDG_CONFIG_HOME/claude/skills"* "$HOME/.claude/skills"
