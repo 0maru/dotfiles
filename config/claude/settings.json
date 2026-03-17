@@ -135,13 +135,29 @@
   },
   "language": "japanese",
   "sandbox": {
+    "enabled": true,
     "network": {
       "allowUnixSockets": [
         "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      ],
+      "allowedDomains": [
+        "github.com",
+        "*.githubusercontent.com",
+        "*.npmjs.org",
+        "registry.npmjs.org",
+        "nodejs.org",
+        "pypi.org",
+        "*.pypi.org",
+        "files.pythonhosted.org",
+        "astral.sh",
+        "djangoproject.com",
+        "*.docker.io",
+        "*.docker.com"
       ]
     },
     "filesystem": {
-      "allowWrite": ["//tmp/build", "~/workspaces"]
+      "allowWrite": ["//tmp/build", "~/workspaces"],
+      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"]
     },
     "excludedCommands": [
       "git",
@@ -152,7 +168,7 @@
       "cargo",
       "go",
       "swift",
-      "docker",
+      "docker"
     ]
   },
   "alwaysThinkingEnabled": true,
