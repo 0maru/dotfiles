@@ -87,3 +87,18 @@ CLAUDE.md 作成時は以下の要素を含める：
 ## プロジェクト概要
 ...
 ```
+
+## Superpowers ワークフロー設定
+
+### Worktree
+- worktree の作成には `ou add {branch-name}` を使用する（`git worktree add` ではなく）
+- worktree ディレクトリ: `.worktrees/` を使用
+
+### コミット・PR
+- コミットメッセージは日本語
+- PR のタイトル・本文も日本語
+- コミット・プッシュ・PR作成は /commit-push-pr コマンドを使用する（superpowers:finishing-a-development-branch ではなく）
+
+### 計画・設計ドキュメント
+- 実装計画: プロジェクトの `plans/` ディレクトリに保存
+- 設計ドキュメント: プロジェクトの `docs/specs/` ディレクトリに保存（superpowers のデフォルトパス `docs/superpowers/` は使用しない）

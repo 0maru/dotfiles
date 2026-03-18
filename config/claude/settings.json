@@ -6,7 +6,8 @@
     "ENABLE_TOOL_SEARCH": "1",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6[1m]",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]",
-    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "high"
   },
   "permissions": {
     "allow": [
@@ -37,7 +38,7 @@
       "Bash(curl *)",
       "Bash(sudo *)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "plan"
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
@@ -135,17 +136,44 @@
   },
   "language": "japanese",
   "sandbox": {
+    "enabled": true,
     "network": {
       "allowUnixSockets": [
         "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      ],
+      "allowedDomains": [
+        "github.com",
+        "*.githubusercontent.com",
+        "*.npmjs.org",
+        "registry.npmjs.org",
+        "nodejs.org",
+        "pypi.org",
+        "*.pypi.org",
+        "files.pythonhosted.org",
+        "astral.sh",
+        "djangoproject.com",
+        "*.docker.io",
+        "*.docker.com"
       ]
+    },
+    "filesystem": {
+      "allowWrite": ["//tmp/build", "~/workspaces"],
+      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"]
     },
     "excludedCommands": [
       "git",
-      "gh"
+      "gh",
+      "ou",
+      "dart",
+      "flutter",
+      "cargo",
+      "go",
+      "swift",
+      "docker"
     ]
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
   "plansDirectory": "./plans",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
