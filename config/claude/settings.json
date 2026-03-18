@@ -162,7 +162,9 @@
     },
     "excludedCommands": [
       "git",
+      "git *",
       "gh",
+      "gh *",
       "ou",
       "dart",
       "flutter",
@@ -173,7 +175,6 @@
     ]
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
   "plansDirectory": "./plans",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
