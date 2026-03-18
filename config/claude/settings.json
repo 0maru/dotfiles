@@ -122,7 +122,8 @@
     "superpowers@claude-plugins-official": true,
     "torico-agent-skills@0maru-private-agent-skills": true,
     "huggingface-skills@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
@@ -151,5 +152,6 @@
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
-  "showTurnDuration": true
+  "showTurnDuration": true,
+  "effortLevel": "high"
 }
