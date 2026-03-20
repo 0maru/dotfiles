@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(aerospace *)",
+      "mcp__serena",
+      "mcp__github"
+    ],
+    "deny": []
+  },
+  "model": "opus[1m]",
+  "sandbox": {
+    "enabled": false
+  }
+}
