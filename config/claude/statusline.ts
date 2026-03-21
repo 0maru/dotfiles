@@ -6,6 +6,14 @@ const DIM = "\x1b[2m";
 const CYAN = "\x1b[38;2;86;182;194m";
 const RED = "\x1b[38;2;255;85;85m";
 const SEP = ` ${DIM}│${R} `;
+const OSC_LINK = (url: string, text: string) => `\x1b]8;;${url}\x1b\\${text}\x1b]8;;\x1b\\`;
+
+const NF_MODEL = "\uf427";
+const NF_CLOCK = "\uf43a";
+const NF_IN = "\uf433";
+const NF_OUT = "\uf431";
+const NF_FOLDER = "\uf4d4";
+const NF_BRANCH = "\uf418";
 
 function gradient(pct: number): string {
   if (pct < 50) {
@@ -48,7 +56,7 @@ function formatTokens(n: number): string {
 
 // ── Line 1: model, context, rate limits ──
 const model = data?.model?.display_name ?? "Claude";
-const parts: string[] = [model];
+const parts: string[] = [`${NF_MODEL} ${model}`];
 
 const ctx = data?.context_window?.used_percentage ?? 0;
 parts.push(fmt("ctx", ctx));
@@ -67,7 +75,7 @@ const outTokens = data?.context_window?.total_output_tokens ?? 0;
 const durationMs = data?.cost?.total_api_duration_ms ?? 0;
 const latency = (durationMs / 1000).toFixed(1);
 
-const line2 = `${formatTokens(inTokens)}/${formatTokens(outTokens)} tokens${SEP}${latency}s`;
+const line2 = `${NF_IN} ${formatTokens(inTokens)}${SEP}${NF_OUT} ${formatTokens(outTokens)}${SEP}${NF_CLOCK} ${latency}s`;
 
 // ── Line 3: directory, git branch ──
 const cwd: string = data?.cwd ?? "";
@@ -79,9 +87,14 @@ const dir = cwd.startsWith(ghPrefix)
     ? "~" + cwd.slice(home.length)
     : cwd;
 
+const ghMatch = cwd.startsWith(ghPrefix) ? dir.match(/^([^/]+\/[^/]+)/) : null;
+const ghRepo = ghMatch ? ghMatch[1] : null;
+const ghBase = ghRepo ? `https://github.com/${ghRepo}` : null;
+
 const lastSlash = dir.lastIndexOf("/");
-const dirDisplay =
+const dirRaw =
   lastSlash >= 0 ? `${DIM}${dir.slice(0, lastSlash + 1)}${R}${dir.slice(lastSlash + 1)}` : dir;
+const dirDisplay = ghBase ? OSC_LINK(ghBase, dirRaw) : dirRaw;
 
 let gitInfo = "";
 if (cwd) {
@@ -108,13 +121,15 @@ if (cwd) {
       } catch {
         /* ignore */
       }
-      gitInfo = `${DIM} (${R}${CYAN}${branch}${dirty}${R}${DIM})${R}`;
+      const branchText = `${CYAN}${branch}${dirty}${R}`;
+      const branchDisplay = ghBase ? OSC_LINK(`${ghBase}/tree/${branch}`, branchText) : branchText;
+      gitInfo = ` ${DIM}${NF_BRANCH} ${R}${branchDisplay}`;
     }
   } catch {
     /* git not available */
   }
 }
 
-const line3 = `${dirDisplay}${gitInfo}`;
+const line3 = `${NF_FOLDER} ${dirDisplay}${gitInfo}`;
 
 Deno.stdout.writeSync(new TextEncoder().encode(`${line1}\n${line2}\n${line3}`));
