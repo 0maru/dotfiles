@@ -11,6 +11,7 @@ config.use_ime = true
 config.color_scheme = 'GitHub Dark'
 config.font = wezterm.font_with_fallback {
   { family = "Berkeley Mono", weight = "Regular", stretch = "Normal", style = "Normal"},
+  { family = "Hack Nerd Font", weight = "Regular", stretch = "Normal", style = "Normal"},
   { family = "Zen Kaku Gothic New", weight = "Regular", stretch = "Normal", style = "Normal"}
 }
 config.font_size = 12.0

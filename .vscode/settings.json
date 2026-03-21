@@ -22,5 +22,6 @@
     "**/*.log": true,
     "**/*.tmp": true,
     "**/*.temp": true
-  }
+  },
+  "deno.enable": true
 }
