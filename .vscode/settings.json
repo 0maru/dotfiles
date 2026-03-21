@@ -1,7 +1,7 @@
 {
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#0055ff",  // タイトルバーの背景色
-    "titleBar.activeForeground": "#D8DEE9",  // タイトルバーのテキスト色
+    "titleBar.activeBackground": "#0055ff", // タイトルバーの背景色
+    "titleBar.activeForeground": "#D8DEE9" // タイトルバーのテキスト色
   },
   "files.exclude": {
     "**/.classpath": true,
@@ -21,6 +21,7 @@
     "**/.localized": true,
     "**/*.log": true,
     "**/*.tmp": true,
-    "**/*.temp": true,
-  }
+    "**/*.temp": true
+  },
+  "deno.enable": true
 }

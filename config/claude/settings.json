@@ -94,7 +94,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.sh"
+    "command": "deno run --allow-run=git ~/.claude/statusline.ts"
   },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
@@ -119,12 +119,34 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "example-skills@anthropic-agent-skills": true,
-    "agent-skills@0maru-private-agent-skills": true,
     "superpowers@claude-plugins-official": true,
     "torico-agent-skills@0maru-private-agent-skills": true,
     "huggingface-skills@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "telegram@claude-plugins-official": true,
+    "agent-skills@0maru-private-agent-skills": true,
+    "stripe@claude-plugins-official": true,
+    "firebase@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "greptile@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "learning-output-style@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "csharp-lsp@claude-plugins-official": true,
+    "coderabbit@claude-plugins-official": true,
+    "firecrawl@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "semgrep@claude-plugins-official": true,
+    "circleback@claude-plugins-official": true,
+    "qodo-skills@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
@@ -138,9 +160,6 @@
   "sandbox": {
     "enabled": true,
     "network": {
-      "allowUnixSockets": [
-        "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-      ],
       "allowedDomains": [
         "github.com",
         "*.githubusercontent.com",
@@ -154,25 +173,14 @@
         "djangoproject.com",
         "*.docker.io",
         "*.docker.com"
-      ]
+      ],
+      "allowUnixSockets": ["~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"]
     },
     "filesystem": {
       "allowWrite": ["//tmp/build", "~/workspaces"],
       "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"]
     },
-    "excludedCommands": [
-      "git",
-      "git *",
-      "gh",
-      "gh *",
-      "ou",
-      "dart",
-      "flutter",
-      "cargo",
-      "go",
-      "swift",
-      "docker"
-    ]
+    "excludedCommands": ["git *", "gh *", "ou *", "docker *"]
   },
   "alwaysThinkingEnabled": true,
   "plansDirectory": "./plans",
@@ -181,6 +189,5 @@
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
-  "showTurnDuration": true,
-  "effortLevel": "high"
+  "showTurnDuration": true
 }
