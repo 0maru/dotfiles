@@ -80,9 +80,10 @@ const dir = cwd.startsWith(ghPrefix)
 		: cwd;
 
 const lastSlash = dir.lastIndexOf("/");
-const dirDisplay = lastSlash >= 0
-	? `${DIM}${dir.slice(0, lastSlash + 1)}${R}${dir.slice(lastSlash + 1)}`
-	: dir;
+const dirDisplay =
+	lastSlash >= 0
+		? `${DIM}${dir.slice(0, lastSlash + 1)}${R}${dir.slice(lastSlash + 1)}`
+		: dir;
 
 let gitInfo = "";
 if (cwd) {
@@ -106,10 +107,14 @@ if (cwd) {
 				if (sOut.success && new TextDecoder().decode(sOut.stdout).trim()) {
 					dirty = `${RED}*${R}`;
 				}
-			} catch { /* ignore */ }
+			} catch {
+				/* ignore */
+			}
 			gitInfo = `${DIM} (${R}${CYAN}${branch}${dirty}${R}${DIM})${R}`;
 		}
-	} catch { /* git not available */ }
+	} catch {
+		/* git not available */
+	}
 }
 
 const line3 = `${dirDisplay}${gitInfo}`;
