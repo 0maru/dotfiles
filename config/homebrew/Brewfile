@@ -73,6 +73,7 @@ cask "wezterm@nightly"
 cask "zoom"
 
 # Fonts
+cask "font-hack-nerd-font"
 cask "font-zen-kaku-gothic-new"
 
 mas "Messenger", id: 1480068668
