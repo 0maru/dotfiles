@@ -183,7 +183,6 @@
     "excludedCommands": ["git *", "gh *", "ou *", "docker *"]
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
   "plansDirectory": "./plans",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
