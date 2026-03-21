@@ -132,7 +132,7 @@
   "cursor.cpp.disabledLanguages": ["plaintext"],
   "update.releaseTrack": "prerelease",
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "explorer.compactFolders": false,
   "explorer.autoOpenDroppedFile": false,
