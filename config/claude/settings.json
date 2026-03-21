@@ -1,196 +1,194 @@
 {
-	"$schema": "https://json.schemastore.org/claude-code-settings.json",
-	"env": {
-		"DISABLE_COST_WARNINGS": "0",
-		"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-		"ENABLE_TOOL_SEARCH": "1",
-		"ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6[1m]",
-		"ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]",
-		"CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
-		"CLAUDE_CODE_EFFORT_LEVEL": "high"
-	},
-	"permissions": {
-		"allow": [
-			"Bash(git *)",
-			"Bash(gh *)",
-			"Bash(* --version)",
-			"Bash(* --help *)",
-			"Read(~/.zshrc)",
-			"Read(~/.claude/commands)",
-			"Write(~/.claude/commands)",
-			"WebFetch(domain:github.com)",
-			"mcp__github",
-			"mcp__claude_ai_Gmail",
-			"mcp__claude_ai_Atlassian",
-			"mcp__claude_ai_Sentry",
-			"mcp__claude_ai_Context7",
-			"mcp__claude_ai_Figma",
-			"mcp__claude_ai_Slack",
-			"mcp__plugin_context7_context7",
-			"mcp__plugin_serena_serena"
-		],
-		"deny": [
-			"Read(.env)",
-			"Read(./.env.*)",
-			"Read(~/.aws/**)",
-			"Read(~/.ssh/**)",
-			"Read(~/.gnupg/**)",
-			"Bash(curl *)",
-			"Bash(sudo *)"
-		],
-		"defaultMode": "plan"
-	},
-	"model": "opus[1m]",
-	"enableAllProjectMcpServers": true,
-	"hooks": {
-		"UserPromptSubmit": [
-			{
-				"hooks": [
-					{
-						"type": "command",
-						"command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n running | base64)\" > /dev/tty 2>/dev/null; true"
-					}
-				]
-			}
-		],
-		"Stop": [
-			{
-				"hooks": [
-					{
-						"type": "command",
-						"command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n idle | base64)\" > /dev/tty 2>/dev/null; true"
-					},
-					{
-						"type": "command",
-						"command": "{ [ \"$TERM_PROGRAM\" = \"vscode\" ] || [ -n \"$VSCODE_PID\" ]; } && osascript -e \"display notification \\\"応答完了\\\" with title \\\"Claude Code\\\" subtitle \\\"$(basename \"$PWD\")\\\"\" 2>/dev/null; true"
-					}
-				]
-			}
-		],
-		"PostToolUse": [
-			{
-				"matcher": "Edit|Write",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "~/.claude/hooks/post-edit-format.sh",
-						"timeout": 10
-					}
-				]
-			}
-		],
-		"PermissionRequest": [
-			{
-				"matcher": "Bash",
-				"hooks": [
-					{
-						"type": "prompt",
-						"prompt": "You are a security evaluator for shell commands in a macOS/Linux development environment.\n\nA permission dialog is about to be shown to the user for this command. Evaluate whether it should be auto-approved or blocked.\n\n$ARGUMENTS\n\n## Classification Rules\n\n### SAFE (return {\"ok\": true}) - Auto-approve:\n- Read-only commands: cat, head, tail, less, file, wc, du, df, which, where, type, echo, printf, find, grep, rg, fd, tree, stat\n- Build/dev/test: make, pnpm run, pnpm dev, pnpm build, pnpm test, npm run, npm test, npx, cargo build, cargo test, cargo run, go build, go test, go run, flutter, dart, python, ruby, swift, javac, java, gradle, mvn\n- Package manager install: brew install, brew bundle, brew upgrade, pnpm install, pnpm add, npm install, npm ci, cargo add, go get, pip install, gem install\n- Editor/tool launch: code, cursor, nvim, vim, open\n- Symlink creation: ln -s, ln -sf\n- File creation: touch, mkdir, mkdir -p\n- File copy/move within project: cp, mv (when target is within project or home directory)\n- Development tools: ghq, lazygit, starship, sheldon, docker, docker-compose, kubectl\n- Shell utilities: sort, uniq, cut, tr, xargs, tee, diff, comm, join, paste, column, jq, yq, sed (read/transform), awk\n- Dotfiles setup: stow, chezmoi, mackup\n- chmod with reasonable permissions (644, 755, +x)\n\n### DANGEROUS (return {\"ok\": false, \"reason\": \"...\"}) - Block:\n- Broad destructive deletion: rm -rf /, rm -rf ~, rm -rf *, rm -rf /* (without specific safe target)\n- System modification: sudo with destructive commands, chmod 777, chown on system files\n- Data exfiltration: commands piping sensitive data to network (curl -X POST with file data, nc, netcat)\n- Disk operations: dd, mkfs, fdisk, diskutil eraseDisk\n- rm -rf on important directories without clear intent (e.g., rm -rf /usr, /etc, /System)\n\n### WHEN UNCERTAIN - err on the side of approval ({\"ok\": true}):\n- Since this command would otherwise require user confirmation anyway, it's better to auto-approve borderline cases\n- The user can always add explicit deny rules for commands they want blocked\n\nRespond with ONLY valid JSON. No explanation outside the JSON.",
-						"timeout": 15
-					}
-				]
-			}
-		]
-	},
-	"statusLine": {
-		"type": "command",
-		"command": "deno run --allow-run=git ~/.claude/statusline.ts"
-	},
-	"enabledPlugins": {
-		"context7@claude-plugins-official": true,
-		"github@claude-plugins-official": true,
-		"feature-dev@claude-plugins-official": true,
-		"code-review@claude-plugins-official": true,
-		"security-guidance@claude-plugins-official": true,
-		"atlassian@claude-plugins-official": true,
-		"playwright@claude-plugins-official": true,
-		"agent-sdk-dev@claude-plugins-official": true,
-		"sentry@claude-plugins-official": true,
-		"code-simplifier@claude-plugins-official": true,
-		"typescript-lsp@claude-plugins-official": true,
-		"frontend-design@claude-plugins-official": true,
-		"serena@claude-plugins-official": true,
-		"pyright-lsp@claude-plugins-official": true,
-		"plugin-dev@claude-plugins-official": true,
-		"linear@claude-plugins-official": true,
-		"hookify@claude-plugins-official": true,
-		"slack@claude-plugins-official": true,
-		"commit-commands@claude-plugins-official": true,
-		"pr-review-toolkit@claude-plugins-official": true,
-		"rust-analyzer-lsp@claude-plugins-official": true,
-		"example-skills@anthropic-agent-skills": true,
-		"superpowers@claude-plugins-official": true,
-		"torico-agent-skills@0maru-private-agent-skills": true,
-		"huggingface-skills@claude-plugins-official": true,
-		"swift-lsp@claude-plugins-official": true,
-		"clangd-lsp@claude-plugins-official": true,
-		"telegram@claude-plugins-official": true,
-		"agent-skills@0maru-private-agent-skills": true,
-		"stripe@claude-plugins-official": true,
-		"firebase@claude-plugins-official": true,
-		"claude-md-management@claude-plugins-official": true,
-		"claude-code-setup@claude-plugins-official": true,
-		"skill-creator@claude-plugins-official": true,
-		"ralph-loop@claude-plugins-official": true,
-		"figma@claude-plugins-official": true,
-		"explanatory-output-style@claude-plugins-official": true,
-		"greptile@claude-plugins-official": true,
-		"playground@claude-plugins-official": true,
-		"learning-output-style@claude-plugins-official": true,
-		"gopls-lsp@claude-plugins-official": true,
-		"csharp-lsp@claude-plugins-official": true,
-		"coderabbit@claude-plugins-official": true,
-		"firecrawl@claude-plugins-official": true,
-		"kotlin-lsp@claude-plugins-official": true,
-		"lua-lsp@claude-plugins-official": true,
-		"semgrep@claude-plugins-official": true,
-		"circleback@claude-plugins-official": true,
-		"qodo-skills@claude-plugins-official": true,
-		"chrome-devtools-mcp@claude-plugins-official": true
-	},
-	"extraKnownMarketplaces": {
-		"0maru-private-agent-skills": {
-			"source": {
-				"source": "github",
-				"repo": "0maru/private-agent-skills"
-			}
-		}
-	},
-	"language": "japanese",
-	"sandbox": {
-		"enabled": true,
-		"network": {
-			"allowedDomains": [
-				"github.com",
-				"*.githubusercontent.com",
-				"*.npmjs.org",
-				"registry.npmjs.org",
-				"nodejs.org",
-				"pypi.org",
-				"*.pypi.org",
-				"files.pythonhosted.org",
-				"astral.sh",
-				"djangoproject.com",
-				"*.docker.io",
-				"*.docker.com"
-			],
-			"allowUnixSockets": [
-				"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-			]
-		},
-		"filesystem": {
-			"allowWrite": ["//tmp/build", "~/workspaces"],
-			"denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"]
-		},
-		"excludedCommands": ["git *", "gh *", "ou *", "docker *"]
-	},
-	"alwaysThinkingEnabled": true,
-	"effortLevel": "high",
-	"plansDirectory": "./plans",
-	"skipDangerousModePermissionPrompt": true,
-	"skipAutoPermissionPrompt": true,
-	"theme": "dark-colorblind",
-	"notifications": false,
-	"autoCompact": true,
-	"showTurnDuration": true
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "DISABLE_COST_WARNINGS": "0",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "ENABLE_TOOL_SEARCH": "1",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "high"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(* --version)",
+      "Bash(* --help *)",
+      "Read(~/.zshrc)",
+      "Read(~/.claude/commands)",
+      "Write(~/.claude/commands)",
+      "WebFetch(domain:github.com)",
+      "mcp__github",
+      "mcp__claude_ai_Gmail",
+      "mcp__claude_ai_Atlassian",
+      "mcp__claude_ai_Sentry",
+      "mcp__claude_ai_Context7",
+      "mcp__claude_ai_Figma",
+      "mcp__claude_ai_Slack",
+      "mcp__plugin_context7_context7",
+      "mcp__plugin_serena_serena"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(./.env.*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Bash(curl *)",
+      "Bash(sudo *)"
+    ],
+    "defaultMode": "plan"
+  },
+  "model": "opus[1m]",
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n running | base64)\" > /dev/tty 2>/dev/null; true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n idle | base64)\" > /dev/tty 2>/dev/null; true"
+          },
+          {
+            "type": "command",
+            "command": "{ [ \"$TERM_PROGRAM\" = \"vscode\" ] || [ -n \"$VSCODE_PID\" ]; } && osascript -e \"display notification \\\"応答完了\\\" with title \\\"Claude Code\\\" subtitle \\\"$(basename \"$PWD\")\\\"\" 2>/dev/null; true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/post-edit-format.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "You are a security evaluator for shell commands in a macOS/Linux development environment.\n\nA permission dialog is about to be shown to the user for this command. Evaluate whether it should be auto-approved or blocked.\n\n$ARGUMENTS\n\n## Classification Rules\n\n### SAFE (return {\"ok\": true}) - Auto-approve:\n- Read-only commands: cat, head, tail, less, file, wc, du, df, which, where, type, echo, printf, find, grep, rg, fd, tree, stat\n- Build/dev/test: make, pnpm run, pnpm dev, pnpm build, pnpm test, npm run, npm test, npx, cargo build, cargo test, cargo run, go build, go test, go run, flutter, dart, python, ruby, swift, javac, java, gradle, mvn\n- Package manager install: brew install, brew bundle, brew upgrade, pnpm install, pnpm add, npm install, npm ci, cargo add, go get, pip install, gem install\n- Editor/tool launch: code, cursor, nvim, vim, open\n- Symlink creation: ln -s, ln -sf\n- File creation: touch, mkdir, mkdir -p\n- File copy/move within project: cp, mv (when target is within project or home directory)\n- Development tools: ghq, lazygit, starship, sheldon, docker, docker-compose, kubectl\n- Shell utilities: sort, uniq, cut, tr, xargs, tee, diff, comm, join, paste, column, jq, yq, sed (read/transform), awk\n- Dotfiles setup: stow, chezmoi, mackup\n- chmod with reasonable permissions (644, 755, +x)\n\n### DANGEROUS (return {\"ok\": false, \"reason\": \"...\"}) - Block:\n- Broad destructive deletion: rm -rf /, rm -rf ~, rm -rf *, rm -rf /* (without specific safe target)\n- System modification: sudo with destructive commands, chmod 777, chown on system files\n- Data exfiltration: commands piping sensitive data to network (curl -X POST with file data, nc, netcat)\n- Disk operations: dd, mkfs, fdisk, diskutil eraseDisk\n- rm -rf on important directories without clear intent (e.g., rm -rf /usr, /etc, /System)\n\n### WHEN UNCERTAIN - err on the side of approval ({\"ok\": true}):\n- Since this command would otherwise require user confirmation anyway, it's better to auto-approve borderline cases\n- The user can always add explicit deny rules for commands they want blocked\n\nRespond with ONLY valid JSON. No explanation outside the JSON.",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "deno run --allow-run=git ~/.claude/statusline.ts"
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": true,
+    "sentry@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "serena@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "linear@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true,
+    "superpowers@claude-plugins-official": true,
+    "torico-agent-skills@0maru-private-agent-skills": true,
+    "huggingface-skills@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "telegram@claude-plugins-official": true,
+    "agent-skills@0maru-private-agent-skills": true,
+    "stripe@claude-plugins-official": true,
+    "firebase@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "greptile@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "learning-output-style@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "csharp-lsp@claude-plugins-official": true,
+    "coderabbit@claude-plugins-official": true,
+    "firecrawl@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "semgrep@claude-plugins-official": true,
+    "circleback@claude-plugins-official": true,
+    "qodo-skills@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "0maru-private-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "0maru/private-agent-skills"
+      }
+    }
+  },
+  "language": "japanese",
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.githubusercontent.com",
+        "*.npmjs.org",
+        "registry.npmjs.org",
+        "nodejs.org",
+        "pypi.org",
+        "*.pypi.org",
+        "files.pythonhosted.org",
+        "astral.sh",
+        "djangoproject.com",
+        "*.docker.io",
+        "*.docker.com"
+      ],
+      "allowUnixSockets": ["~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"]
+    },
+    "filesystem": {
+      "allowWrite": ["//tmp/build", "~/workspaces"],
+      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"]
+    },
+    "excludedCommands": ["git *", "gh *", "ou *", "docker *"]
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "plansDirectory": "./plans",
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
+  "theme": "dark-colorblind",
+  "notifications": false,
+  "autoCompact": true,
+  "showTurnDuration": true
 }
