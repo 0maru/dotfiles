@@ -39,7 +39,7 @@
       "Bash(curl *)",
       "Bash(sudo *)"
     ],
-    "defaultMode": "plan"
+    "defaultMode": "acceptEdits"
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
