@@ -10,10 +10,28 @@ description: テストコードを書く際に使用するスキル。AAA パタ
 ## 基本原則
 
 - すべてのテストメソッドは **Arrange → Act → Assert** の3フェーズで構成する
-- 各フェーズは `# Arrange`, `# Act`, `# Assert` のコメントで区切る
+- 各フェーズは `# Arrange: 説明`, `# Act: 説明`, `# Assert: 説明` のコメントで区切る
+- `: ` の後にそのフェーズで **何をしているか** を簡潔に書く
 - **1テストメソッド = 1つの Act**（複数の振る舞いをテストしない）
 - Arrange が setUp で完結する場合はコメントを省略可
-- AAA コメント以外の説明コメントは最小限にする
+- 事前条件の検証が必要な場合は Act の前に `# Assert: ... (before)` を置いてよい
+
+```python
+# 例
+def test_create_user_with_valid_data_returns_201(self):
+    # Arrange: 必須パラメータのみのリクエストデータを用意する
+    user_data = UserFactory.build_dict(email="new@example.com")
+
+    # Assert: DB に対象レコードが存在しないか検証 (before)
+    self.assertFalse(User.objects.filter(email="new@example.com").exists())
+
+    # Act: POST ユーザー作成を送信する
+    response = self.client.post("/api/users/", user_data)
+
+    # Assert: status = 201, レスポンスに作成データを含むか検証
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    self.assertEqual(response.data["email"], "new@example.com")
+```
 
 ## 命名規則
 
@@ -66,7 +84,7 @@ description: テストコードを書く際に使用するスキル。AAA パタ
 
 ### AI が陥りやすいアンチパターン
 - **過剰な mock**: 実際の DB / モデルを使えるところまで mock しない。Django の TestCase は DB をサポートしている
-- **冗長なコメント**: `# Arrange` / `# Act` / `# Assert` 以外の説明コメントを過剰に追加しない
+- **冗長なコメント**: AAA コメント（`# Arrange: ...` / `# Act: ...` / `# Assert: ...`）以外の説明コメントを過剰に追加しない
 - **汎用的すぎるメソッド名**: `test_success`, `test_failure`, `test_create` のような情報量の少ない名前を使わない
 - **浅いアサーション**: `assertIsNotNone` だけで終わらせず、値の中身まで検証する
 - **setUp の肥大化**: 全テストデータを setUp で作らない。各テストの Arrange で必要なものだけ作る

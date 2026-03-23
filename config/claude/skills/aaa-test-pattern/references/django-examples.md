@@ -57,35 +57,35 @@ from tests.factories import OrderFactory, UserFactory
 
 class TestOrderCompletion(TestCase):
     def test_complete_order_with_pending_status_sets_completed_at(self):
-        # Arrange
+        # Arrange: pending 状態の注文を用意する
         order = OrderFactory(status="pending")
 
-        # Act
+        # Act: 注文を完了する
         order.complete()
 
-        # Assert
+        # Assert: status が completed に変わり、completed_at が設定されるか検証
         order.refresh_from_db()
         self.assertEqual(order.status, "completed")
         self.assertIsNotNone(order.completed_at)
 
     def test_complete_order_with_already_completed_status_raises_error(self):
-        # Arrange
+        # Arrange: 完了済みの注文を用意する
         order = OrderFactory(completed=True)
 
-        # Act & Assert
+        # Act & Assert: 再度完了しようとすると ValueError が発生するか検証
         with self.assertRaises(ValueError):
             order.complete()
 
     def test_calculate_total_with_multiple_items_returns_sum(self):
-        # Arrange
+        # Arrange: 注文に複数の明細を追加する
         order = OrderFactory()
         OrderItemFactory(order=order, price=1000, quantity=2)
         OrderItemFactory(order=order, price=500, quantity=1)
 
-        # Act
+        # Act: 合計金額を計算する
         total = order.calculate_total()
 
-        # Assert
+        # Assert: 明細の合計 (1000*2 + 500*1 = 2500) と一致するか検証
         self.assertEqual(total, 2500)
 ```
 
@@ -130,13 +130,16 @@ class TestUserRegistration(TestCase):
         self.client = APIClient()
 
     def test_register_user_with_valid_data_creates_active_user(self):
-        # Arrange
+        # Arrange: 必須パラメータのみのリクエストデータを用意する
         user_data = UserFactory.build_dict(email="new@example.com")
 
-        # Act
+        # Assert: DB に対象レコードが存在しないか検証 (before)
+        self.assertFalse(User.objects.filter(email="new@example.com").exists())
+
+        # Act: POST ユーザー作成を送信する
         response = self.client.post("/api/users/", user_data)
 
-        # Assert
+        # Assert: status = 201, DB にアクティブユーザーが作成されたか検証
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["email"], "new@example.com")
         self.assertTrue(
@@ -144,14 +147,14 @@ class TestUserRegistration(TestCase):
         )
 
     def test_register_user_with_duplicate_email_returns_400(self):
-        # Arrange
+        # Arrange: 既存ユーザーと同じメールアドレスのリクエストデータを用意する
         UserFactory(email="existing@example.com")
         user_data = UserFactory.build_dict(email="existing@example.com")
 
-        # Act
+        # Act: POST ユーザー作成を送信する
         response = self.client.post("/api/users/", user_data)
 
-        # Assert
+        # Assert: status = 400, email フィールドにエラーが含まれるか検証
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("email", response.data)
 
@@ -161,25 +164,25 @@ class TestUserDetail(TestCase):
         self.client = APIClient()
 
     def test_get_user_with_valid_id_returns_user_data(self):
-        # Arrange
+        # Arrange: 認証済みユーザーを用意する
         user = UserFactory(email="test@example.com")
         self.client.force_authenticate(user=user)
 
-        # Act
+        # Act: GET ユーザー詳細を取得する
         response = self.client.get(f"/api/users/{user.id}/")
 
-        # Assert
+        # Assert: status = 200, レスポンスにユーザー情報が含まれるか検証
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["email"], "test@example.com")
 
     def test_get_user_without_auth_returns_401(self):
-        # Arrange
+        # Arrange: 未認証状態でユーザーを用意する
         user = UserFactory()
 
-        # Act
+        # Act: GET ユーザー詳細を取得する
         response = self.client.get(f"/api/users/{user.id}/")
 
-        # Assert
+        # Assert: status = 401 が返るか検証
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 ```
 
@@ -213,46 +216,46 @@ from tests.factories import UserFactory
 
 class TestUserSerializer(TestCase):
     def test_serialize_user_returns_expected_fields(self):
-        # Arrange
+        # Arrange: シリアライズ対象のユーザーを用意する
         user = UserFactory(email="test@example.com", username="testuser")
 
-        # Act
+        # Act: ユーザーをシリアライズする
         data = UserSerializer(user).data
 
-        # Assert
+        # Assert: 期待するフィールドが含まれ、password が除外されているか検証
         self.assertEqual(data["email"], "test@example.com")
         self.assertEqual(data["username"], "testuser")
         self.assertNotIn("password", data)
 
     def test_deserialize_with_valid_data_passes_validation(self):
-        # Arrange
+        # Arrange: 正常な入力データを用意する
         input_data = {"email": "new@example.com", "username": "newuser", "password": "securepass123"}
 
-        # Act
+        # Act: デシリアライズしてバリデーションを実行する
         serializer = UserSerializer(data=input_data)
 
-        # Assert
+        # Assert: バリデーションが通るか検証
         self.assertTrue(serializer.is_valid())
 
     def test_deserialize_with_invalid_email_fails_validation(self):
-        # Arrange
+        # Arrange: 不正なメールアドレスの入力データを用意する
         input_data = {"email": "not-an-email", "username": "newuser", "password": "securepass123"}
 
-        # Act
+        # Act: デシリアライズしてバリデーションを実行する
         serializer = UserSerializer(data=input_data)
 
-        # Assert
+        # Assert: バリデーションが失敗し、email にエラーが含まれるか検証
         self.assertFalse(serializer.is_valid())
         self.assertIn("email", serializer.errors)
 
     def test_deserialize_with_short_password_fails_validation(self):
-        # Arrange
+        # Arrange: 短すぎるパスワードの入力データを用意する
         input_data = {"email": "new@example.com", "username": "newuser", "password": "123"}
 
-        # Act
+        # Act: デシリアライズしてバリデーションを実行する
         serializer = UserSerializer(data=input_data)
 
-        # Assert
+        # Assert: バリデーションが失敗し、password にエラーが含まれるか検証
         self.assertFalse(serializer.is_valid())
         self.assertIn("password", serializer.errors)
 ```
