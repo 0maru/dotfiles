@@ -196,9 +196,8 @@
       ]
     },
     "excludedCommands": [
-      "git *",
+      "git commit *",
       "gh *",
-      "ou *",
       "docker *"
     ]
   },
@@ -209,5 +208,6 @@
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
-  "showTurnDuration": true
+  "showTurnDuration": true,
+  "effortLevel": "high"
 }
