@@ -28,7 +28,8 @@
       "mcp__claude_ai_Figma",
       "mcp__claude_ai_Slack",
       "mcp__plugin_context7_context7",
-      "mcp__plugin_serena_serena"
+      "mcp__plugin_serena_serena",
+      "Skill(update-config *)",
     ],
     "deny": [
       "Read(.env)",
@@ -154,10 +155,10 @@
         "repo": "0maru/private-agent-skills"
       }
     },
-    "sof-agent-skills": {
+    "torico-agent-skills": {
       "source": {
         "source": "github",
-        "repo": "SPRING-OF-FASHION-Inc/agent-skills"
+        "repo": "torico-tokyo/ai-toolkit"
       }
     }
   },
@@ -203,12 +204,12 @@
     ]
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
   "plansDirectory": "./plans",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
-  "showTurnDuration": true,
-  "effortLevel": "high"
+  "showTurnDuration": true
 }
