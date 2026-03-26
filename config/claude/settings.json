@@ -14,6 +14,7 @@
     "allow": [
       "Bash(git *)",
       "Bash(gh *)",
+      "Bash(ou *)",
       "Bash(* --version)",
       "Bash(* --help *)",
       "Read(~/.zshrc)",
@@ -146,7 +147,13 @@
     "lua-lsp@claude-plugins-official": true,
     "circleback@claude-plugins-official": true,
     "qodo-skills@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": true
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "amazon-location-service@agent-plugins-for-aws": true,
+    "aws-amplify@agent-plugins-for-aws": true,
+    "aws-serverless@agent-plugins-for-aws": true,
+    "databases-on-aws@agent-plugins-for-aws": true,
+    "deploy-on-aws@agent-plugins-for-aws": true,
+    "migration-to-aws@agent-plugins-for-aws": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
@@ -159,6 +166,12 @@
       "source": {
         "source": "github",
         "repo": "torico-tokyo/ai-toolkit"
+      }
+    },
+    "agent-plugins-for-aws": {
+      "source": {
+        "source": "github",
+        "repo": "awslabs/agent-plugins"
       }
     }
   },
