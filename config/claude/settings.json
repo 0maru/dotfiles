@@ -153,31 +153,37 @@
     "aws-serverless@agent-plugins-for-aws": true,
     "databases-on-aws@agent-plugins-for-aws": true,
     "deploy-on-aws@agent-plugins-for-aws": true,
-    "migration-to-aws@agent-plugins-for-aws": true
+    "migration-to-aws@agent-plugins-for-aws": true,
+    "claude-api@anthropic-agent-skills": true,
+    "document-skills@anthropic-agent-skills": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
       "source": {
         "source": "github",
         "repo": "0maru/private-agent-skills"
-      }
+      },
+      "autoUpdate": true
     },
     "torico-agent-skills": {
       "source": {
         "source": "github",
         "repo": "torico-tokyo/ai-toolkit"
-      }
+      },
+      "autoUpdate": true
     },
     "agent-plugins-for-aws": {
       "source": {
         "source": "github",
         "repo": "awslabs/agent-plugins"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "language": "japanese",
   "sandbox": {
     "enabled": true,
+    "allowUnsandboxedCommands": false,
     "network": {
       "allowedDomains": [
         "github.com",
@@ -195,11 +201,12 @@
       ],
       "allowUnixSockets": [
         "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-      ]
+      ],
+      "allowLocalBinding": true
     },
     "filesystem": {
       "allowWrite": [
-        "//tmp/build",
+        "/tmp/build",
         "~/workspaces"
       ],
       "denyRead": [
@@ -208,12 +215,16 @@
         "**/.env",
         "**/.env.*",
         "**/secrets/**"
+      ],
+      "allowRead": [
+        "~/.claude/plugins"
       ]
     },
     "excludedCommands": [
       "git commit *",
       "gh *",
-      "docker *"
+      "docker *",
+      "pnpm build*"
     ]
   },
   "alwaysThinkingEnabled": true,
