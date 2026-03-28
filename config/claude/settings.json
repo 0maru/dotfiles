@@ -8,7 +8,12 @@
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_EFFORT_LEVEL": "high",
-    "CLAUDE_CODE_NEW_INIT": "1"
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
+    "MCP_TIMEOUT": "30000",
+    "MCP_TOOL_TIMEOUT": "60000",
+    "BASH_MAX_TIMEOUT_MS": "600000",
+    "MAX_MCP_OUTPUT_TOKENS": "50000"
   },
   "permissions": {
     "allow": [
@@ -30,7 +35,8 @@
       "mcp__claude_ai_Slack",
       "mcp__plugin_context7_context7",
       "mcp__plugin_serena_serena",
-      "Skill(update-config *)"
+      "Skill(update-config *)",
+      "Bash(*plamo-translate *)"
     ],
     "deny": [
       "Read(.env)",
@@ -38,8 +44,24 @@
       "Read(~/.aws/**)",
       "Read(~/.ssh/**)",
       "Read(~/.gnupg/**)",
+      "Bash(rm -rf:*)",
+      "Bash(chmod 777:*)",
       "Bash(curl *)",
-      "Bash(sudo *)"
+      "Bash(sudo *)",
+      "Bash(aws s3 rm:*)",
+      "Bash(aws s3 rb:*)",
+      "Bash(aws ec2 terminate-instances:*)",
+      "Bash(aws rds delete-db-instance:*)",
+      "Bash(aws rds delete-db-cluster:*)",
+      "Bash(aws lambda delete-function:*)",
+      "Bash(aws iam delete-:*)",
+      "Bash(aws cloudformation delete-stack:*)",
+      "Bash(aws dynamodb delete-table:*)",
+      "Bash(aws sns delete-topic:*)",
+      "Bash(aws sqs delete-queue:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh secret delete:*)",
+      "Bash(gh variable delete:*)"
     ],
     "defaultMode": "acceptEdits"
   },
