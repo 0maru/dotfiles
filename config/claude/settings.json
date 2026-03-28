@@ -234,6 +234,6 @@
   "skipAutoPermissionPrompt": true,
   "theme": "dark-colorblind",
   "notifications": false,
-  "autoCompact": true,
+  "autoCompact": false,
   "showTurnDuration": true
 }
