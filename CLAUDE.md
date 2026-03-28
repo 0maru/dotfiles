@@ -54,3 +54,17 @@ XDG Base Directory仕様に準拠し、設定ファイルは`~/.config`に配置
 - **エディタ**: Neovim（メイン）、VS Code/Insiders/Cursor
 - **プロンプト**: Starship
 - **Gitツール**: lazygit、gh、ghq
+- **ウィンドウマネージャー**: Aerospace
+
+## キーバインド制約
+
+- **ALT（Option）キーは使用禁止**: Aerospace（タイル型ウィンドウマネージャー）がALTキーをグローバルに占有しているため、WezTerm やその他のアプリケーションのキーバインドにALTキーを含めてはならない。代わりに CTRL、CMD（SUPER）、LEADER の組み合わせを使用すること。
+
+## WezTerm 設定構造
+
+`config/wezterm/` はモジュラー構成:
+- `wezterm.lua` — オーケストレーター（各モジュールを `require` して `apply_to_config` を呼ぶ）
+- `appearance.lua` — 見た目（色、フォント、透過度、タブバー等）
+- `keybindings.lua` — キーバインド、キーテーブル（copy_mode, setting_mode）、リーダーキー
+- `tab.lua` — タブタイトル表示（プロセスアイコン、ghq命名、Claude状態）
+- `statusbar.lua` — ステータスバー（Phase 3 用プレースホルダー）
