@@ -37,7 +37,8 @@
       "mcp__plugin_serena_serena",
       "Skill(update-config *)",
       "Bash(*plamo-translate *)",
-      "mcp__plamo-translate"
+      "mcp__plamo-translate",
+      "Skill(update-config)"
     ],
     "deny": [
       "Read(.env)",
@@ -67,12 +68,6 @@
     "defaultMode": "acceptEdits"
   },
   "model": "opus[1m]",
-  "mcpServers": {
-    "plamo-translate": {
-      "command": "/opt/homebrew/bin/npx",
-      "args": ["-y", "mcp-remote", "http://localhost:30000/mcp", "--allow-http", "--transport", "http-only"]
-    }
-  },
   "enableAllProjectMcpServers": true,
   "hooks": {
     "UserPromptSubmit": [
@@ -258,10 +253,22 @@
     ]
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
   "plansDirectory": "./plans",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
+  "mcpServers": {
+    "plamo-translate": {
+      "command": "/opt/homebrew/bin/npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:30000/mcp",
+        "--allow-http",
+        "--transport",
+        "http-only"
+      ]
+    }
+  },
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": true,
