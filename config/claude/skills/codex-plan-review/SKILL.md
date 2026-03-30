@@ -33,8 +33,7 @@ description: |
 以下のコマンドを Bash で実行する。`{プランの全文}` 部分にはStep 1で読み取ったプランの内容を埋め込む:
 
 ```bash
-codex exec --sandbox read-only \
-  --output-last-message /tmp/codex-plan-review-output.md \
+codex exec --color never --full-auto \
   - <<'REVIEW_PROMPT'
 あなたはシニアソフトウェアアーキテクトです。
 以下の実装計画をレビューしてください。
@@ -68,11 +67,7 @@ codex exec --sandbox read-only \
 REVIEW_PROMPT
 ```
 
-### Step 3: レビュー結果の読み取り
-
-`/tmp/codex-plan-review-output.md` を Read ツールで読み取る。
-
-### Step 4: 結果に応じた対応
+### Step 3: 結果に応じた対応
 
 | Codex の判定 | 対応 |
 |-------------|------|
@@ -84,4 +79,3 @@ REVIEW_PROMPT
 
 - Codex の指摘を盲目的に受け入れない。Claude 自身の判断で妥当性を評価する
 - タイムアウト（2分以上）した場合はスキップする
-- `/tmp/codex-plan-review-output.md` は使用後に削除する

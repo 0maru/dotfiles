@@ -247,7 +247,8 @@
       "git commit *",
       "gh *",
       "docker *",
-      "pnpm build*"
+      "pnpm build*",
+      "codex *"
     ]
   },
   "alwaysThinkingEnabled": true,
