@@ -102,3 +102,9 @@ CLAUDE.md 作成時は以下の要素を含める：
 ### 計画・設計ドキュメント
 - 実装計画: プロジェクトの `plans/` ディレクトリに保存
 - 設計ドキュメント: プロジェクトの `docs/specs/` ディレクトリに保存（superpowers のデフォルトパス `docs/superpowers/` は使用しない）
+
+### Codex レビュー
+- **プランレビュー**: プランモードで ExitPlanMode を呼ぶ前に、`codex-plan-review` スキルを使って Codex CLI にプランをレビューさせること
+- **コードレビュー**: 実装タスク完了後、コミット前に `codex-code-review` スキルを使って `codex review --uncommitted` で変更をレビューさせること
+- Codex が SUGGEST_CHANGES / REJECT を返した場合は、指摘を検討して対応すること
+- Codex が利用できない場合（未インストール、認証切れ等）はスキップして続行

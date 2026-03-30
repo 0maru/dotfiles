@@ -1,0 +1,58 @@
+---
+name: codex-code-review
+description: |
+  実装完了後、コミット前に自動実行される Codex CLI コードレビュースキル。
+  Claude が実装タスクを完了した際に自動的に使用する。直接トリガーはしない。
+---
+
+# Codex Code Review
+
+実装タスク完了後、コミット前に `codex review --uncommitted` でコード変更をレビューする。
+
+## 最重要ルール
+
+**レビュー結果の報告が目的。Codex の指摘に基づく修正は Claude 自身の判断で行う。**
+
+## 前提条件の確認
+
+以下を確認し、満たさない場合はスキップする:
+
+1. `which codex` で Codex CLI がインストールされていること
+2. `git status --short` で未コミット変更が存在すること
+
+エラー時は「Codex コードレビューをスキップします: {理由}」と表示して続行する。
+
+## 実行手順
+
+### Step 1: codex review の実行
+
+```bash
+codex review --uncommitted 2>&1 | tee /tmp/codex-code-review-output.txt
+```
+
+### Step 2: レビュー結果の表示
+
+`/tmp/codex-code-review-output.txt` を Read ツールで読み取り、結果をユーザーに表示する。
+
+### Step 3: 指摘への対応
+
+1. レビュー結果を分析し、指摘を severity で分類:
+   - **CRITICAL/HIGH**: 修正を検討。修正可能なものは自動修正し、設計判断を伴うものはユーザーに報告
+   - **MEDIUM/LOW**: 情報として報告するのみ
+2. 問題なし（LGTM）の場合はその旨を表示
+
+## codex review のオプション
+
+コンテキストに応じて適切なオプションを選択する:
+
+| シーン | コマンド |
+|-------|---------|
+| 通常（デフォルト） | `codex review --uncommitted` |
+| ブランチの全変更 | `codex review --base main` |
+| 特定コミット | `codex review --commit {SHA}` |
+
+## 注意事項
+
+- Codex の指摘を盲目的に受け入れない。Claude 自身の判断で妥当性を評価する
+- タイムアウト（2分以上）した場合はスキップする
+- `/tmp/codex-code-review-output.txt` は使用後に削除する
