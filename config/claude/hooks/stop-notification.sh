@@ -8,8 +8,11 @@ PROJECT_NAME="$(basename "$PWD")"
 PROJECT_DIR="$PWD"
 ACTIVATE_ARGS=()
 
+SENDER_ID="${__CFBundleIdentifier:-}"
+
 case "$TERM_PROGRAM" in
   WezTerm)
+    SENDER_ID="${SENDER_ID:-com.github.wez.wezterm}"
     PANE_ID="${WEZTERM_PANE:-}"
     if [ -n "$PANE_ID" ] && command -v wezterm &>/dev/null; then
       # Bring WezTerm to front, then switch to the exact pane/tab
@@ -19,6 +22,7 @@ case "$TERM_PROGRAM" in
     fi
     ;;
   vscode)
+    SENDER_ID="${SENDER_ID:-com.microsoft.VSCode}"
     if command -v code &>/dev/null; then
       ACTIVATE_ARGS=(-execute "code \"${PROJECT_DIR}\"")
     else
@@ -35,5 +39,6 @@ terminal-notifier \
   -subtitle "$PROJECT_NAME" \
   -message "応答完了" \
   "${ACTIVATE_ARGS[@]}" \
+  -sender "$SENDER_ID" \
   -sound default \
   -ignoreDnD
