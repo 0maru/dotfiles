@@ -3,6 +3,17 @@ local act = wezterm.action
 
 local M = {}
 
+local SHELL = os.getenv('SHELL') or '/bin/zsh'
+
+-- Helper: spawn a command as an overlay pane (split + zoom)
+local function spawn_overlay_pane(command)
+  return wezterm.action_callback(function(window, pane)
+    local new_pane = pane:split({ direction = 'Bottom', size = 1.0,
+                                  args = { SHELL, '-lc', command } })
+    window:perform_action(act.TogglePaneZoomState, new_pane)
+  end)
+end
+
 -- Helper: set pane height to a percentage of the tab
 local function set_pane_height_percent(percent)
   return wezterm.action_callback(function(window, pane)
@@ -130,6 +141,9 @@ local keys = {
     mods = 'LEADER',
     action = act.ActivateKeyTable { name = 'setting_mode', one_shot = false },
   },
+
+  -- [LEADER+m] Launch lazygit (overlay pane)
+  { key = 'm', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
 
   -- [LEADER+[] Copy Mode
   { key = '[', mods = 'LEADER', action = act.ActivateCopyMode },
