@@ -1,11 +1,14 @@
--- Phase 3: Status bar with mode indicator
--- Placeholder for future implementation
+---------------------------------------------------------------
+-- ステータスバー設定（Phase 3: 未実装）
+-- ワークスペース名やアクティブなキーテーブル（コピーモード、
+-- セッティングモード）に応じた色変更などを予定
+---------------------------------------------------------------
 local M = {}
 
 function M.apply_to_config(config)
-  -- TODO: update-status event handler
-  -- - Show workspace name in left status
-  -- - Change color based on active key table (copy_mode, setting_mode)
+  -- TODO: update-status イベントハンドラを実装
+  -- - 左ステータスにワークスペース名を表示
+  -- - アクティブなキーテーブルに応じて色を変更
 end
 
 return M

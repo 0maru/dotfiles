@@ -7,9 +7,9 @@ git:
   branchLogCmd: "git log --graph --color=always --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' {{branchName}}"
   allBranchesLogCmds:
     - "git log --graph --all --color=always --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
 customCommands:
   # [CTRL+G] Generate commit message with Claude AI
   - key: "<c-g>"
@@ -17,7 +17,7 @@ customCommands:
     description: "Generate commit message with Claude AI"
     command: |
       MSG=$(git diff --cached | claude --no-session-persistence --print --model haiku "Generate a single-line commit message in Conventional Commits format for the following diff. Output only the commit message, nothing else.") && git commit -e -m "$MSG"
-    subprocess: true
+    output: terminal
   # [CTRL+F] Search commits by keyword
   - key: "<c-f>"
     context: "commits"
@@ -34,4 +34,4 @@ customCommands:
         valueFormat: '{{ .hash }}'
         labelFormat: '{{ .hash | green }} {{ .description }}'
     command: "git show --color=always {{.Form.Commit}} | delta --dark --paging=always"
-    subprocess: true
+    output: terminal

@@ -1,3 +1,8 @@
+---------------------------------------------------------------
+-- キーバインド設定
+-- リーダーキー: CTRL+a（2秒タイムアウト）
+-- ※ ALT キーは Aerospace が占有しているため使用禁止
+---------------------------------------------------------------
 local wezterm = require('wezterm')
 local act = wezterm.action
 
@@ -5,22 +10,31 @@ local M = {}
 
 local SHELL = os.getenv('SHELL') or '/bin/zsh'
 
--- Helper: spawn a command as an overlay pane (split + zoom)
+---------------------------------------------------------------
+-- ヘルパー関数
+---------------------------------------------------------------
+
+-- コマンドをオーバーレイペインで起動する（下方向に分割→ズーム）
+-- lazygit などの TUI ツールをフルスクリーンで表示するのに使用
 local function spawn_overlay_pane(command)
   return wezterm.action_callback(function(window, pane)
-    local new_pane = pane:split({ direction = 'Bottom', size = 1.0,
-                                  args = { SHELL, '-lc', command } })
+    local new_pane = pane:split({
+      direction = 'Bottom',
+      size = 1.0,
+      args = { SHELL, '-lic', command }
+    })
     window:perform_action(act.TogglePaneZoomState, new_pane)
   end)
 end
 
--- Helper: set pane height to a percentage of the tab
+-- ペインの高さをタブ全体に対するパーセンテージで設定する
 local function set_pane_height_percent(percent)
   return wezterm.action_callback(function(window, pane)
     local tab = window:active_tab()
     local tab_size = tab:get_size()
     local total_rows = tab_size.rows
 
+    -- 現在のペイン情報を取得
     local pane_info = nil
     for _, info in ipairs(tab:panes_with_info()) do
       if info.pane:pane_id() == pane:pane_id() then
@@ -30,24 +44,27 @@ local function set_pane_height_percent(percent)
     end
     if not pane_info then return end
 
+    -- 目標行数と現在行数の差分を計算してリサイズ
     local current_rows = pane_info.pixel_height / tab_size.pixel_height * total_rows
     local target_rows = math.floor(total_rows * percent / 100)
     local delta = target_rows - math.floor(current_rows)
 
     if delta ~= 0 then
+      -- ペインが上端にある場合は下方向、そうでなければ上方向にリサイズ
       local direction = pane_info.top == 0 and 'Down' or 'Up'
       window:perform_action(act.AdjustPaneSize { direction, math.abs(delta) }, pane)
     end
   end)
 end
 
--- Helper: set pane width to a percentage of the tab
+-- ペインの幅をタブ全体に対するパーセンテージで設定する
 local function set_pane_width_percent(percent)
   return wezterm.action_callback(function(window, pane)
     local tab = window:active_tab()
     local tab_size = tab:get_size()
     local total_cols = tab_size.cols
 
+    -- 現在のペイン情報を取得
     local pane_info = nil
     for _, info in ipairs(tab:panes_with_info()) do
       if info.pane:pane_id() == pane:pane_id() then
@@ -57,98 +74,74 @@ local function set_pane_width_percent(percent)
     end
     if not pane_info then return end
 
+    -- 目標列数と現在列数の差分を計算してリサイズ
     local current_cols = pane_info.pixel_width / tab_size.pixel_width * total_cols
     local target_cols = math.floor(total_cols * percent / 100)
     local delta = target_cols - math.floor(current_cols)
 
     if delta ~= 0 then
+      -- ペインが左端にある場合は右方向、そうでなければ左方向にリサイズ
       local direction = pane_info.left == 0 and 'Right' or 'Left'
       window:perform_action(act.AdjustPaneSize { direction, math.abs(delta) }, pane)
     end
   end)
 end
 
--- Opacity control events
-wezterm.on('increase-opacity', function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  local current = overrides.window_background_opacity or 0.9
-  overrides.window_background_opacity = math.min(current + 0.1, 1.0)
-  window:set_config_overrides(overrides)
-end)
-
-wezterm.on('decrease-opacity', function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  local current = overrides.window_background_opacity or 0.9
-  overrides.window_background_opacity = math.max(current - 0.1, 0.1)
-  window:set_config_overrides(overrides)
-end)
-
-wezterm.on('reset-opacity', function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  overrides.window_background_opacity = nil
-  window:set_config_overrides(overrides)
-end)
-
 ---------------------------------------------------------------
--- Keys
+-- 通常キーバインド
 ---------------------------------------------------------------
 local keys = {
-  -- [CMD+SHIFT+r] Reload Configuration
-  { key = 'r', mods = 'SUPER|SHIFT', action = act.ReloadConfiguration },
-  -- [CMD+p] Command Palette
-  { key = 'p', mods = 'SUPER', action = act.ActivateCommandPalette },
-  -- [CMD+q] Quit
-  { key = 'q', mods = 'SUPER', action = act.QuitApplication },
-  -- [CMD+f] Search
-  { key = 'f', mods = 'SUPER', action = act.Search { CaseSensitiveString = '' } },
-  -- [CMD+c] Copy
-  { key = 'c', mods = 'SUPER', action = act.CopyTo('Clipboard') },
-  -- [CMD+v] Paste
-  { key = 'v', mods = 'SUPER', action = act.PasteFrom('Clipboard') },
-  -- [CMD+Space] QuickSelect
-  { key = 'Space', mods = 'SUPER', action = act.QuickSelect },
+  -- === 一般操作 ===
+  { key = 'r', mods = 'SUPER|SHIFT', action = act.ReloadConfiguration },  -- 設定リロード
+  { key = 'p', mods = 'SUPER', action = act.ActivateCommandPalette },     -- コマンドパレット
+  { key = 'q', mods = 'SUPER', action = act.QuitApplication },            -- アプリ終了
+  { key = 'f', mods = 'SUPER', action = act.Search { CaseSensitiveString = '' } }, -- 検索
+  { key = 'c', mods = 'SUPER', action = act.CopyTo('Clipboard') },        -- コピー
+  { key = 'v', mods = 'SUPER', action = act.PasteFrom('Clipboard') },     -- 貼り付け
+  { key = 'Space', mods = 'SUPER', action = act.QuickSelect },            -- クイックセレクト
 
-  -- Tab management
-  { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
-  { key = 'Tab', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
-  { key = 't', mods = 'SUPER', action = act { SpawnTab = 'CurrentPaneDomain' } },
-  { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab { confirm = true } },
-  { key = 'e', mods = 'SUPER', action = act.ShowTabNavigator },
+  -- === タブ管理 ===
+  { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },          -- 次のタブ
+  { key = 'Tab', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },   -- 前のタブ
+  { key = 't', mods = 'SUPER', action = act { SpawnTab = 'CurrentPaneDomain' } }, -- 新しいタブ
+  { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab { confirm = true } }, -- タブを閉じる
+  { key = 'e', mods = 'SUPER', action = act.ShowTabNavigator },                   -- タブ一覧
 
-  -- Pane split (LEADER+d = vertical, LEADER+v = horizontal)
-  { key = 'd', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-  { key = 'v', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-  -- [CTRL+w] Close Pane
-  { key = 'w', mods = 'CTRL', action = act.CloseCurrentPane { confirm = true } },
-  -- [LEADER+z] Toggle Pane Zoom
-  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+  -- === ペイン分割 ===
+  { key = 'd', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },   -- 上下に分割
+  { key = 'v', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- 左右に分割
+  { key = 'w', mods = 'CTRL', action = act.CloseCurrentPane { confirm = true } },  -- ペインを閉じる
+  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },                -- ペインのズーム切り替え
 
-  -- Pane navigation (CTRL+h/j/k/l)
-  { key = 'h', mods = 'CTRL', action = act.ActivatePaneDirection('Left') },
-  { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection('Down') },
-  { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection('Up') },
-  { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection('Right') },
+  -- === ペイン移動（Vim風 hjkl） ===
+  { key = 'h', mods = 'CTRL', action = act.ActivatePaneDirection('Left') },   -- 左のペインへ
+  { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection('Down') },   -- 下のペインへ
+  { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection('Up') },     -- 上のペインへ
+  { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection('Right') },  -- 右のペインへ
 
-  -- Pane resize (LEADER+SHIFT+h/j/k/l)
-  { key = 'H', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Left', 5 } },
+  -- === ペインリサイズ（LEADER+SHIFT+hjkl、5セル単位） ===
+  { key = 'H', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Left', 6 } },
   { key = 'J', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Down', 5 } },
   { key = 'K', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Up', 5 } },
   { key = 'L', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Right', 5 } },
 
-  -- [LEADER+s] Enter Setting Mode
+  -- === モード切替 ===
+  -- セッティングモード: ペインリサイズ（1セル単位）と透過度調整
   {
     key = 's',
     mods = 'LEADER',
     action = act.ActivateKeyTable { name = 'setting_mode', one_shot = false },
   },
 
-  -- [LEADER+m] Launch lazygit (overlay pane)
-  { key = 'm', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
+  -- === ツール起動 ===
+  -- lazygit をオーバーレイペインで起動
+  { key = 'i', mods = 'SUPER', action = spawn_overlay_pane('lazygit') },
 
-  -- [LEADER+[] Copy Mode
-  { key = '[', mods = 'LEADER', action = act.ActivateCopyMode },
+  -- === コピーモード（Vim風テキスト選択） ===
+  { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
 
-  -- [LEADER+,] Rename Tab
+  -- === タブ名の変更 ===
+  -- 空文字で確定するとカスタム名をリセット
   {
     key = ',',
     mods = 'LEADER',
@@ -168,17 +161,21 @@ local keys = {
     },
   },
 
-  -- [CTRL+L] Debug Overlay
+  -- === デバッグ ===
+  -- WezTerm のデバッグオーバーレイを表示
   { key = 'L', mods = 'CTRL', action = act.ShowDebugOverlay },
 
-  -- [SHIFT+ENTER] Claude Code newline
+  -- === Claude Code 用 ===
+  -- SHIFT+ENTER で改行を送信（Claude Code のマルチライン入力用）
   { key = 'Enter', mods = 'SHIFT', action = act { SendString = '\x1b\r' } },
 
-  -- [CTRL+SHIFT+p/n] Scroll to previous/next prompt
-  { key = 'p', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(-1) },
-  { key = 'n', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },
+  -- === プロンプト間スクロール ===
+  -- シェルのセマンティックゾーンを利用して前後のプロンプトにジャンプ
+  { key = 'p', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(-1) },  -- 前のプロンプトへ
+  { key = 'n', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },   -- 次のプロンプトへ
 
-  -- [LEADER+g] Grid layout (3 columns, right split)
+  -- === グリッドレイアウト ===
+  -- 3列レイアウトを一括作成（左1/3 + 右上1/3 + 右下1/3）
   {
     key = 'g',
     mods = 'LEADER',
@@ -191,7 +188,7 @@ local keys = {
   },
 }
 
--- [CMD+1-9] Activate Tab 1-9
+-- CMD+数字キーでタブを直接切り替え（CMD+1〜9 → タブ1〜9）
 for i = 1, 9 do
   table.insert(keys, {
     key = tostring(i),
@@ -201,28 +198,29 @@ for i = 1, 9 do
 end
 
 ---------------------------------------------------------------
--- Key Tables
+-- キーテーブル（モード別キーバインド）
 ---------------------------------------------------------------
 local key_tables = {}
 
--- Setting Mode: pane resize + opacity control
+-- === セッティングモード ===
+-- LEADER+s で入るモード。Escape/q/CTRL+c で抜ける
 local setting_mode = {
-  -- Fine-grained pane resize (1 cell)
+  -- ペインリサイズ（1セル単位の細かい調整）
   { key = 'h', action = act.AdjustPaneSize { 'Left', 1 } },
   { key = 'j', action = act.AdjustPaneSize { 'Down', 1 } },
   { key = 'k', action = act.AdjustPaneSize { 'Up', 1 } },
   { key = 'l', action = act.AdjustPaneSize { 'Right', 1 } },
-  -- Opacity control
-  { key = ';', action = act.EmitEvent('increase-opacity') },
-  { key = '-', action = act.EmitEvent('decrease-opacity') },
-  { key = '0', action = act.EmitEvent('reset-opacity') },
-  -- Exit
+  -- 透過度の調整
+  { key = ';', action = act.EmitEvent('increase-opacity') },  -- 透過度を上げる（不透明に）
+  { key = '-', action = act.EmitEvent('decrease-opacity') },  -- 透過度を下げる（透明に）
+  { key = '0', action = act.EmitEvent('reset-opacity') },     -- 透過度をリセット
+  -- モード終了
   { key = 'Escape', action = act.PopKeyTable },
   { key = 'q', action = act.PopKeyTable },
   { key = 'c', mods = 'CTRL', action = act.PopKeyTable },
 }
 
--- Percentage-based pane height (1-9 = 10%-90%)
+-- ペインの高さをパーセンテージで指定（1〜9キー → 10%〜90%）
 for i = 1, 9 do
   table.insert(setting_mode, {
     key = tostring(i),
@@ -230,7 +228,7 @@ for i = 1, 9 do
   })
 end
 
--- Percentage-based pane width (CTRL+1-9 = 10%-90%)
+-- ペインの幅をパーセンテージで指定（CTRL+1〜9キー → 10%〜90%）
 for i = 1, 9 do
   table.insert(setting_mode, {
     key = tostring(i),
@@ -241,43 +239,44 @@ end
 
 key_tables.setting_mode = setting_mode
 
--- Copy Mode: full Vim keybindings
+-- === コピーモード ===
+-- LEADER+[ で入るモード。Vim ライクなキーバインドでテキストを選択・コピーできる
 key_tables.copy_mode = {
-  -- Movement
+  -- カーソル移動（hjkl）
   { key = 'h', action = act.CopyMode('MoveLeft') },
   { key = 'j', action = act.CopyMode('MoveDown') },
   { key = 'k', action = act.CopyMode('MoveUp') },
   { key = 'l', action = act.CopyMode('MoveRight') },
-  -- Word movement
-  { key = 'w', action = act.CopyMode('MoveForwardWord') },
-  { key = 'b', action = act.CopyMode('MoveBackwardWord') },
-  { key = 'e', action = act.CopyMode('MoveForwardWordEnd') },
-  -- Line movement
-  { key = '0', action = act.CopyMode('MoveToStartOfLine') },
-  { key = '^', mods = 'SHIFT', action = act.CopyMode('MoveToStartOfLineContent') },
-  { key = '$', mods = 'SHIFT', action = act.CopyMode('MoveToEndOfLineContent') },
-  -- Page movement
-  { key = 'u', mods = 'CTRL', action = act.CopyMode('PageUp') },
-  { key = 'd', mods = 'CTRL', action = act.CopyMode('PageDown') },
-  { key = 'b', mods = 'CTRL', action = act.CopyMode('PageUp') },
-  { key = 'f', mods = 'CTRL', action = act.CopyMode('PageDown') },
-  -- Document movement
-  { key = 'g', action = act.CopyMode('MoveToScrollbackTop') },
-  { key = 'G', mods = 'SHIFT', action = act.CopyMode('MoveToScrollbackBottom') },
-  -- Screen position
-  { key = 'H', mods = 'SHIFT', action = act.CopyMode('MoveToViewportTop') },
-  { key = 'M', mods = 'SHIFT', action = act.CopyMode('MoveToViewportMiddle') },
-  { key = 'L', mods = 'SHIFT', action = act.CopyMode('MoveToViewportBottom') },
-  -- Find character
-  { key = 'f', action = act.CopyMode { JumpForward = { prev_char = false } } },
-  { key = 'F', mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = false } } },
-  { key = 't', action = act.CopyMode { JumpForward = { prev_char = true } } },
-  { key = 'T', mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = true } } },
-  -- Selection
-  { key = 'v', action = act.CopyMode { SetSelectionMode = 'Cell' } },
-  { key = 'V', mods = 'SHIFT', action = act.CopyMode { SetSelectionMode = 'Line' } },
-  { key = 'v', mods = 'CTRL', action = act.CopyMode { SetSelectionMode = 'Block' } },
-  -- Yank and exit
+  -- 単語移動
+  { key = 'w', action = act.CopyMode('MoveForwardWord') },     -- 次の単語の先頭へ
+  { key = 'b', action = act.CopyMode('MoveBackwardWord') },    -- 前の単語の先頭へ
+  { key = 'e', action = act.CopyMode('MoveForwardWordEnd') },  -- 単語の末尾へ
+  -- 行内移動
+  { key = '0', action = act.CopyMode('MoveToStartOfLine') },                     -- 行頭へ
+  { key = '^', mods = 'SHIFT', action = act.CopyMode('MoveToStartOfLineContent') }, -- 行頭（空白除く）へ
+  { key = '$', mods = 'SHIFT', action = act.CopyMode('MoveToEndOfLineContent') },   -- 行末へ
+  -- ページ移動
+  { key = 'u', mods = 'CTRL', action = act.CopyMode('PageUp') },    -- 半ページ上へ
+  { key = 'd', mods = 'CTRL', action = act.CopyMode('PageDown') },  -- 半ページ下へ
+  { key = 'b', mods = 'CTRL', action = act.CopyMode('PageUp') },    -- 1ページ上へ
+  { key = 'f', mods = 'CTRL', action = act.CopyMode('PageDown') },  -- 1ページ下へ
+  -- ドキュメント先頭・末尾
+  { key = 'g', action = act.CopyMode('MoveToScrollbackTop') },                    -- スクロールバッファの先頭へ
+  { key = 'G', mods = 'SHIFT', action = act.CopyMode('MoveToScrollbackBottom') }, -- スクロールバッファの末尾へ
+  -- 画面内位置
+  { key = 'H', mods = 'SHIFT', action = act.CopyMode('MoveToViewportTop') },     -- 画面上端へ
+  { key = 'M', mods = 'SHIFT', action = act.CopyMode('MoveToViewportMiddle') },  -- 画面中央へ
+  { key = 'L', mods = 'SHIFT', action = act.CopyMode('MoveToViewportBottom') },  -- 画面下端へ
+  -- 文字検索（f/F/t/T）
+  { key = 'f', action = act.CopyMode { JumpForward = { prev_char = false } } },                 -- 前方の文字へジャンプ
+  { key = 'F', mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = false } } }, -- 後方の文字へジャンプ
+  { key = 't', action = act.CopyMode { JumpForward = { prev_char = true } } },                   -- 前方の文字の手前へ
+  { key = 'T', mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = true } } },  -- 後方の文字の手前へ
+  -- 選択モード
+  { key = 'v', action = act.CopyMode { SetSelectionMode = 'Cell' } },               -- 文字単位選択
+  { key = 'V', mods = 'SHIFT', action = act.CopyMode { SetSelectionMode = 'Line' } }, -- 行単位選択
+  { key = 'v', mods = 'CTRL', action = act.CopyMode { SetSelectionMode = 'Block' } }, -- 矩形選択
+  -- ヤンク（コピーしてコピーモードを終了）
   {
     key = 'y',
     action = act.Multiple {
@@ -285,33 +284,37 @@ key_tables.copy_mode = {
       { CopyMode = 'Close' },
     },
   },
-  -- Search
-  { key = '/', action = act.CopyMode('EditPattern') },
-  { key = 'n', action = act.CopyMode('NextMatch') },
-  { key = 'N', mods = 'SHIFT', action = act.CopyMode('PriorMatch') },
-  -- Semantic zone navigation
-  { key = '[', action = act.CopyMode('MoveBackwardSemanticZone') },
-  { key = ']', action = act.CopyMode('MoveForwardSemanticZone') },
-  -- Exit
+  -- 検索
+  { key = '/', action = act.CopyMode('EditPattern') },    -- 検索パターンを入力
+  { key = 'n', action = act.CopyMode('NextMatch') },      -- 次のマッチへ
+  { key = 'N', mods = 'SHIFT', action = act.CopyMode('PriorMatch') }, -- 前のマッチへ
+  -- セマンティックゾーン移動（プロンプト間の移動等）
+  { key = '[', action = act.CopyMode('MoveBackwardSemanticZone') },  -- 前のゾーンへ
+  { key = ']', action = act.CopyMode('MoveForwardSemanticZone') },   -- 次のゾーンへ
+  -- モード終了
   { key = 'Escape', action = act.CopyMode('Close') },
   { key = 'q', action = act.CopyMode('Close') },
 }
 
--- Search Mode
+-- === 検索モード ===
+-- コピーモード内で / を押すと入る。検索パターンの入力と結果のナビゲーション
 key_tables.search_mode = {
-  { key = 'Enter', action = act.CopyMode('PriorMatch') },
-  { key = 'Escape', action = act.CopyMode('Close') },
-  { key = 'n', mods = 'CTRL', action = act.CopyMode('NextMatch') },
-  { key = 'p', mods = 'CTRL', action = act.CopyMode('PriorMatch') },
-  { key = 'r', mods = 'CTRL', action = act.CopyMode('CycleMatchType') },
-  { key = 'u', mods = 'CTRL', action = act.CopyMode('ClearPattern') },
+  { key = 'Enter', action = act.CopyMode('PriorMatch') },                       -- 前のマッチへ（確定）
+  { key = 'Escape', action = act.CopyMode('Close') },                           -- 検索を終了
+  { key = 'n', mods = 'CTRL', action = act.CopyMode('NextMatch') },             -- 次のマッチへ
+  { key = 'p', mods = 'CTRL', action = act.CopyMode('PriorMatch') },            -- 前のマッチへ
+  { key = 'r', mods = 'CTRL', action = act.CopyMode('CycleMatchType') },        -- マッチ方式を切り替え（文字列/正規表現）
+  { key = 'u', mods = 'CTRL', action = act.CopyMode('ClearPattern') },          -- 検索パターンをクリア
 }
 
 ---------------------------------------------------------------
--- Apply
+-- 設定の適用
 ---------------------------------------------------------------
 function M.apply_to_config(config)
+  -- WezTerm のデフォルトキーバインドを無効化（独自定義のみ使う）
   config.disable_default_key_bindings = true
+  -- リーダーキー: CTRL+a（tmux と同じ使い勝手）
+  -- 2秒以内に続くキーを入力する
   config.leader = {
     key = 'a',
     mods = 'CTRL',
