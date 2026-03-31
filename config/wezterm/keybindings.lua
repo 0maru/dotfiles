@@ -1,6 +1,6 @@
 ---------------------------------------------------------------
 -- キーバインド設定
--- リーダーキー: CTRL+a（2秒タイムアウト）
+-- リーダーキー: CTRL+;（2秒タイムアウト）
 -- ※ ALT キーは Aerospace が占有しているため使用禁止
 ---------------------------------------------------------------
 local wezterm = require('wezterm')
@@ -20,8 +20,8 @@ local function spawn_overlay_pane(command)
   return wezterm.action_callback(function(window, pane)
     local new_pane = pane:split({
       direction = 'Bottom',
-      size = 1.0,
-      args = { SHELL, '-lic', command }
+      size = 0,
+      args = { SHELL, '-lc', command }
     })
     window:perform_action(act.TogglePaneZoomState, new_pane)
   end)
@@ -108,8 +108,8 @@ local keys = {
   { key = 'e', mods = 'SUPER', action = act.ShowTabNavigator },                   -- タブ一覧
 
   -- === ペイン分割 ===
-  { key = 'd', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },   -- 上下に分割
-  { key = 'v', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- 左右に分割
+  { key = 'v', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },   -- 上下に分割
+  { key = 's', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- 左右に分割
   { key = 'w', mods = 'CTRL', action = act.CloseCurrentPane { confirm = true } },  -- ペインを閉じる
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },                -- ペインのズーム切り替え
 
@@ -119,23 +119,11 @@ local keys = {
   { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection('Up') },     -- 上のペインへ
   { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection('Right') },  -- 右のペインへ
 
-  -- === ペインリサイズ（LEADER+SHIFT+hjkl、5セル単位） ===
-  { key = 'H', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Left', 6 } },
-  { key = 'J', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Down', 5 } },
-  { key = 'K', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Up', 5 } },
-  { key = 'L', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Right', 5 } },
-
-  -- === モード切替 ===
-  -- セッティングモード: ペインリサイズ（1セル単位）と透過度調整
-  {
-    key = 's',
-    mods = 'LEADER',
-    action = act.ActivateKeyTable { name = 'setting_mode', one_shot = false },
-  },
-
   -- === ツール起動 ===
   -- lazygit をオーバーレイペインで起動
-  { key = 'i', mods = 'SUPER', action = spawn_overlay_pane('lazygit') },
+  { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
+  -- Neovim をオーバーレイペインで起動
+  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim') },
 
   -- === コピーモード（Vim風テキスト選択） ===
   { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
@@ -313,15 +301,36 @@ key_tables.search_mode = {
 function M.apply_to_config(config)
   -- WezTerm のデフォルトキーバインドを無効化（独自定義のみ使う）
   config.disable_default_key_bindings = true
-  -- リーダーキー: CTRL+a（tmux と同じ使い勝手）
-  -- 2秒以内に続くキーを入力する
+  -- リーダーキー: CTRL+;
   config.leader = {
-    key = 'a',
+    key = 'l',
     mods = 'CTRL',
     timeout_milliseconds = 2000,
   }
   config.keys = keys
   config.key_tables = key_tables
 end
+
+-- augment-command-palette イベントでコマンドパレットにカスタムアクションを追加
+wezterm.on("augment-command-palette", function(window, pane)
+  local commands = {
+    {
+      brief = "Lauch: lazygit",
+      icon = "md_git",
+      action = spawn_overlay_pane('lazygit'),
+    },
+    {
+      brief = "Launch: Neovim",
+      icon = "md_vim",
+      action = spawn_overlay_pane("nvim"),
+    },
+    {
+      brief = "Launch: Claude Code",
+      icon = "md_robot",
+      action = spawn_overlay_pane("claude"),
+    },
+  }
+  return commands
+end)
 
 return M
