@@ -30,6 +30,8 @@ description: |
 codex review --uncommitted 2>&1 | tee /tmp/codex-code-review-output.txt
 ```
 
+Bash ツールの `timeout` パラメータは `300000`（5分）に設定すること。
+
 ### Step 2: レビュー結果の表示
 
 `/tmp/codex-code-review-output.txt` を Read ツールで読み取り、結果をユーザーに表示する。
@@ -54,5 +56,5 @@ codex review --uncommitted 2>&1 | tee /tmp/codex-code-review-output.txt
 ## 注意事項
 
 - Codex の指摘を盲目的に受け入れない。Claude 自身の判断で妥当性を評価する
-- タイムアウト（2分以上）した場合はスキップする
+- タイムアウト（5分以上）した場合はスキップする
 - `/tmp/codex-code-review-output.txt` は使用後に削除する

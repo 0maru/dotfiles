@@ -32,6 +32,8 @@ description: |
 
 以下のコマンドを Bash で実行する。`{プランの全文}` 部分にはStep 1で読み取ったプランの内容を埋め込む:
 
+Bash ツールの `timeout` パラメータは `300000`（5分）に設定すること。
+
 ```bash
 codex exec --color never --full-auto \
   - <<'REVIEW_PROMPT'
@@ -78,4 +80,4 @@ REVIEW_PROMPT
 ## 注意事項
 
 - Codex の指摘を盲目的に受け入れない。Claude 自身の判断で妥当性を評価する
-- タイムアウト（2分以上）した場合はスキップする
+- タイムアウト（5分以上）した場合はスキップする
