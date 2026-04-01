@@ -14,18 +14,50 @@ local SHELL = os.getenv('SHELL') or '/bin/zsh'
 -- ヘルパー関数
 ---------------------------------------------------------------
 
+-- オーバーレイ状態を追跡（ウィンドウID → true）
+local overlay_windows = {}
+
 -- コマンドをオーバーレイペインで起動する（下方向に分割→ズーム）
 -- lazygit などの TUI ツールをフルスクリーンで表示するのに使用
 local function spawn_overlay_pane(command)
   return wezterm.action_callback(function(window, pane)
+    local cwd_url = pane:get_current_working_dir()
     local new_pane = pane:split({
       direction = 'Bottom',
-      size = 0,
-      args = { SHELL, '-lc', command }
+      size = 0.1,
+      cwd = cwd_url and cwd_url.path or nil,
+      args = { SHELL, '-lic', command }
     })
     window:perform_action(act.TogglePaneZoomState, new_pane)
+
+    overlay_windows[window:window_id()] = true
+    local overrides = window:get_config_overrides() or {}
+    overrides.window_padding = { left = 24, right = 24, top = 16, bottom = 16 }
+    window:set_config_overrides(overrides)
   end)
 end
+
+-- オーバーレイ終了時（ズーム解除時）にパディングを元に戻す
+wezterm.on('update-status', function(window, pane)
+  local window_id = window:window_id()
+  if not overlay_windows[window_id] then return end
+
+  local tab = window:active_tab()
+  local is_zoomed = false
+  for _, p in ipairs(tab:panes_with_info()) do
+    if p.is_zoomed then
+      is_zoomed = true
+      break
+    end
+  end
+
+  if not is_zoomed then
+    overlay_windows[window_id] = nil
+    local overrides = window:get_config_overrides() or {}
+    overrides.window_padding = nil
+    window:set_config_overrides(overrides)
+  end
+end)
 
 -- ペインの高さをタブ全体に対するパーセンテージで設定する
 local function set_pane_height_percent(percent)
@@ -123,7 +155,9 @@ local keys = {
   -- lazygit をオーバーレイペインで起動
   { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
   -- Neovim をオーバーレイペインで起動
-  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim') },
+  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim .') },
+  -- Helix をオーバーレイペインで起動
+  { key = 'h', mods = 'LEADER', action = spawn_overlay_pane('hx .') },
 
   -- === コピーモード（Vim風テキスト選択） ===
   { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
@@ -303,7 +337,7 @@ function M.apply_to_config(config)
   config.disable_default_key_bindings = true
   -- リーダーキー: CTRL+;
   config.leader = {
-    key = 'l',
+    key = ';',
     mods = 'CTRL',
     timeout_milliseconds = 2000,
   }
@@ -322,7 +356,12 @@ wezterm.on("augment-command-palette", function(window, pane)
     {
       brief = "Launch: Neovim",
       icon = "md_vim",
-      action = spawn_overlay_pane("nvim"),
+      action = spawn_overlay_pane("nvim ."),
+    },
+    {
+      brief = "Launch: Helix",
+      icon = "md_file_edit",
+      action = spawn_overlay_pane("hx ."),
     },
     {
       brief = "Launch: Claude Code",
