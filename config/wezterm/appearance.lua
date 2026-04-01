@@ -31,7 +31,7 @@ function M.apply_to_config(config)
   -- ウィンドウ設定
   ---------------------------------------------------------------
   -- 背景の透過度（0.0〜1.0、1.0で完全不透明）
-  config.window_background_opacity = 0.9
+  config.window_background_opacity = 0.85
   -- macOS のウィンドウ背景ぼかし度合い
   config.macos_window_background_blur = 20
   -- ウィンドウ装飾: リサイズのみ（タイトルバー非表示）

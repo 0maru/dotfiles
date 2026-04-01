@@ -14,9 +14,6 @@ local SHELL = os.getenv('SHELL') or '/bin/zsh'
 -- ヘルパー関数
 ---------------------------------------------------------------
 
--- オーバーレイ状態を追跡（ウィンドウID → true）
-local overlay_windows = {}
-
 -- コマンドをオーバーレイペインで起動する（下方向に分割→ズーム）
 -- lazygit などの TUI ツールをフルスクリーンで表示するのに使用
 local function spawn_overlay_pane(command)
@@ -29,35 +26,8 @@ local function spawn_overlay_pane(command)
       args = { SHELL, '-lic', command }
     })
     window:perform_action(act.TogglePaneZoomState, new_pane)
-
-    overlay_windows[window:window_id()] = true
-    local overrides = window:get_config_overrides() or {}
-    overrides.window_padding = { left = 24, right = 24, top = 16, bottom = 16 }
-    window:set_config_overrides(overrides)
   end)
 end
-
--- オーバーレイ終了時（ズーム解除時）にパディングを元に戻す
-wezterm.on('update-status', function(window, pane)
-  local window_id = window:window_id()
-  if not overlay_windows[window_id] then return end
-
-  local tab = window:active_tab()
-  local is_zoomed = false
-  for _, p in ipairs(tab:panes_with_info()) do
-    if p.is_zoomed then
-      is_zoomed = true
-      break
-    end
-  end
-
-  if not is_zoomed then
-    overlay_windows[window_id] = nil
-    local overrides = window:get_config_overrides() or {}
-    overrides.window_padding = nil
-    window:set_config_overrides(overrides)
-  end
-end)
 
 -- ペインの高さをタブ全体に対するパーセンテージで設定する
 local function set_pane_height_percent(percent)
