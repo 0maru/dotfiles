@@ -18,10 +18,12 @@ local SHELL = os.getenv('SHELL') or '/bin/zsh'
 -- lazygit などの TUI ツールをフルスクリーンで表示するのに使用
 local function spawn_overlay_pane(command)
   return wezterm.action_callback(function(window, pane)
+    local cwd_url = pane:get_current_working_dir()
     local new_pane = pane:split({
       direction = 'Bottom',
-      size = 0,
-      args = { SHELL, '-lc', command }
+      size = 0.1,
+      cwd = cwd_url and cwd_url.path or nil,
+      args = { SHELL, '-lic', command }
     })
     window:perform_action(act.TogglePaneZoomState, new_pane)
   end)
@@ -123,7 +125,7 @@ local keys = {
   -- lazygit をオーバーレイペインで起動
   { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
   -- Neovim をオーバーレイペインで起動
-  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim') },
+  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim .') },
 
   -- === コピーモード（Vim風テキスト選択） ===
   { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
@@ -303,7 +305,7 @@ function M.apply_to_config(config)
   config.disable_default_key_bindings = true
   -- リーダーキー: CTRL+;
   config.leader = {
-    key = 'l',
+    key = ';',
     mods = 'CTRL',
     timeout_milliseconds = 2000,
   }
