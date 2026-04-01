@@ -39,6 +39,7 @@
       "Skill(update-config *)",
       "Bash(*plamo-translate *)",
       "mcp__plamo-translate",
+      "Bash(codex *)",
       "Skill(update-config)"
     ],
     "deny": [
