@@ -9,6 +9,8 @@ local act = wezterm.action
 local M = {}
 
 local SHELL = os.getenv('SHELL') or '/bin/zsh'
+-- オーバーレイペインの背景色（GitHub Dark #0d1117 と区別しやすい暗めネイビー）
+local OVERLAY_BG = '#303446'
 
 ---------------------------------------------------------------
 -- ヘルパー関数
@@ -16,14 +18,20 @@ local SHELL = os.getenv('SHELL') or '/bin/zsh'
 
 -- コマンドをオーバーレイペインで起動する（下方向に分割→ズーム）
 -- lazygit などの TUI ツールをフルスクリーンで表示するのに使用
-local function spawn_overlay_pane(command)
+-- opts.bg_color: オーバーレイの背景色（例: '#1a1a2e'）。OSC 11 で設定。
+local function spawn_overlay_pane(command, opts)
+  opts = opts or {}
   return wezterm.action_callback(function(window, pane)
     local cwd_url = pane:get_current_working_dir()
+    local prefix = ''
+    if opts.bg_color then
+      prefix = string.format('printf "\\033]11;%s\\007" && ', opts.bg_color)
+    end
     local new_pane = pane:split({
       direction = 'Bottom',
       size = 0.1,
       cwd = cwd_url and cwd_url.path or nil,
-      args = { SHELL, '-lic', command }
+      args = { SHELL, '-lic', prefix .. command }
     })
     window:perform_action(act.TogglePaneZoomState, new_pane)
   end)
@@ -123,11 +131,11 @@ local keys = {
 
   -- === ツール起動 ===
   -- lazygit をオーバーレイペインで起動
-  { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
+  { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit', { bg_color = OVERLAY_BG }) },
   -- Neovim をオーバーレイペインで起動
-  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim .') },
+  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim .', { bg_color = OVERLAY_BG }) },
   -- Helix をオーバーレイペインで起動
-  { key = 'h', mods = 'LEADER', action = spawn_overlay_pane('hx .') },
+  { key = 'h', mods = 'LEADER', action = spawn_overlay_pane('hx .', { bg_color = OVERLAY_BG }) },
 
   -- === コピーモード（Vim風テキスト選択） ===
   { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
@@ -321,22 +329,22 @@ wezterm.on("augment-command-palette", function(window, pane)
     {
       brief = "Lauch: lazygit",
       icon = "md_git",
-      action = spawn_overlay_pane('lazygit'),
+      action = spawn_overlay_pane('lazygit', { bg_color = OVERLAY_BG }),
     },
     {
       brief = "Launch: Neovim",
       icon = "md_vim",
-      action = spawn_overlay_pane("nvim ."),
+      action = spawn_overlay_pane("nvim .", { bg_color = OVERLAY_BG }),
     },
     {
       brief = "Launch: Helix",
       icon = "md_file_edit",
-      action = spawn_overlay_pane("hx ."),
+      action = spawn_overlay_pane("hx .", { bg_color = OVERLAY_BG }),
     },
     {
       brief = "Launch: Claude Code",
       icon = "md_robot",
-      action = spawn_overlay_pane("claude"),
+      action = spawn_overlay_pane("claude", { bg_color = OVERLAY_BG }),
     },
   }
   return commands
