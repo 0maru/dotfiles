@@ -139,7 +139,6 @@
     "code-simplifier@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
-    "serena@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
     "linear@claude-plugins-official": true,
@@ -180,7 +179,6 @@
     "migration-to-aws@agent-plugins-for-aws": true,
     "claude-api@anthropic-agent-skills": true,
     "document-skills@anthropic-agent-skills": true,
-    "agent-skills@0maru-private-agent-skills": true,
     "torico-agent-skills@0maru-private-agent-skills": true
   },
   "extraKnownMarketplaces": {
