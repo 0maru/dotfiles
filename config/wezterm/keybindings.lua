@@ -156,6 +156,8 @@ local keys = {
   { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit') },
   -- Neovim をオーバーレイペインで起動
   { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim .') },
+  -- Helix をオーバーレイペインで起動
+  { key = 'h', mods = 'LEADER', action = spawn_overlay_pane('hx .') },
 
   -- === コピーモード（Vim風テキスト選択） ===
   { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
@@ -354,7 +356,12 @@ wezterm.on("augment-command-palette", function(window, pane)
     {
       brief = "Launch: Neovim",
       icon = "md_vim",
-      action = spawn_overlay_pane("nvim"),
+      action = spawn_overlay_pane("nvim ."),
+    },
+    {
+      brief = "Launch: Helix",
+      icon = "md_file_edit",
+      action = spawn_overlay_pane("hx ."),
     },
     {
       brief = "Launch: Claude Code",
