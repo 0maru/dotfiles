@@ -100,7 +100,7 @@ let gitInfo = "";
 if (cwd) {
   try {
     const p = new Deno.Command("git", {
-      args: ["-C", cwd, "rev-parse", "--abbrev-ref", "HEAD"],
+      args: ["-C", cwd, "--no-optional-locks", "rev-parse", "--abbrev-ref", "HEAD"],
       stdout: "piped",
       stderr: "null",
     });
@@ -110,7 +110,7 @@ if (cwd) {
       let dirty = "";
       try {
         const s = new Deno.Command("git", {
-          args: ["-C", cwd, "status", "--porcelain"],
+          args: ["-C", cwd, "--no-optional-locks", "status", "--porcelain"],
           stdout: "piped",
           stderr: "null",
         });
