@@ -33,7 +33,9 @@ autocmd("BufWritePre", {
   group = augroup("trim_whitespace", { clear = true }),
   pattern = "*",
   callback = function()
-    if vim.bo.filetype == "markdown" then return end
+    if vim.bo.filetype == "markdown" then
+      return
+    end
     vim.cmd([[%s/\s\+$//e]])
   end,
 })

@@ -19,7 +19,7 @@ require("lazy").setup({
     {
       "LazyVim/LazyVim",
       opts = {
-        colorscheme = "github-theme",
+        colorscheme = "github_dark_dimmed",
       },
     },
     -- import your plugins
