@@ -45,7 +45,7 @@ XDG Base Directory仕様に準拠し、設定ファイルは`~/.config`に配置
 - `config/*` → `~/.config/*` （ほとんどの設定）
 - `config/zsh/.zshenv` → `~/.zshenv`
 - `config/vscode/settings.json` → VS Code/Insiders/Cursorのユーザー設定
-- `config/claude/CLAUDE.md` → `~/.claude/CLAUDE.md` （コピー、シンボリックリンクではない）
+- `config/claude/*` → `~/.claude/*` （CLAUDE.md、settings.json、statusline.ts、commands/、hooks/、skills/ をシンボリックリンク）
 
 ### 技術スタック
 - **パッケージマネージャー**: Homebrew
