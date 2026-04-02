@@ -11,6 +11,15 @@ config.use_ime = true
 config.automatically_reload_config = true
 -- macSKK向け Ctrl+j で改行されないようにするs
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
+-- mailto リンクを無効化（メールアプリの起動を防ぐ）
+local hyperlink_rules = wezterm.default_hyperlink_rules()
+for i = #hyperlink_rules, 1, -1 do
+  if hyperlink_rules[i].format and hyperlink_rules[i].format:find('mailto') then
+    table.remove(hyperlink_rules, i)
+  end
+end
+config.hyperlink_rules = hyperlink_rules
+
 -- 各モジュールの設定を適用
 require('appearance').apply_to_config(config)  -- 外観（色、フォント、ウィンドウ等）
 require('keybindings').apply_to_config(config)  -- キーバインド
