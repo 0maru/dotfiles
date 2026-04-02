@@ -1,13 +1,13 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- Reload file when changed externally
+-- 外部で変更されたファイルを自動リロード
 autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   group = augroup("checktime", { clear = true }),
   command = "checktime",
 })
 
--- Highlight on yank
+-- ヤンク時にハイライト表示
 autocmd("TextYankPost", {
   group = augroup("highlight_yank", { clear = true }),
   callback = function()
@@ -15,7 +15,7 @@ autocmd("TextYankPost", {
   end,
 })
 
--- Auto-save on focus lost
+-- フォーカスを失った時に自動保存
 autocmd({ "FocusLost", "BufLeave" }, {
   group = augroup("auto_save", { clear = true }),
   callback = function(event)
@@ -28,14 +28,17 @@ autocmd({ "FocusLost", "BufLeave" }, {
   end,
 })
 
--- Remove trailing whitespace on save
+-- 保存時に末尾の空白を削除（Markdown は除外）
 autocmd("BufWritePre", {
   group = augroup("trim_whitespace", { clear = true }),
   pattern = "*",
-  command = [[%s/\s\+$//e]],
+  callback = function()
+    if vim.bo.filetype == "markdown" then return end
+    vim.cmd([[%s/\s\+$//e]])
+  end,
 })
 
--- Restore cursor position
+-- カーソル位置を復元
 autocmd("BufReadPost", {
   group = augroup("restore_cursor", { clear = true }),
   callback = function()
@@ -47,7 +50,7 @@ autocmd("BufReadPost", {
   end,
 })
 
--- Close some filetypes with q
+-- 特定のファイルタイプを q で閉じる
 autocmd("FileType", {
   group = augroup("close_with_q", { clear = true }),
   pattern = { "help", "man", "qf", "checkhealth" },
