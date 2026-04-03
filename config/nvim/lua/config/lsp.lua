@@ -35,9 +35,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         { buffer = buf, desc = "Show hover documentation" })
     end
 
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-    end
 
     if not client:supports_method("textDocument/willSaveWaitUntil")
         and client:supports_method("textDocument/formatting") then
