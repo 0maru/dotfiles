@@ -82,7 +82,6 @@ on-mode-changed = []
       {monitor.'EX-LDQ273DS \(1\)' = 41},
       {monitor.'EX-LDQ273DS \(2\)' = 41},
       {monitor.'Sidecar Display \(AirPlay\)' = 41},
-      {monitor.'Sidecar Display' = 41},
       {monitor.'DELL S2721DS' = 41},
       {monitor.'T27h-30' = 41},
       {monitor.'KA270H' = 41},
@@ -94,32 +93,32 @@ on-mode-changed = []
 
 [workspace-to-monitor-force-assignment]
     # メインモニター: 文字入力系（開発）
-    1 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    2 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    3 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    4 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    5 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    6 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    7 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    8 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    9 = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']
-    E = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']   # Editor (VS Code)
-    S = ['EV2750', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(2\)', '1']   # Slack
+    1 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    2 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    3 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    4 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    5 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    6 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    7 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    8 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    9 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
+    E = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']   # Editor (VS Code)
+    S = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']   # Slack
 
     # サブモニター: 調べ物・参照系
-    A = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    B = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(1\)', '2']  # Browser (Arc/Chrome)
-    C = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    D = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    F = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    G = ['SDM27Q10S', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
+    A = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
+    B = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']  # Browser (Arc/Chrome)
+    C = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
+    D = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
+    F = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
+    G = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
 
     # iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
-    T = ['EV2750', 'KA270H \(2\)', 'KA270H', 'EX-LDQ273DS \(2\)', '1']   # Terminal (WezTerm)
-    X = ['KA270H', 'Sidecar Display', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Claude Desktop
-    Z = ['KA270H', 'Sidecar Display', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Codex
-    I = ['Sidecar Display']
-    P = ['Sidecar Display']
+    T = ['EV2750', 'EX-LDQ273DS \(1\)', 'KA270H \(2\)', 'KA270H','1']   # Terminal (WezTerm)
+    X = ['KA270H', 'Sidecar Display \(AirPlay\)', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Claude Desktop
+    Z = ['KA270H', 'Sidecar Display \(AirPlay\)', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Codex
+    I = ['Sidecar Display \(AirPlay\)']
+    P = ['Sidecar Display \(AirPlay\)']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
