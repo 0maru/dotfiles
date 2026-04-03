@@ -6,7 +6,9 @@ tap "nikitabobko/tap"
 
 # Language
 brew "go"
+brew "gopls"
 brew "rust"
+brew "taplo"
 
 # Tools
 brew "aerospace"
