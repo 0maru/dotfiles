@@ -16,7 +16,6 @@ vim.lsp.enable({
   "cssmodules_ls",
   "cssls",
   "taplo",
-  "ts_ls"
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
