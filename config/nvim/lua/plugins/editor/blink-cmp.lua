@@ -1,7 +1,7 @@
 return {
   'saghen/blink.cmp',
-  version = '1.*',
-  event = 'InsertEnter',
+  version = '*',
+  event = { 'InsertEnter', 'CmdlineEnter' },
   dependencies = {
     'rafamadriz/friendly-snippets',
   },
@@ -17,6 +17,7 @@ return {
     },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
+      cmdline = {},
     },
     signature = {
       enabled = true,
