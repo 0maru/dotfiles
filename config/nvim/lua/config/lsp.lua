@@ -14,7 +14,6 @@ vim.lsp.enable({
   "css_variables",
   "cssls",
   "cssmodules_ls",
-  "cssls",
   "taplo",
 })
 
