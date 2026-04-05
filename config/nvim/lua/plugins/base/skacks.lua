@@ -40,6 +40,7 @@ return {
     { '<leader>fg', function() Snacks.picker.grep() end, desc = 'Grep' },
     { '<leader>fw', function() Snacks.picker.grep_word() end, desc = 'Grep Word', mode = { 'n', 'x' } },
     -- git
+    { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
     { '<leader>gs', function() Snacks.picker.git_status() end, desc = 'Git Status' },
     { '<leader>gl', function() Snacks.picker.git_log() end, desc = 'Git Log' },
     -- その他
