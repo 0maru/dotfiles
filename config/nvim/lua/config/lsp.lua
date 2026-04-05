@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         expr = true,
         buffer = buf,
         desc = "Accept the current inline completion",
-      })
+        })
     end
   end,
 })
