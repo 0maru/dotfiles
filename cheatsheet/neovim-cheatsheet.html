@@ -359,6 +359,8 @@
     <table>
       <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>ff</kbd></td><td>ファイル検索 <span class="plug">snacks.nvim</span></td></tr>
       <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>e</kbd></td><td>ファイラーを開く <span class="plug">oil.nvim</span></td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>E</kbd></td><td>ファイルツリー表示 <span class="plug">neo-tree.nvim</span></td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>?</kbd></td><td>キーマップ一覧表示 <span class="plug">which-key.nvim</span></td></tr>
     </table>
     <div class="tip"><strong>&#128161;</strong> oil.nvim ではディレクトリがバッファ。ファイル名編集 = リネーム、<kbd>dd</kbd> = 削除</div>
   </div>
@@ -502,23 +504,49 @@
   </div>
 
   <div class="card">
-    <h3><span class="icon">&#9000;&#65039;</span> 補完・フォーマット<span class="plug">native LSP</span></h3>
+    <h3><span class="icon">&#9000;&#65039;</span> 補完<span class="plug">blink.cmp</span></h3>
     <table>
       <tr><td><span class="m mi">I</span> <kbd>Ctrl+n</kbd> <span class="sep">/</span> <kbd>Ctrl+p</kbd></td><td>次 / 前の補完候補</td></tr>
       <tr><td><span class="m mi">I</span> <kbd>Ctrl+y</kbd></td><td>補完を確定</td></tr>
-      <tr><td><span class="m mi">I</span> <kbd>Tab</kbd></td><td>インライン補完を確定</td></tr>
+      <tr><td><span class="m mi">I</span> <kbd>Tab</kbd></td><td>インライン補完を確定 <span class="plug">LSP</span></td></tr>
       <tr><td><span class="m mn">N</span> <kbd>CR</kbd></td><td>Treesitter 選択拡大</td></tr>
       <tr><td><span class="m mv">V</span> <kbd>BS</kbd></td><td>Treesitter 選択縮小</td></tr>
     </table>
-    <div class="tip"><strong>&#128161;</strong> 補完は LSP autotrigger で自動表示。保存時に自動フォーマット有効</div>
+    <div class="tip"><strong>&#128161;</strong> blink.cmp が LSP・スニペット・パスを統合補完。入力中に自動表示。保存時に自動フォーマット有効</div>
   </div>
 
   <div class="card">
-    <h3><span class="icon">&#128200;</span> Git<span class="plug">snacks.nvim</span></h3>
+    <h3><span class="icon">&#128200;</span> Git（検索・UI）<span class="plug">snacks.nvim</span></h3>
     <table>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>gg</kbd></td><td>Lazygit を開く</td></tr>
       <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>gs</kbd></td><td>Git Status</td></tr>
       <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>gl</kbd></td><td>Git Log</td></tr>
     </table>
+    <div class="tip"><strong>&#128161;</strong> Lazygit でステージ・コミット・プッシュまで完結。<kbd>q</kbd> で閉じる</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128296;</span> Git ハンク操作<span class="plug">gitsigns.nvim</span></h3>
+    <table>
+      <tr><td colspan="2" style="color:#cba6f7; font-size:0.78rem; padding:3px 0">ナビゲーション</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>]h</kbd> <span class="sep">/</span> <kbd>[h</kbd></td><td>次 / 前のハンク</td></tr>
+      <tr><td colspan="2" style="color:#cba6f7; font-size:0.78rem; padding:3px 0">ステージ・リセット</td></tr>
+      <tr><td><span class="m mn">N</span><span class="m mv">V</span> <kbd class="leader">Space</kbd><kbd>hs</kbd></td><td>ハンクをステージ</td></tr>
+      <tr><td><span class="m mn">N</span><span class="m mv">V</span> <kbd class="leader">Space</kbd><kbd>hr</kbd></td><td>ハンクをリセット</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hS</kbd></td><td>バッファ全体をステージ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hu</kbd></td><td>ステージしたハンクを戻す</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hR</kbd></td><td>バッファ全体をリセット</td></tr>
+      <tr><td colspan="2" style="color:#cba6f7; font-size:0.78rem; padding:3px 0">表示・Blame</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hP</kbd></td><td>ハンクをプレビュー</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hb</kbd></td><td>行の blame を表示</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>tb</kbd></td><td>行 blame をトグル</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hd</kbd></td><td>Diff（current vs index）</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>hD</kbd></td><td>Diff（current vs HEAD）</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>td</kbd></td><td>削除行の表示をトグル</td></tr>
+      <tr><td colspan="2" style="color:#cba6f7; font-size:0.78rem; padding:3px 0">テキストオブジェクト</td></tr>
+      <tr><td><span class="m mv">V</span> <kbd>ih</kbd></td><td>ハンクを選択（inner hunk）</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> <kbd>]h</kbd> でハンク移動 → <kbd class="leader">Space</kbd><kbd>hP</kbd> でプレビュー → <kbd class="leader">Space</kbd><kbd>hs</kbd> でステージの流れが便利</div>
   </div>
 
   <div class="card">
@@ -527,6 +555,41 @@
       <tr><td><span class="m mn">N</span> <kbd class="leader">Space</kbd><kbd>tt</kbd></td><td>ターミナルをトグル</td></tr>
     </table>
     <div class="tip"><strong>&#128161;</strong> ターミナルモードから <kbd class="leader">Space</kbd><kbd>tt</kbd> で閉じる。<kbd>Esc</kbd> で NORMAL モードに戻る</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128203;</span> Diff・マージ<span class="plug">diffview.nvim</span></h3>
+    <table>
+      <tr><td><span class="m mc">C</span> <kbd>:DiffviewOpen</kbd></td><td>Diff ビューを開く</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>:DiffviewClose</kbd></td><td>Diff ビューを閉じる</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>:DiffviewFileHistory</kbd></td><td>全ファイルの Git 履歴</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>:DiffviewFileHistory %</kbd></td><td>現在のファイルの Git 履歴</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> マージコンフリクト解決に最適。ファイルパネルで変更一覧、差分を横並び表示</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128202;</span> CSV ビュー<span class="plug">csvview.nvim</span></h3>
+    <table>
+      <tr><td><span class="m mc">C</span> <kbd>:CsvViewToggle</kbd></td><td>CSV テーブル表示を切替</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Tab</kbd> <span class="sep">/</span> <kbd>S-Tab</kbd></td><td>次 / 前のフィールドへ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Enter</kbd> <span class="sep">/</span> <kbd>S-Enter</kbd></td><td>次 / 前の行へ</td></tr>
+      <tr><td><span class="m mv">V</span> <kbd>if</kbd> <span class="sep">/</span> <kbd>af</kbd></td><td>フィールド選択（inner / outer）</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> CSV ファイルを開くと自動で整列表示。Excel 風のナビゲーションが可能</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#9881;&#65039;</span> 自動機能（autocmd）</h3>
+    <table>
+      <tr><td>フォーカスが外れると</td><td>変更を自動保存</td></tr>
+      <tr><td>保存時</td><td>末尾空白を自動削除（markdown 除く）</td></tr>
+      <tr><td>ヤンク時</td><td>コピー範囲を 200ms ハイライト</td></tr>
+      <tr><td>ファイルを開くと</td><td>前回のカーソル位置を復元</td></tr>
+      <tr><td>help / man / quickfix</td><td><kbd>q</kbd> で閉じる</td></tr>
+      <tr><td>括弧・引用符入力時</td><td>自動でペアを挿入 <span class="plug">nvim-autopairs</span></td></tr>
+      <tr><td>HTML/JSX タグ入力時</td><td>閉じタグを自動挿入 <span class="plug">nvim-ts-autotag</span></td></tr>
+    </table>
   </div>
 
   <div class="card">
@@ -575,6 +638,8 @@
       <tr><td>ターミナル</td><td><span class="vs-arrow">&#8594;</span> <kbd class="leader">Space</kbd><kbd>tt</kbd></td></tr>
       <tr><td>シンボル検索</td><td><span class="vs-arrow">&#8594;</span> <kbd class="leader">Space</kbd><kbd>ss</kbd></td></tr>
       <tr><td>フォーマット</td><td><span class="vs-arrow">&#8594;</span> 保存時自動</td></tr>
+      <tr><td>Git Blame</td><td><span class="vs-arrow">&#8594;</span> <kbd class="leader">Space</kbd><kbd>tb</kbd></td></tr>
+      <tr><td>Git Diff</td><td><span class="vs-arrow">&#8594;</span> <kbd class="leader">Space</kbd><kbd>hd</kbd> / <kbd>:DiffviewOpen</kbd></td></tr>
       <tr><td><kbd>Cmd+Z</kbd> / <kbd>Cmd+Shift+Z</kbd></td><td><span class="vs-arrow">&#8594;</span> <kbd>u</kbd> / <kbd>Ctrl+r</kbd></td></tr>
     </table>
   </div>
@@ -591,20 +656,37 @@
   </div>
 
   <div class="card">
-    <h3><span class="icon">&#127981;</span> プラグイン一覧</h3>
+    <h3><span class="icon">&#127981;</span> プラグイン一覧（ベース・UI）</h3>
     <table>
-      <tr><td><span class="plug">snacks.nvim</span></td><td>Picker / Terminal / Notifier</td></tr>
+      <tr><td><span class="plug">snacks.nvim</span></td><td>Picker / Terminal / Lazygit / Notifier</td></tr>
       <tr><td><span class="plug">oil.nvim</span></td><td>バッファ形式ファイラー</td></tr>
+      <tr><td><span class="plug">neo-tree.nvim</span></td><td>ファイルツリーエクスプローラー</td></tr>
+      <tr><td><span class="plug">which-key.nvim</span></td><td>キーマップヒント表示</td></tr>
+      <tr><td><span class="plug">smart-splits.nvim</span></td><td>ウィンドウ分割・リサイズ管理</td></tr>
       <tr><td><span class="plug">bufferline.nvim</span></td><td>バッファタブ表示</td></tr>
-      <tr><td><span class="plug">dropbar.nvim</span></td><td>Winbar シンボルピッカー</td></tr>
-      <tr><td><span class="plug">flash.nvim</span></td><td>高速ジャンプ</td></tr>
-      <tr><td><span class="plug">namu.nvim</span></td><td>LSP シンボル検索</td></tr>
       <tr><td><span class="plug">lualine.nvim</span></td><td>ステータスライン</td></tr>
-      <tr><td><span class="plug">hlchunk.nvim</span></td><td>チャンク / インデントガイド</td></tr>
-      <tr><td><span class="plug">tiny-inline-diagnostic</span></td><td>インライン診断表示</td></tr>
-      <tr><td><span class="plug">lsp_signature.nvim</span></td><td>関数シグネチャ表示</td></tr>
+      <tr><td><span class="plug">dropbar.nvim</span></td><td>Winbar シンボルピッカー</td></tr>
+      <tr><td><span class="plug">github-nvim-theme</span></td><td>GitHub Dark Dimmed カラースキーム</td></tr>
+      <tr><td><span class="plug">nvim-web-devicons</span></td><td>ファイルタイプアイコン</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#127981;</span> プラグイン一覧（エディタ・LSP・Git）</h3>
+    <table>
+      <tr><td><span class="plug">blink.cmp</span></td><td>補完エンジン（LSP / スニペット / パス）</td></tr>
+      <tr><td><span class="plug">flash.nvim</span></td><td>高速ジャンプ</td></tr>
+      <tr><td><span class="plug">nvim-treesitter</span></td><td>シンタックスハイライト / テキストオブジェクト</td></tr>
+      <tr><td><span class="plug">nvim-autopairs</span></td><td>括弧・引用符の自動ペア</td></tr>
       <tr><td><span class="plug">nvim-ts-autotag</span></td><td>HTML/JSX タグ自動閉じ</td></tr>
-      <tr><td><span class="plug">csvview.nvim</span></td><td>CSV テーブル表示</td></tr>
+      <tr><td><span class="plug">namu.nvim</span></td><td>LSP シンボル検索</td></tr>
+      <tr><td><span class="plug">tiny-inline-diagnostic</span></td><td>インライン診断表示</td></tr>
+      <tr><td><span class="plug">hlchunk.nvim</span></td><td>チャンク / インデントガイド</td></tr>
+      <tr><td><span class="plug">csvview.nvim</span></td><td>CSV テーブル表示・ナビゲーション</td></tr>
+      <tr><td><span class="plug">gitsigns.nvim</span></td><td>Git サイン / blame / ハンク操作</td></tr>
+      <tr><td><span class="plug">diffview.nvim</span></td><td>Diff / マージコンフリクト UI</td></tr>
+      <tr><td><span class="plug">typescript-tools.nvim</span></td><td>TypeScript / JavaScript LSP</td></tr>
+      <tr><td><span class="plug">rustaceanvim</span></td><td>Rust 開発サポート</td></tr>
     </table>
   </div>
 
@@ -612,7 +694,8 @@
 
 <p class="footer">
   0maru's dotfiles &mdash; Neovim Cheatsheet &mdash; Generated from config/nvim/<br>
-  TS / Go / Python / Rust / Dart / Lua / HTML / CSS / TOML / YAML / JSON 対応
+  TS / Go / Python / Rust / Dart / Lua / HTML / CSS / Vue / TOML / YAML / JSON 対応<br>
+  29 plugins / lazy.nvim &mdash; Last updated: 2026-04-06
 </p>
 
 </body>
