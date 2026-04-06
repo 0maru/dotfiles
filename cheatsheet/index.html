@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheatsheets - 0maru's dotfiles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    color: #cba6f7;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: #a6adc8;
+    margin-bottom: 40px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 960px;
+    width: 100%;
+  }
+
+  a.card {
+    background: #181825;
+    border: 1px solid #313244;
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  a.card:hover {
+    border-color: rgba(203,166,247,0.4);
+    transform: translateY(-3px);
+  }
+
+  .card-icon {
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .card-neovim .card-title { color: #a6e3a1; }
+  .card-wezterm .card-title { color: #89b4fa; }
+  .card-aerospace .card-title { color: #cba6f7; }
+
+  .card-desc {
+    font-size: 0.84rem;
+    color: #a6adc8;
+    line-height: 1.5;
+  }
+
+  .footer {
+    margin-top: 48px;
+    font-size: 0.78rem;
+    color: #585b70;
+  }
+
+  .footer a {
+    color: #585b70;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .footer a:hover { color: #a6adc8; }
+
+  @media (max-width: 720px) {
+    .cards { grid-template-columns: 1fr; }
+    body { padding: 16px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #1e1e2e; }
+    a.card { border: 1px solid #ccc; background: #fafafa; }
+    .card-title { color: #333 !important; }
+    .card-desc { color: #666; }
+    .footer { color: #999; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Cheatsheets</h1>
+<p class="subtitle">0maru's dotfiles</p>
+
+<div class="cards">
+
+  <a class="card card-neovim" href="neovim-cheatsheet.html">
+    <div class="card-icon">&#9997;&#65039;</div>
+    <div class="card-title">Neovim</div>
+    <div class="card-desc">LazyVim + Native LSP のキーバインド。モード別操作、テキストオブジェクト、LSP、プラグインショートカット。</div>
+  </a>
+
+  <a class="card card-wezterm" href="wezterm-cheatsheet.html">
+    <div class="card-icon">&#128187;</div>
+    <div class="card-title">WezTerm</div>
+    <div class="card-desc">Leader キー (Ctrl+;) ベースのターミナル操作。タブ・ペイン管理、Copy/Setting モード、オーバーレイペイン。</div>
+  </a>
+
+  <a class="card card-aerospace" href="aerospace-cheatsheet.html">
+    <div class="card-icon">&#127744;</div>
+    <div class="card-title">AeroSpace</div>
+    <div class="card-desc">Alt キーベースのタイル型ウィンドウマネージャー。ワークスペース切替、モニター配置、アプリ自動振り分け。</div>
+  </a>
+
+</div>
+
+<p class="footer">
+  <a href="https://github.com/0maru/dotfiles">github.com/0maru/dotfiles</a>
+</p>
+
+</body>
+</html>

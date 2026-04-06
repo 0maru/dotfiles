@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WezTerm Cheatsheet - 0maru's dotfiles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    padding: 24px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #cba6f7;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #a6adc8;
+    margin-bottom: 8px;
+  }
+
+  .leader-info {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #a6adc8;
+    margin-bottom: 24px;
+  }
+
+  .leader-info kbd.leader {
+    background: linear-gradient(135deg, rgba(203,166,247,0.25), rgba(180,190,254,0.25));
+    border-color: #cba6f7;
+    color: #cba6f7;
+  }
+
+  /* Mode cards */
+  .modes-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    justify-content: center;
+  }
+
+  .mode-card {
+    background: #181825;
+    border: 1px solid #313244;
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+  }
+
+  .mode-card .mode-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .mode-card .mode-key { font-size: 0.78rem; color: #a6adc8; }
+
+  /* Stage headers */
+  .stage-divider {
+    max-width: 1200px;
+    margin: 32px auto 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #313244;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stage-divider:first-of-type { margin-top: 0; }
+
+  .stage-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stage-1 .stage-num { background: rgba(166,227,161,0.15); color: #a6e3a1; }
+  .stage-2 .stage-num { background: rgba(137,180,250,0.15); color: #89b4fa; }
+  .stage-3 .stage-num { background: rgba(203,166,247,0.15); color: #cba6f7; }
+
+  .stage-divider h2 { font-size: 1.1rem; }
+  .stage-1 h2 { color: #a6e3a1; }
+  .stage-2 h2 { color: #89b4fa; }
+  .stage-3 h2 { color: #cba6f7; }
+
+  .stage-desc { font-size: 0.8rem; color: #a6adc8; margin-left: auto; }
+
+  /* Card grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #181825;
+    border: 1px solid #313244;
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: rgba(203,166,247,0.3); }
+
+  .card h3 {
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #313244;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stage-1-cards .card h3 { color: #a6e3a1; }
+  .stage-2-cards .card h3 { color: #89b4fa; }
+  .stage-3-cards .card h3 { color: #cba6f7; }
+
+  .icon { font-size: 1.05rem; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; }
+  tr { border-bottom: 1px solid #313244; }
+  tr:last-child { border-bottom: none; }
+  tr:hover { background: rgba(205,214,244,0.02); }
+
+  td {
+    padding: 4px 0;
+    font-size: 0.84rem;
+    vertical-align: top;
+  }
+
+  td:first-child {
+    width: 44%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  td:last-child { color: #a6adc8; }
+
+  /* Keys */
+  kbd {
+    background: #313244;
+    border: 1px solid #45475a;
+    border-bottom: 2px solid #585b70;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+    font-size: 0.82rem;
+    color: #cdd6f4;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 1px 0;
+    line-height: 1.5;
+  }
+
+  kbd.leader {
+    background: linear-gradient(135deg, rgba(203,166,247,0.2), rgba(180,190,254,0.2));
+    border-color: #cba6f7;
+    color: #cba6f7;
+  }
+
+  .sep { color: #585b70; margin: 0 2px; font-size: 0.75rem; }
+
+  /* Tips */
+  .tip {
+    background: rgba(249,226,175,0.06);
+    border-left: 3px solid #f9e2af;
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: #a6adc8;
+  }
+
+  .tip strong { color: #f9e2af; }
+
+  /* Mode badges */
+  .m {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 0px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-right: 3px;
+    vertical-align: middle;
+  }
+
+  .mn { background: #89b4fa; color: #1e1e2e; }  /* Normal */
+  .mc { background: #a6e3a1; color: #1e1e2e; }  /* Copy */
+  .ms { background: #f9e2af; color: #1e1e2e; }  /* Setting */
+  .msr { background: #fab387; color: #1e1e2e; }  /* Search */
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #313244;
+    font-size: 0.78rem;
+    color: #585b70;
+  }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    body { padding: 14px; }
+    td:first-child { width: auto; }
+  }
+
+  @media print {
+    body { background: #fff; color: #1e1e2e; padding: 12px; }
+    .card { border: 1px solid #ccc; background: #fafafa; }
+    .card h3 { color: #333 !important; border-color: #ddd; }
+    .stage-divider { border-color: #ccc; }
+    .stage-divider h2 { color: #333 !important; }
+    kbd { background: #eee; border-color: #ccc; color: #333; }
+    kbd.leader { background: #e8e0f0; color: #7c3aed; }
+    .m { color: #fff !important; }
+    .mode-card { background: #f5f5f5; border-color: #ddd; }
+    .tip { border-left-width: 2px; }
+    .footer { display: none; }
+    tr:hover { background: none; }
+  }
+</style>
+</head>
+<body>
+
+<h1>WezTerm Cheatsheet</h1>
+<p class="subtitle">0maru's dotfiles &mdash; github_dark_dimmed / Monaspace Krypton</p>
+<p class="leader-info"><kbd class="leader">Ctrl+;</kbd> = Leader (2秒タイムアウト) &nbsp;|&nbsp; ALT キーは Aerospace が占有のため使用禁止</p>
+
+<!-- Modes -->
+<div class="modes-row">
+  <div class="mode-card">
+    <div class="mode-name" style="color:#89b4fa">NORMAL</div>
+    <div class="mode-key">通常操作モード</div>
+  </div>
+  <div class="mode-card">
+    <div class="mode-name" style="color:#a6e3a1">COPY</div>
+    <div class="mode-key"><kbd class="leader">Leader</kbd><kbd>}</kbd> で入る</div>
+  </div>
+  <div class="mode-card">
+    <div class="mode-name" style="color:#f9e2af">SETTING</div>
+    <div class="mode-key"><kbd class="leader">Leader</kbd><kbd>s</kbd> で入る</div>
+  </div>
+  <div class="mode-card">
+    <div class="mode-name" style="color:#fab387">SEARCH</div>
+    <div class="mode-key">Copy モードで <kbd>/</kbd></div>
+  </div>
+</div>
+
+<!-- ===== Stage 1: 基本操作 ===== -->
+<div class="stage-divider stage-1">
+  <span class="stage-num">Stage 1</span>
+  <h2>基本操作</h2>
+  <span class="stage-desc">まずこれだけ覚えて WezTerm で生き残る</span>
+</div>
+
+<div class="grid stage-1-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#9881;</span> 一般</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+Shift+R</kbd></td><td>設定リロード</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+P</kbd></td><td>コマンドパレット</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+Q</kbd></td><td>アプリ終了</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+F</kbd></td><td>検索</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+C</kbd></td><td>コピー</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+V</kbd></td><td>貼り付け</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+Space</kbd></td><td>クイックセレクト</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128195;</span> タブ管理</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+T</kbd></td><td>新しいタブ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+W</kbd></td><td>タブを閉じる</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+E</kbd></td><td>タブ一覧（ナビゲーター）</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+Tab</kbd></td><td>次のタブ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+Shift+Tab</kbd></td><td>前のタブ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Cmd+1</kbd>〜<kbd>9</kbd></td><td>タブ1〜9へ直接移動</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>,</kbd></td><td>タブ名を変更</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> タブ名変更で空文字を入力するとカスタム名がリセットされる</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128295;</span> ペイン操作</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>v</kbd></td><td>上下に分割</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>s</kbd></td><td>左右に分割（→ Setting モード）</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+W</kbd></td><td>ペインを閉じる</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>z</kbd></td><td>ペインのズーム切り替え</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#127939;</span> ペイン移動（Vim風 hjkl）</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+H</kbd></td><td>左のペインへ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+J</kbd></td><td>下のペインへ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+K</kbd></td><td>上のペインへ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+L</kbd></td><td>右のペインへ</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===== Stage 2: ツール・レイアウト ===== -->
+<div class="stage-divider stage-2">
+  <span class="stage-num">Stage 2</span>
+  <h2>ツール・レイアウト</h2>
+  <span class="stage-desc">オーバーレイペインとグリッドレイアウト</span>
+</div>
+
+<div class="grid stage-2-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#128640;</span> ツール起動（オーバーレイペイン）</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>l</kbd></td><td>lazygit を起動</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>n</kbd></td><td>Neovim を起動</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>h</kbd></td><td>Helix を起動</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> オーバーレイは下方向に分割→ズームでフルスクリーン表示。コマンドパレットから Claude Code も起動可能</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128200;</span> グリッドレイアウト</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd class="leader">Leader</kbd><kbd>g</kbd></td><td>3列レイアウトを一括作成</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> 左1/3 + 右上1/3 + 右下1/3 のグリッドを一発で構築</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128483;</span> プロンプト間スクロール</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+Shift+P</kbd></td><td>前のプロンプトへ</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+Shift+N</kbd></td><td>次のプロンプトへ</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> シェルのセマンティックゾーンを利用。長い出力をスキップして前後のコマンドにジャンプ</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128027;</span> デバッグ・その他</h3>
+    <table>
+      <tr><td><span class="m mn">N</span> <kbd>Ctrl+L</kbd></td><td>デバッグオーバーレイ表示</td></tr>
+      <tr><td><span class="m mn">N</span> <kbd>Shift+Enter</kbd></td><td>改行を送信（Claude Code マルチライン入力用）</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===== Stage 3: モード別操作 ===== -->
+<div class="stage-divider stage-3">
+  <span class="stage-num">Stage 3</span>
+  <h2>モード別操作</h2>
+  <span class="stage-desc">Copy / Setting / Search モードの詳細</span>
+</div>
+
+<div class="grid stage-3-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#128203;</span> Copy モード &mdash; カーソル移動</h3>
+    <table>
+      <tr><td><span class="m mc">C</span> <kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td>&#8592; &#8595; &#8593; &#8594;</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>w</kbd> <span class="sep">/</span> <kbd>b</kbd> <span class="sep">/</span> <kbd>e</kbd></td><td>次の単語 / 前の単語 / 単語末尾</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>0</kbd> <span class="sep">/</span> <kbd>^</kbd> <span class="sep">/</span> <kbd>$</kbd></td><td>行頭 / 行頭(空白除く) / 行末</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>g</kbd> <span class="sep">/</span> <kbd>G</kbd></td><td>バッファ先頭 / 末尾</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>H</kbd> <span class="sep">/</span> <kbd>M</kbd> <span class="sep">/</span> <kbd>L</kbd></td><td>画面上端 / 中央 / 下端</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>Ctrl+U</kbd> <span class="sep">/</span> <kbd>Ctrl+D</kbd></td><td>半ページ上 / 下</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>Ctrl+B</kbd> <span class="sep">/</span> <kbd>Ctrl+F</kbd></td><td>1ページ上 / 下</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#9999;&#65039;</span> Copy モード &mdash; 選択・ヤンク</h3>
+    <table>
+      <tr><td><span class="m mc">C</span> <kbd>v</kbd></td><td>文字単位選択</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>V</kbd></td><td>行単位選択</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>Ctrl+V</kbd></td><td>矩形選択</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>y</kbd></td><td>ヤンク（コピーしてモード終了）</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128269;</span> Copy モード &mdash; 検索・ジャンプ</h3>
+    <table>
+      <tr><td><span class="m mc">C</span> <kbd>/</kbd></td><td>検索パターンを入力（→ Search モード）</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>n</kbd> <span class="sep">/</span> <kbd>N</kbd></td><td>次のマッチ / 前のマッチ</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>f</kbd>{char}</td><td>前方の文字へジャンプ</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>F</kbd>{char}</td><td>後方の文字へジャンプ</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>t</kbd>{char}</td><td>前方の文字の手前へ</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>T</kbd>{char}</td><td>後方の文字の手前へ</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>[</kbd> <span class="sep">/</span> <kbd>]</kbd></td><td>前 / 次のセマンティックゾーン</td></tr>
+      <tr><td><span class="m mc">C</span> <kbd>Esc</kbd> <span class="sep">/</span> <kbd>q</kbd></td><td>Copy モード終了</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128270;</span> Search モード</h3>
+    <table>
+      <tr><td><span class="m msr">S</span> <kbd>Enter</kbd></td><td>前のマッチへ（確定）</td></tr>
+      <tr><td><span class="m msr">S</span> <kbd>Ctrl+N</kbd></td><td>次のマッチへ</td></tr>
+      <tr><td><span class="m msr">S</span> <kbd>Ctrl+P</kbd></td><td>前のマッチへ</td></tr>
+      <tr><td><span class="m msr">S</span> <kbd>Ctrl+R</kbd></td><td>マッチ方式を切り替え（文字列/正規表現）</td></tr>
+      <tr><td><span class="m msr">S</span> <kbd>Ctrl+U</kbd></td><td>検索パターンをクリア</td></tr>
+      <tr><td><span class="m msr">S</span> <kbd>Esc</kbd></td><td>検索を終了</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#9879;&#65039;</span> Setting モード（ペインリサイズ・透過度）</h3>
+    <table>
+      <tr><td><span class="m ms">S</span> <kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td>ペインリサイズ（1セル単位）</td></tr>
+      <tr><td><span class="m ms">S</span> <kbd>1</kbd>〜<kbd>9</kbd></td><td>ペイン高さを 10%〜90% に設定</td></tr>
+      <tr><td><span class="m ms">S</span> <kbd>Ctrl+1</kbd>〜<kbd>9</kbd></td><td>ペイン幅を 10%〜90% に設定</td></tr>
+      <tr><td><span class="m ms">S</span> <kbd>;</kbd></td><td>透過度を上げる（不透明に）</td></tr>
+      <tr><td><span class="m ms">S</span> <kbd>-</kbd></td><td>透過度を下げる（透明に）</td></tr>
+      <tr><td><span class="m ms">S</span> <kbd>0</kbd></td><td>透過度をリセット</td></tr>
+      <tr><td><span class="m ms">S</span> <kbd>Esc</kbd> <span class="sep">/</span> <kbd>q</kbd></td><td>Setting モード終了</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> Setting モードではキーを押し続けるとリピートされる。微調整に便利</div>
+  </div>
+
+</div>
+
+<p class="footer">
+  0maru's dotfiles &mdash; WezTerm Cheatsheet &mdash; Generated from config/wezterm/keybindings.lua
+</p>
+
+</body>
+</html>
