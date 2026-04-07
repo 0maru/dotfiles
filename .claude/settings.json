@@ -1,6 +1,12 @@
 {
   "permissions": {
-    "allow": ["Bash(aerospace *)", "mcp__serena", "mcp__github"],
+    "allow": [
+      "Bash(aerospace *)",
+      "mcp__serena",
+      "mcp__github",
+      "Read(/temp)",
+      "Write(/temp)"
+    ],
     "deny": []
   },
   "model": "opus[1m]",
