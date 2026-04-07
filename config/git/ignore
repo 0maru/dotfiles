@@ -4,6 +4,9 @@
 # vim
 .*.swp
 
+# nvim
+nvim.log
+
 **/.claude/settings.local.json
 
 # claude code
