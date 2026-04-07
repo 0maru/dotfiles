@@ -1,8 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
-  home.username = "0maru";
-  home.homeDirectory = "/Users/0maru";
+  home.username = username;
+  home.homeDirectory = "/Users/${username}";
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
