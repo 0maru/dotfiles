@@ -4,8 +4,8 @@
       "Bash(aerospace *)",
       "mcp__serena",
       "mcp__github",
-      "Read(/temp)",
-      "Write(/temp)"
+      "Read(/tmp)",
+      "Write(/tmp)"
     ],
     "deny": []
   },
