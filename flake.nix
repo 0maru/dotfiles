@@ -13,11 +13,14 @@
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
-      homeConfigurations."0maru" = home-manager.lib.homeManagerConfiguration {
+      mkHome = username: home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./nix/home.nix ];
+        extraSpecialArgs = { inherit username; };
       };
+    in
+    {
+      homeConfigurations."0maru" = mkHome "0maru";
+      homeConfigurations."4maru" = mkHome "4maru";
     };
 }
