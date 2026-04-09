@@ -37,5 +37,8 @@ opt.splitbelow = true
 opt.scrolloff = 8
 opt.sidescrolloff = 8
 
+opt.listchars = { tab = ">.", trail = "-", eol = "↲", nbsp = '%', space = '･' }
+opt.list = true
+
 -- 補完
 opt.completeopt = { "menu", "menuone", "noselect" }
