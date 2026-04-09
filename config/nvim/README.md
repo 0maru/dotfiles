@@ -24,6 +24,7 @@
 | [shellRaining/hlchunk.nvim](https://github.com/shellRaining/hlchunk.nvim) | インデント・チャンクのハイライト |
 | [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) | 括弧・引用符の自動ペア |
 | [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | シンタックスハイライト・テキストオブジェクト |
+| [nvim-treesitter/nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) | スコープのスティッキー表示 |
 
 ### git
 

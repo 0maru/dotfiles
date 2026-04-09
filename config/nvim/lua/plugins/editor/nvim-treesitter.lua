@@ -82,4 +82,20 @@ return {
       end
     end,
   },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      max_lines = 3,
+      min_window_height = 20,
+      mode = "cursor",
+      multiwindow = false,
+      trim_scope = "outer",
+      separator = nil,
+    },
+    keys = {
+      { "<Leader>tc", "<cmd>TSContext toggle<cr>", desc = "Toggle Treesitter Context" },
+    },
+  },
 }
