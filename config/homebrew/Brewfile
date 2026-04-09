@@ -18,6 +18,7 @@ brew "k6"
 brew "k9s"
 brew "mas"
 brew "ou"
+brew "pngpaste"
 brew "sketchybar"
 
 # Application

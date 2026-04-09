@@ -274,5 +274,6 @@
   "theme": "dark-colorblind",
   "notifications": false,
   "autoCompact": false,
-  "showTurnDuration": true
+  "showTurnDuration": true,
+  "effortLevel": "high"
 }
