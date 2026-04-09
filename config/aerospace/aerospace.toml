@@ -10,8 +10,10 @@ config-version = 2
 after-startup-command = []
 
 # Notify sketchybar on workspace change
-exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
 ]
 
 # Start AeroSpace at login
@@ -50,8 +52,22 @@ automatically-unhide-macos-hidden-apps = true
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9",
-                         "B", "C", "E", "S", "T"]
+persistent-workspaces = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "B",
+  "C",
+  "E",
+  "S",
+  "T",
+]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -61,7 +77,7 @@ on-mode-changed = []
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
-    preset = 'qwerty'
+preset = 'qwerty'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:…
@@ -72,53 +88,71 @@ on-mode-changed = []
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 0
-    inner.vertical =   0
-    outer.left =       0
-    outer.bottom =     0
-    outer.top =        [
-      {monitor.EV2750 = 41},
-      {monitor.SDM27Q10S = 41},
-      {monitor.'EX-LDQ273DS \(1\)' = 41},
-      {monitor.'EX-LDQ273DS \(2\)' = 41},
-      {monitor.'Sidecar Display \(AirPlay\)' = 41},
-      {monitor.'DELL S2721DS' = 41},
-      {monitor.'T27h-30' = 41},
-      {monitor.'KA270H' = 41},
-      {monitor.'KA270H \(1\)' = 41},
-      {monitor.'KA270H \(2\)' = 41},
-      0
-    ]
-    outer.right =      0
+inner.horizontal = 0
+inner.vertical = 0
+outer.left = 0
+outer.bottom = 0
+outer.top = 41
+outer.right = 0
 
 [workspace-to-monitor-force-assignment]
-    # メインモニター: 文字入力系（開発）
-    1 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    2 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    3 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    4 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    5 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    6 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    7 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    8 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    9 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']
-    E = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']   # Editor (VS Code)
-    S = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(2\)', '1']   # Slack
+# メインモニター: 文字入力系（開発）
+1 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+2 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+3 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+4 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+5 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+6 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+7 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+8 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+9 = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1']
+E = [
+  'EV2750',
+  'EX-LDQ273DS \(1\)',
+  'T27h-30',
+  'KA270H \(1\)',
+  '1',
+] # Editor (VS Code)
+S = ['EV2750', 'EX-LDQ273DS \(1\)', 'T27h-30', 'KA270H \(1\)', '1'] # Slack
 
-    # サブモニター: 調べ物・参照系
-    A = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    B = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']  # Browser (Arc/Chrome)
-    C = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    D = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    F = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
-    G = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(1\)', '2']
+# サブモニター: 調べ物・参照系
+A = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+B = [
+  'SDM27Q10S',
+  'EX-LDQ273DS \(2\)',
+  'DELL S2721DS',
+  'KA270H \(2\)',
+  '2',
+] # Browser (Arc/Chrome)
+C = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+D = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+F = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+G = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
 
-    # iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
-    T = ['EV2750', 'EX-LDQ273DS \(1\)', 'KA270H \(2\)', 'KA270H','1']   # Terminal (WezTerm)
-    X = ['KA270H', 'Sidecar Display \(AirPlay\)', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Claude Desktop
-    Z = ['KA270H', 'Sidecar Display \(AirPlay\)', 'EV2750', 'EX-LDQ273DS \(2\)', '1']   # Codex
-    I = ['Sidecar Display \(AirPlay\)']
-    P = ['Sidecar Display \(AirPlay\)']
+# iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
+T = [
+  'EV2750',
+  'EX-LDQ273DS \(1\)',
+  'KA270H \(1\)',
+  'KA270H',
+  '1',
+] # Terminal (WezTerm)
+X = [
+  'KA270H',
+  'Sidecar Display \(AirPlay\)',
+  'EV2750',
+  'EX-LDQ273DS \(2\)',
+  '1',
+] # Claude Desktop
+Z = [
+  'KA270H',
+  'Sidecar Display \(AirPlay\)',
+  'EV2750',
+  'EX-LDQ273DS \(2\)',
+  '1',
+] # Codex
+I = ['Sidecar Display \(AirPlay\)']
+P = ['Sidecar Display \(AirPlay\)']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -126,187 +160,190 @@ on-mode-changed = []
 # Fallback value (if you omit the key): mode.main.binding = {}
 [mode.main.binding]
 
-    # All possible keys:
-    # - Letters.        a, b, c, ..., z
-    # - Numbers.        0, 1, 2, ..., 9
-    # - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
-    # - F-keys.         f1, f2, ..., f20
-    # - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon,
-    #                   backtick, leftSquareBracket, rightSquareBracket, space, enter, esc,
-    #                   backspace, tab, pageUp, pageDown, home, end, forwardDelete,
-    #                   sectionSign (ISO keyboards only, european keyboards only)
-    # - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
-    #                   keypadMinus, keypadMultiply, keypadPlus
-    # - Arrows.         left, down, up, right
+# All possible keys:
+# - Letters.        a, b, c, ..., z
+# - Numbers.        0, 1, 2, ..., 9
+# - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
+# - F-keys.         f1, f2, ..., f20
+# - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon,
+#                   backtick, leftSquareBracket, rightSquareBracket, space, enter, esc,
+#                   backspace, tab, pageUp, pageDown, home, end, forwardDelete,
+#                   sectionSign (ISO keyboards only, european keyboards only)
+# - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+#                   keypadMinus, keypadMultiply, keypadPlus
+# - Arrows.         left, down, up, right
 
-    # All possible modifiers: cmd, alt, ctrl, shift
+# All possible modifiers: cmd, alt, ctrl, shift
 
-    # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+# All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-    # You can uncomment the following lines to open up terminal with alt + enter shortcut
-    # (like in i3)
-    # alt-enter = '''exec-and-forget osascript -e '
-    # tell application "Terminal"
-    #     do script
-    #     activate
-    # end tell'
-    # '''
+# See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
+# You can uncomment the following lines to open up terminal with alt + enter shortcut
+# (like in i3)
+# alt-enter = '''exec-and-forget osascript -e '
+# tell application "Terminal"
+#     do script
+#     activate
+# end tell'
+# '''
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
+# See: https://nikitabobko.github.io/AeroSpace/commands#layout
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    alt-h = 'focus left'
-    alt-j = 'focus down'
-    alt-k = 'focus up'
-    alt-l = 'focus right'
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    alt-shift-h = 'move left'
-    alt-shift-j = 'move down'
-    alt-shift-k = 'move up'
-    alt-shift-l = 'move right'
+# See: https://nikitabobko.github.io/AeroSpace/commands#move
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-    alt-minus = 'resize smart -50'
-    alt-equal = 'resize smart +50'
+# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9'
-    alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
-    alt-b = 'workspace B'
-    alt-c = 'workspace C'
-    alt-d = 'workspace D'
-    alt-e = 'workspace E'
-    alt-f = 'workspace F'
-    alt-g = 'workspace G'
-    alt-i = 'workspace I'
-    alt-m = 'workspace M'
-    alt-n = 'workspace N'
-    alt-o = 'workspace O'
-    alt-p = 'workspace P'
-    alt-q = 'workspace Q'
-    alt-r = 'workspace R'
-    alt-s = 'workspace S'
-    alt-t = 'workspace T'
-    alt-u = 'workspace U'
-    alt-v = 'workspace V'
-    alt-w = 'workspace W'
-    alt-x = 'workspace X'
-    alt-y = 'workspace Y'
-    alt-z = 'workspace Z'
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
+alt-b = 'workspace B'
+alt-c = 'workspace C'
+alt-d = 'workspace D'
+alt-e = 'workspace E'
+alt-f = 'workspace F'
+alt-g = 'workspace G'
+alt-i = 'workspace I'
+alt-m = 'workspace M'
+alt-n = 'workspace N'
+alt-o = 'workspace O'
+alt-p = 'workspace P'
+alt-q = 'workspace Q'
+alt-r = 'workspace R'
+alt-s = 'workspace S'
+alt-t = 'workspace T'
+alt-u = 'workspace U'
+alt-v = 'workspace V'
+alt-w = 'workspace W'
+alt-x = 'workspace X'
+alt-y = 'workspace Y'
+alt-z = 'workspace Z'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-6 = 'move-node-to-workspace 6'
-    alt-shift-7 = 'move-node-to-workspace 7'
-    alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace 9'
-    alt-shift-a = 'move-node-to-workspace A'
-    alt-shift-b = 'move-node-to-workspace B'
-    alt-shift-c = 'move-node-to-workspace C'
-    alt-shift-d = 'move-node-to-workspace D'
-    alt-shift-e = 'move-node-to-workspace E'
-    alt-shift-f = 'move-node-to-workspace F'
-    alt-shift-g = 'move-node-to-workspace G'
-    alt-shift-i = 'move-node-to-workspace I'
-    alt-shift-m = 'move-node-to-workspace M'
-    alt-shift-n = 'move-node-to-workspace N'
-    alt-shift-o = 'move-node-to-workspace O'
-    alt-shift-p = 'move-node-to-workspace P'
-    alt-shift-q = 'move-node-to-workspace Q'
-    alt-shift-r = 'move-node-to-workspace R'
-    alt-shift-s = 'move-node-to-workspace S'
-    alt-shift-t = 'move-node-to-workspace T'
-    alt-shift-u = 'move-node-to-workspace U'
-    alt-shift-v = 'move-node-to-workspace V'
-    alt-shift-w = 'move-node-to-workspace W'
-    alt-shift-x = 'move-node-to-workspace X'
-    alt-shift-y = 'move-node-to-workspace Y'
-    alt-shift-z = 'move-node-to-workspace Z'
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+alt-shift-a = 'move-node-to-workspace A'
+alt-shift-b = 'move-node-to-workspace B'
+alt-shift-c = 'move-node-to-workspace C'
+alt-shift-d = 'move-node-to-workspace D'
+alt-shift-e = 'move-node-to-workspace E'
+alt-shift-f = 'move-node-to-workspace F'
+alt-shift-g = 'move-node-to-workspace G'
+alt-shift-i = 'move-node-to-workspace I'
+alt-shift-m = 'move-node-to-workspace M'
+alt-shift-n = 'move-node-to-workspace N'
+alt-shift-o = 'move-node-to-workspace O'
+alt-shift-p = 'move-node-to-workspace P'
+alt-shift-q = 'move-node-to-workspace Q'
+alt-shift-r = 'move-node-to-workspace R'
+alt-shift-s = 'move-node-to-workspace S'
+alt-shift-t = 'move-node-to-workspace T'
+alt-shift-u = 'move-node-to-workspace U'
+alt-shift-v = 'move-node-to-workspace V'
+alt-shift-w = 'move-node-to-workspace W'
+alt-shift-x = 'move-node-to-workspace X'
+alt-shift-y = 'move-node-to-workspace Y'
+alt-shift-z = 'move-node-to-workspace Z'
 
-    # Monitor focus
-    alt-shift-left = 'focus-monitor left'
-    alt-shift-right = 'focus-monitor right'
+# Monitor focus
+alt-shift-left = 'focus-monitor left'
+alt-shift-right = 'focus-monitor right'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-    alt-tab = 'workspace-back-and-forth'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
+alt-tab = 'workspace-back-and-forth'
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-    alt-shift-semicolon = 'mode service'
+# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+alt-shift-semicolon = 'mode service'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-    esc = ['reload-config', 'mode main']
-    r = ['flatten-workspace-tree', 'mode main'] # reset layout
-    f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-    backspace = ['close-all-windows-but-current', 'mode main']
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = [
+  'layout floating tiling',
+  'mode main',
+] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
 
-    # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
-    #s = ['layout sticky tiling', 'mode main']
+# sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+#s = ['layout sticky tiling', 'mode main']
 
-    alt-shift-h = ['join-with left', 'mode main']
-    alt-shift-j = ['join-with down', 'mode main']
-    alt-shift-k = ['join-with up', 'mode main']
-    alt-shift-l = ['join-with right', 'mode main']
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
 
 # Application-specific rules
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected
 
 # -- 開発ツール → メインモニター --
 [[on-window-detected]]
-    if.app-id = 'com.microsoft.VSCode'
-    if.during-aerospace-startup = true
-    run = 'move-node-to-workspace E'
+if.app-id = 'com.microsoft.VSCode'
+if.during-aerospace-startup = true
+run = 'move-node-to-workspace E'
 
 [[on-window-detected]]
-    if.app-id = 'com.github.wez.wezterm'
-    run = ['layout floating', 'move-node-to-workspace T']
+if.app-id = 'com.github.wez.wezterm'
+run = ['layout floating', 'move-node-to-workspace T']
 
 # -- コミュニケーション → メインモニター --
 [[on-window-detected]]
-    if.app-id = 'com.tinyspeck.slackmacgap'
-    run = 'move-node-to-workspace S'
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace S'
 
 # -- ブラウザ → サブモニター --
 [[on-window-detected]]
-    if.app-id = 'company.thebrowser.Browser'
-    run = 'move-node-to-workspace B'
+if.app-id = 'company.thebrowser.Browser'
+run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
-    if.app-id = 'com.google.Chrome.canary'
-    run = 'move-node-to-workspace B'
+if.app-id = 'com.google.Chrome.canary'
+run = 'move-node-to-workspace B'
 
 # -- Floating のみ（ワークスペース指定なし） --
 [[on-window-detected]]
-    if.app-id = 'com.1password.1password'
-    run = 'layout floating'
+if.app-id = 'com.1password.1password'
+run = 'layout floating'
 
 [[on-window-detected]]
-    if.app-id = 'com.anthropic.claudefordesktop'
-    run = ['layout floating', 'move-node-to-workspace X']
+if.app-id = 'com.anthropic.claudefordesktop'
+run = ['layout floating', 'move-node-to-workspace X']
 
 [[on-window-detected]]
-    if.app-id = 'com.openai.codex'
-    run = ['layout floating', 'move-node-to-workspace Z']
+if.app-id = 'com.openai.codex'
+run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
-    if.app-id = 'com.apple.finder'
-    run = 'layout floating'
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
