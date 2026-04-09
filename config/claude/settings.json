@@ -233,6 +233,7 @@
     "filesystem": {
       "allowWrite": [
         "/tmp/build",
+        "/tmp",
         "~/workspaces"
       ],
       "denyRead": [
