@@ -26,3 +26,5 @@ export PIPENV_VENV_IN_PROJECT=1
 # mysql-client
 export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client@8.0/lib/pkgconfig"
 
+# 1Password ssh
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
