@@ -97,6 +97,23 @@ local function set_pane_width_percent(percent)
   end)
 end
 
+-- Neovim ペインでは CTRL+h/j/k/l をそのまま送り、
+-- それ以外では WezTerm のペイン移動として扱う
+local function is_nvim_pane(pane)
+  return pane:get_user_vars().IS_NVIM == 'true'
+end
+
+local function smart_activate_pane(key, direction)
+  return wezterm.action_callback(function(window, pane)
+    if is_nvim_pane(pane) or #window:active_tab():panes() == 1 then
+      window:perform_action(act.SendKey { key = key, mods = 'CTRL' }, pane)
+      return
+    end
+
+    window:perform_action(act.ActivatePaneDirection(direction), pane)
+  end)
+end
+
 ---------------------------------------------------------------
 -- 通常キーバインド
 ---------------------------------------------------------------
@@ -123,11 +140,11 @@ local keys = {
   { key = 'w', mods = 'CTRL', action = act.CloseCurrentPane { confirm = true } },  -- ペインを閉じる
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },                -- ペインのズーム切り替え
 
-  -- === ペイン移動（Vim風 hjkl） ===
-  { key = 'h', mods = 'CTRL', action = act.ActivatePaneDirection('Left') },   -- 左のペインへ
-  { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection('Down') },   -- 下のペインへ
-  { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection('Up') },     -- 上のペインへ
-  { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection('Right') },  -- 右のペインへ
+  -- === ペイン移動（Neovim 連携対応） ===
+  { key = 'h', mods = 'CTRL', action = smart_activate_pane('h', 'Left') },   -- 左のペインへ
+  { key = 'j', mods = 'CTRL', action = smart_activate_pane('j', 'Down') },   -- 下のペインへ
+  { key = 'k', mods = 'CTRL', action = smart_activate_pane('k', 'Up') },     -- 上のペインへ
+  { key = 'l', mods = 'CTRL', action = smart_activate_pane('l', 'Right') },  -- 右のペインへ
 
   -- === ツール起動 ===
   -- lazygit をオーバーレイペインで起動

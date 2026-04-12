@@ -28,7 +28,10 @@ require('tab').apply_to_config(config)         -- タブタイトルの表示
 -- WezTerm Agent Dashboard
 -- keybindings.apply_to_config が config.keys を丸ごと代入するため、
 -- それより後で table.insert する必要がある
--- local agent_dashboard = wezterm.plugin.require('https://github.com/0maru/wezterm-agent-dashboard')
--- agent_dashboard.apply_to_config(config)
+local agent_dashboard = wezterm.plugin.require('https://github.com/0maru/wezterm-agent-dashboard')
+agent_dashboard.setup({
+  binary_name = wezterm.home_dir .. "/.local/bin/wezterm-agent-dashboard"
+})
+agent_dashboard.apply_to_config(config)
 
 return config
