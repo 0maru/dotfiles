@@ -192,14 +192,14 @@ local keys = {
   { key = 'n', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },   -- 次のプロンプトへ
 
   -- === グリッドレイアウト ===
-  -- 3列レイアウトを一括作成（左1/3 + 右上1/3 + 右下1/3）
+  -- 4paneレイアウトを一括作成（左25% + 中央50% + 右上25% + 右下25%）
   {
     key = 'g',
     mods = 'LEADER',
     action = wezterm.action_callback(function(window, pane)
-      local right_pane = pane:split { direction = 'Right', size = 0.67 }
-      local mid_pane = right_pane:split { direction = 'Right', size = 0.5 }
-      mid_pane:split { direction = 'Bottom' }
+      local right_pane = pane:split { direction = 'Right', size = 0.75 }
+      local far_right_pane = right_pane:split { direction = 'Right', size = 0.33 }
+      far_right_pane:split { direction = 'Bottom', size = 0.3 }
       pane:activate()
     end),
   },
