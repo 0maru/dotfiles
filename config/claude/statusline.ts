@@ -54,10 +54,8 @@ function formatTokens(n: number): string {
   return `${n}`;
 }
 
-// ── Line 1: model, context, rate limits ──
 const model = data?.model?.display_name ?? "Claude";
-const parts: string[] = [`${NF_MODEL} ${model}`];
-
+const parts: string[] = [];
 const ctx = data?.context_window?.used_percentage ?? 0;
 parts.push(fmt("ctx", ctx));
 
@@ -67,17 +65,11 @@ parts.push(fmt("5h", five));
 const week = data?.rate_limits?.seven_day?.used_percentage ?? 0;
 parts.push(fmt("7d", week));
 
-const line1 = parts.join(SEP);
-
-// ── Line 2: tokens, latency ──
 const inTokens = data?.context_window?.total_input_tokens ?? 0;
 const outTokens = data?.context_window?.total_output_tokens ?? 0;
 const durationMs = data?.cost?.total_api_duration_ms ?? 0;
 const latency = (durationMs / 1000).toFixed(1);
 
-const line2 = `${NF_IN} ${formatTokens(inTokens)}${SEP}${NF_OUT} ${formatTokens(outTokens)}${SEP}${NF_CLOCK} ${latency}s`;
-
-// ── Line 3: directory, git branch ──
 const cwd: string = data?.cwd ?? "";
 const home = cwd.match(/^(\/Users\/[^/]+)/)?.[1] ?? "";
 const ghPrefix = home + "/workspaces/github.com/";
@@ -130,6 +122,8 @@ if (cwd) {
   }
 }
 
-const line3 = `${NF_FOLDER} ${dirDisplay}${gitInfo}`;
+const line1 = `${NF_MODEL} ${model} ${SEP}${NF_FOLDER} ${dirDisplay} ${SEP}${gitInfo}`;
+const line2 = parts.join(SEP);
+const line3 = `${NF_IN} ${formatTokens(inTokens)}${SEP}${NF_OUT} ${formatTokens(outTokens)}${SEP}${NF_CLOCK} ${latency}s`;
 
 Deno.stdout.writeSync(new TextEncoder().encode(`${line1}\n${line2}\n${line3}`));
