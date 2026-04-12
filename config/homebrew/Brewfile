@@ -10,6 +10,7 @@ brew "taplo"
 
 # Tools (macOS-specific / not in nixpkgs)
 brew "aerospace"
+brew "agent-browser"
 brew "awscli"
 brew "aws-cdk"
 brew "azookey"
