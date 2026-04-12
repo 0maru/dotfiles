@@ -44,7 +44,7 @@ description: |
 ### Step 1: codex review の実行
 
 ```bash
-codex review --uncommitted 2>&1 | tee /tmp/codex-code-review-output.txt
+codex --model gpt-5.4 review --uncommitted 2>&1 | tee /tmp/codex-code-review-output.txt
 ```
 
 Bash ツールの `timeout` パラメータは `300000`（5分）に設定すること。
