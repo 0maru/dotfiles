@@ -32,9 +32,6 @@ alias update='ghq list | ghq get --update --parallel'
 # tmux
 alias t='tmux attach || tmux'
 
-# lazygit
-alias lg=lazygit
-
 # flutter
 alias fcg='flutter clean && flutter pub get'
 alias fbb='flutter pub run build_runner build --delete-conflicting-outputs'
@@ -43,7 +40,10 @@ alias fbw='flutter pub run build_runner watch'
 alias globalip='curl -s https://inet-ip.info'
 
 # docker
+alias d='docker'
 alias dredis='docker run -d --rm -p 6379:6379 redis:latest'
+alias diclean='d image prune'
+alias dcclean='d container prune'
 
 # wezterm pane layout
 4pane() {
@@ -54,3 +54,46 @@ alias dredis='docker run -d --rm -p 6379:6379 redis:latest'
   wezterm cli activate-pane-direction Left
 }
 
+# ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
+function ghq-fzf() {
+  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N ghq-fzf
+bindkey '^g' ghq-fzf
+
+# fzf でgit のブランチを一覧で表示してブランチを切り替える
+function git-branches-fzf() {
+  local branch=$(
+    git branch -a |
+    fzf --preview="echo {} | tr -d ' *' | xargs git plog --color=always" |
+    head -n 1 |
+    perl -pe "s/\s//g; s/\*//g; s/remotes\/origin\///g"
+  )
+  if [ -n "$branch" ]; then
+    BUFFER="git switch $branch"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N git-branches-fzf
+bindkey '^b' git-branches-fzf
+
+
+function open_lazygit() {
+  lazygit
+}
+zle -N open_lazygit
+bindkey '^o' open_lazygit
+
+# claude
+function run_claude() {
+  BUFFER="claude --permission-mode auto"
+  zle accept-line
+}
+zle -N run_claude
+bindkey 'c;' run_claude

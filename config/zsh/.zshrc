@@ -5,7 +5,10 @@ if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
 
+# starship
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+
 eval "$(starship init zsh)"
 eval "$(sheldon source)"
 eval "$(mise activate zsh)"
@@ -37,65 +40,7 @@ zstyle ':completion:*:setopt:*' menu true select
 
 # fzf のシェル統合
 source <(fzf --zsh)
-# ghq + fzf でgit のリポジトリを一覧で表示してリポジトリを切り替える
-function ghq-fzf() {
-  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
-  if [ -n "$src" ]; then
-    BUFFER="cd $(ghq root)/$src"
-    zle accept-line
-  fi
-  zle -R -c
-}
-zle -N ghq-fzf
-bindkey '^g' ghq-fzf
-
-# fzf でgit のブランチを一覧で表示してブランチを切り替える
-function git-branches-fzf() {
-  local branch=$(
-    git branch -a |
-    fzf --preview="echo {} | tr -d ' *' | xargs git plog --color=always" |
-    head -n 1 |
-    perl -pe "s/\s//g; s/\*//g; s/remotes\/origin\///g"
-  )
-  if [ -n "$branch" ]; then
-    BUFFER="git switch $branch"
-    zle accept-line
-  fi
-  zle -R -c
-}
-zle -N git-branches-fzf
-bindkey '^b' git-branches-fzf
-
-
-function open_lazygit() {
-  lazygit
-}
-zle -N open_lazygit
-bindkey '^o' open_lazygit
-
-# claude
-function run_claude() {
-  BUFFER="claude --enable-auto-mode --permission-mode auto"
-  zle accept-line
-}
-zle -N run_claude
-bindkey 'c;' run_claude
-
-function run_claude_danger() {
-  BUFFER="claude --dangerously-skip-permissions"
-  zle accept-line
-}
-zle -N run_claude_danger
-bindkey 'c;d' run_claude_danger
-
-alias d='docker'
-alias diclean='d image prune'
-alias dcclean='d container prune'
-alias ccu='npx ccusage@latest'
-export PATH="$PATH:/$HOME/Library/Android/sdk/platform-tools"
-export PATH="$PATH:$HOME/workspaces/github.com/0maru/cwm"
-
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # Load local settings (not tracked by git)
 [[ -f "$ZDOTDIR/local.zsh" ]] && source "$ZDOTDIR/local.zsh"
+
