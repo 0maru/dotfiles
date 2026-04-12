@@ -51,6 +51,20 @@ function M.apply_to_config(config)
   config.inactive_pane_hsb = { saturation = 0.85, brightness = 0.7 }
 
   ---------------------------------------------------------------
+  -- ベル設定
+  -- Claude Code の Stop/Notification フックから BEL (\a) を送信して
+  -- WezTerm の `bell` イベントでタブ未読マーカーを点ける（tab.lua 参照）。
+  -- 音は鳴らさず、視覚的なフラッシュも控えめにする。
+  ---------------------------------------------------------------
+  config.audible_bell = "Disabled"
+  config.visual_bell = {
+    fade_in_function = 'EaseIn',
+    fade_in_duration_ms = 0,
+    fade_out_function = 'EaseOut',
+    fade_out_duration_ms = 0,
+  }
+
+  ---------------------------------------------------------------
   -- レンダリング設定
   ---------------------------------------------------------------
   -- レンダリングバックエンド（WebGpu で GPU アクセラレーション）
