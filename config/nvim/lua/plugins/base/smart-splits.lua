@@ -1,4 +1,7 @@
 return {
   'mrjones2014/smart-splits.nvim',
-  opts = {}
+  opts = {
+    at_edge = 'stop',
+    multiplexer_integration = 'wezterm',
+  }
 }

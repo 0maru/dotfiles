@@ -3,6 +3,13 @@ vim.g.maplocalleader = " "
 
 local map = vim.keymap.set
 
+-- プラグイン読込前でも壊れないよう、実行時に smart-splits を解決する
+local function smart_move(direction)
+  return function()
+    require("smart-splits")[direction]()
+  end
+end
+
 -- 保存 / 終了
 map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save" })
 map("n", "<Leader>q", "<Cmd>q<CR>", { desc = "Quit" })
@@ -11,11 +18,11 @@ map("n", "<Leader>q", "<Cmd>q<CR>", { desc = "Quit" })
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
--- ウィンドウ間の移動（smart-splits が上書きする前のフォールバック）
-map("n", "<C-h>", "<C-w>h", { desc = "Move to left split" })
-map("n", "<C-j>", "<C-w>j", { desc = "Move to lower split" })
-map("n", "<C-k>", "<C-w>k", { desc = "Move to upper split" })
-map("n", "<C-l>", "<C-w>l", { desc = "Move to right split" })
+-- smart-splits 経由で Neovim と WezTerm のペイン移動を統一
+map("n", "<C-h>", smart_move("move_cursor_left"), { desc = "Move to left split" })
+map("n", "<C-j>", smart_move("move_cursor_down"), { desc = "Move to lower split" })
+map("n", "<C-k>", smart_move("move_cursor_up"), { desc = "Move to upper split" })
+map("n", "<C-l>", smart_move("move_cursor_right"), { desc = "Move to right split" })
 
 -- バッファの移動
 map("n", "<S-h>", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
