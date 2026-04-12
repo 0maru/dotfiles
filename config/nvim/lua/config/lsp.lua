@@ -27,6 +27,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
     end
 
+    if client:supports_method("textDocument/codeAction") then
+      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { buffer = buf, desc = "Code action" })
+    end
+
     if client:supports_method("textDocument/hover") then
       vim.keymap.set("n", "<leader>k",
         function() vim.lsp.buf.hover({ border = "single" }) end,
