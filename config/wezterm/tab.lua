@@ -12,6 +12,11 @@ local M = {}
 -- LEADER+, で設定したカスタムタブ名を保持するテーブル
 M.custom_title = {}
 
+-- Claude Code の Stop/Notification フックから BEL を受けたタブ ID を記録するテーブル。
+-- key: tostring(tab_id), value: true
+-- format-tab-title の中で、対応するタブがアクティブ化された瞬間にエントリを削除する。
+local bell_tabs = {}
+
 -- プロセス名に対応する Nerd Font アイコンと色のマッピング
 local process_icons = {
   nvim = { icon = wezterm.nerdfonts.linux_neovim, color = '#73C936' },
@@ -64,6 +69,16 @@ local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
 
 function M.apply_to_config(config)
+  -- BEL (\a) を受信したタブを記録する。
+  -- Claude Code の Stop/Notification フックが ~/.claude/hooks/wezterm-bell.sh を
+  -- 経由して BEL を送ると、この pane の属するタブ id がここに積まれる。
+  wezterm.on('bell', function(window, pane)
+    local tab = pane:tab()
+    if tab then
+      bell_tabs[tostring(tab:tab_id())] = true
+    end
+  end)
+
   -- タブタイトルのフォーマットをカスタマイズするイベントハンドラ
   wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
     -- タブの状態に応じた配色
@@ -76,9 +91,22 @@ function M.apply_to_config(config)
       foreground = '#E0FFFF'
     end
 
+    -- アクティブ化した瞬間に未読マーカーをクリアする。
+    -- format-tab-title はタブ描画のたびに呼ばれるので、ここに置けば自然に消える。
+    local tab_id_key = tostring(tab.tab_id)
+    if tab.is_active then
+      bell_tabs[tab_id_key] = nil
+    end
+    local has_unread = bell_tabs[tab_id_key] == true
+
     local edge_foreground = background
     local title = get_tab_title(tab)
     local proc = get_process_icon(tab.active_pane)
+
+    -- 未読マーカー（Claude Code の Stop/Notification フック由来の BEL を受信したタブに表示）
+    -- 未読がなければ空文字 + 背景色なので描画されない（レイヤー数を一定に保つ）
+    local marker_color = has_unread and '#FFB454' or background
+    local marker_text = has_unread and (' ' .. wezterm.nerdfonts.md_bell_ring) or ''
 
     -- Claude Code の実行状態をアイコンで表示
     -- user_vars.claude_status は Claude Code が自動設定する
@@ -89,7 +117,7 @@ function M.apply_to_config(config)
     end
 
     -- Powerline 風セパレータ付きのタブタイトルを構築
-    -- 構成: [左矢印][アイコン][番号: タイトル][右矢印]
+    -- 構成: [左矢印][アイコン][未読マーカー][番号: タイトル][右矢印]
     return {
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
@@ -97,6 +125,8 @@ function M.apply_to_config(config)
       { Background = { Color = background } },
       { Foreground = { Color = proc.color } },
       { Text = ' ' .. proc.icon },
+      { Foreground = { Color = marker_color } },
+      { Text = marker_text },
       { Foreground = { Color = foreground } },
       { Text = ' ' .. (tab.tab_index + 1) .. ': ' .. title .. status_icon .. ' ' },
       { Background = { Color = edge_background } },
