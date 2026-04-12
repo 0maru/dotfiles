@@ -45,11 +45,23 @@ alias dredis='docker run -d --rm -p 6379:6379 redis:latest'
 alias diclean='d image prune'
 alias dcclean='d container prune'
 
-# wezterm pane layout
+# wezterm のタブを4分割する
+# ┌──────┬────────────┬──────┐
+# │      │            │      │
+# │ 25%  │    50%     │ 25%  │
+# │      │            │      │
+# │      │            ├──────┤
+# │      │            │      │
+# └──────┴────────────┴──────┘
 4pane() {
-  local pane_right=$(wezterm cli split-pane --right --percent 67)
-  local pane_mid=$(wezterm cli split-pane --right --percent 50 --pane-id "$pane_right")
-  wezterm cli split-pane --bottom --pane-id "$pane_mid"
+  local ratios=(25 50 25)  # 左, 中央, 右
+  local total=$((ratios[1] + ratios[2] + ratios[3]))
+  local right_pct=$(( (ratios[2] + ratios[3]) * 100 / total ))
+  local far_right_pct=$(( ratios[3] * 100 / (ratios[2] + ratios[3]) ))
+
+  local pane_right=$(wezterm cli split-pane --right --percent $right_pct)
+  local pane_mid=$(wezterm cli split-pane --right --percent $far_right_pct --pane-id "$pane_right")
+  wezterm cli split-pane --bottom --percent 30 --pane-id "$pane_mid"
   wezterm cli activate-pane-direction Left
   wezterm cli activate-pane-direction Left
 }
