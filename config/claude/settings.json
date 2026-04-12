@@ -1,9 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "alwaysThinkingEnabled": true,
   "awsAuthRefresh": "aws login",
-  "effortLevel": "high",
-  "enableAllProjectMcpServers": true,
   "env": {
     "DISABLE_COST_WARNINGS": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
@@ -21,6 +18,58 @@
     "CLAUDE_CODE_NO_FLICKER": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(ou *)",
+      "Bash(* --version)",
+      "Bash(* --help *)",
+      "Read(~/.zshrc)",
+      "WebFetch(domain:github.com)",
+      "mcp__github",
+      "mcp__claude_ai_Gmail",
+      "mcp__claude_ai_Atlassian",
+      "mcp__claude_ai_Sentry",
+      "mcp__claude_ai_Context7",
+      "mcp__claude_ai_Figma",
+      "mcp__claude_ai_Slack",
+      "mcp__plugin_context7_context7",
+      "mcp__plugin_serena_serena",
+      "Skill(update-config *)",
+      "Bash(*plamo-translate *)",
+      "mcp__plamo-translate",
+      "Bash(codex *)",
+      "Skill(update-config)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(./.env.*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Bash(rm -rf:*)",
+      "Bash(chmod 777:*)",
+      "Bash(curl *)",
+      "Bash(sudo *)",
+      "Bash(aws s3 rm:*)",
+      "Bash(aws s3 rb:*)",
+      "Bash(aws ec2 terminate-instances:*)",
+      "Bash(aws rds delete-db-instance:*)",
+      "Bash(aws rds delete-db-cluster:*)",
+      "Bash(aws lambda delete-function:*)",
+      "Bash(aws iam delete-:*)",
+      "Bash(aws cloudformation delete-stack:*)",
+      "Bash(aws dynamodb delete-table:*)",
+      "Bash(aws sns delete-topic:*)",
+      "Bash(aws sqs delete-queue:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh secret delete:*)",
+      "Bash(gh variable delete:*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "enableAllProjectMcpServers": true,
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -166,65 +215,88 @@
       }
     ]
   },
-  "language": "japanese",
-  "permissions": {
-    "defaultMode": "auto",
-    "allow": [
-      "Bash(git *)",
-      "Bash(gh *)",
-      "Bash(ou *)",
-      "Bash(* --version)",
-      "Bash(* --help *)",
-      "Read(~/.zshrc)",
-      "WebFetch(domain:github.com)",
-      "mcp__github",
-      "mcp__claude_ai_Gmail",
-      "mcp__claude_ai_Atlassian",
-      "mcp__claude_ai_Sentry",
-      "mcp__claude_ai_Context7",
-      "mcp__claude_ai_Figma",
-      "mcp__claude_ai_Slack",
-      "mcp__plugin_context7_context7",
-      "mcp__plugin_serena_serena",
-      "Skill(update-config *)",
-      "Bash(*plamo-translate *)",
-      "mcp__plamo-translate",
-      "Bash(codex *)",
-      "Skill(update-config)"
-    ],
-    "deny": [
-      "Read(.env)",
-      "Read(./.env.*)",
-      "Read(~/.aws/**)",
-      "Read(~/.ssh/**)",
-      "Bash(rm -rf:*)",
-      "Bash(chmod 777:*)",
-      "Bash(curl *)",
-      "Bash(sudo *)",
-      "Bash(aws s3 rm:*)",
-      "Bash(aws s3 rb:*)",
-      "Bash(aws ec2 terminate-instances:*)",
-      "Bash(aws rds delete-db-instance:*)",
-      "Bash(aws rds delete-db-cluster:*)",
-      "Bash(aws lambda delete-function:*)",
-      "Bash(aws iam delete-:*)",
-      "Bash(aws cloudformation delete-stack:*)",
-      "Bash(aws dynamodb delete-table:*)",
-      "Bash(aws sns delete-topic:*)",
-      "Bash(aws sqs delete-queue:*)",
-      "Bash(gh repo delete:*)",
-      "Bash(gh secret delete:*)",
-      "Bash(gh variable delete:*)"
-    ]
-  },
-  "showThinkingSummaries": true,
   "statusLine": {
     "type": "command",
     "command": "deno run --allow-run=git ~/.claude/statusline.ts"
   },
-  "editMode": "vim",
-  "showTurnDuration": true,
-  "teammateMode": "in-process",
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "code-review@claude-plugins-official": false,
+    "security-guidance@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": true,
+    "sentry@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "linear@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": false,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true,
+    "superpowers@claude-plugins-official": true,
+    "huggingface-skills@claude-plugins-official": false,
+    "swift-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "telegram@claude-plugins-official": true,
+    "stripe@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "csharp-lsp@claude-plugins-official": true,
+    "coderabbit@claude-plugins-official": false,
+    "firecrawl@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "circleback@claude-plugins-official": true,
+    "qodo-skills@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "amazon-location-service@agent-plugins-for-aws": true,
+    "aws-amplify@agent-plugins-for-aws": true,
+    "aws-serverless@agent-plugins-for-aws": true,
+    "databases-on-aws@agent-plugins-for-aws": true,
+    "deploy-on-aws@agent-plugins-for-aws": true,
+    "migration-to-aws@agent-plugins-for-aws": true,
+    "claude-api@anthropic-agent-skills": true,
+    "document-skills@anthropic-agent-skills": true,
+    "torico-agent-skills@0maru-private-agent-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "0maru-private-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "0maru/private-agent-skills"
+      },
+      "autoUpdate": true
+    },
+    "torico-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "torico-tokyo/ai-toolkit"
+      },
+      "autoUpdate": true
+    },
+    "agent-plugins-for-aws": {
+      "source": {
+        "source": "github",
+        "repo": "awslabs/agent-plugins"
+      },
+      "autoUpdate": true
+    }
+  },
+  "language": "japanese",
   "sandbox": {
     "enabled": true,
     "allowUnsandboxedCommands": false,
@@ -273,87 +345,14 @@
       "codex *"
     ]
   },
-  "model": "opus[1m]",
-  "enabledPlugins": {
-    "context7@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "atlassian@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "agent-sdk-dev@claude-plugins-official": true,
-    "sentry@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "linear@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true,
-    "slack@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "example-skills@anthropic-agent-skills": true,
-    "superpowers@claude-plugins-official": true,
-    "huggingface-skills@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true,
-    "telegram@claude-plugins-official": true,
-    "stripe@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "figma@claude-plugins-official": true,
-    "explanatory-output-style@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "learning-output-style@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "csharp-lsp@claude-plugins-official": true,
-    "coderabbit@claude-plugins-official": true,
-    "firecrawl@claude-plugins-official": true,
-    "kotlin-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "circleback@claude-plugins-official": true,
-    "qodo-skills@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": true,
-    "amazon-location-service@agent-plugins-for-aws": true,
-    "aws-amplify@agent-plugins-for-aws": true,
-    "aws-serverless@agent-plugins-for-aws": true,
-    "databases-on-aws@agent-plugins-for-aws": true,
-    "deploy-on-aws@agent-plugins-for-aws": true,
-    "migration-to-aws@agent-plugins-for-aws": true,
-    "claude-api@anthropic-agent-skills": true,
-    "document-skills@anthropic-agent-skills": true,
-    "torico-agent-skills@0maru-private-agent-skills": true
-  },
-  "extraKnownMarketplaces": {
-    "0maru-private-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "0maru/private-agent-skills"
-      },
-      "autoUpdate": true
-    },
-    "torico-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "torico-tokyo/ai-toolkit"
-      },
-      "autoUpdate": true
-    },
-    "agent-plugins-for-aws": {
-      "source": {
-        "source": "github",
-        "repo": "awslabs/agent-plugins"
-      },
-      "autoUpdate": true
-    }
-  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
+  "editMode": "vim",
+  "showTurnDuration": true,
+  "teammateMode": "in-process",
   "mcpServers": {
     "plamo-translate": {
       "command": "/opt/homebrew/bin/npx",
