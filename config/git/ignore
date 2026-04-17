@@ -1,0 +1,20 @@
+.DS_Store
+._*
+
+# vim
+.*.swp
+
+# nvim
+nvim.log
+
+**/.claude/settings.local.json
+
+# claude code
+plans/
+
+# serena
+.serena/
+
+# ou
+.ou/
+worktrees/
