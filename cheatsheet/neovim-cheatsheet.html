@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neovim Cheatsheet - 0maru's dotfiles</title>
+<style>
+  :root {
+    --bg: #22272e;
+    --panel: rgba(34, 39, 46, 0.88);
+    --panel-strong: #2d333b;
+    --panel-soft: #1c2128;
+    --border: #444c56;
+    --text: #adbac7;
+    --muted: #768390;
+    --blue: #539bf5;
+    --green: #57ab5a;
+    --yellow: #c69026;
+    --red: #e5534b;
+    --purple: #986ee2;
+    --shadow: 0 18px 60px rgba(9, 12, 16, 0.36);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 32px 20px 56px;
+    color: var(--text);
+    font-family: "Avenir Next", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at top left, rgba(83, 155, 245, 0.18), transparent 28%),
+      radial-gradient(circle at top right, rgba(87, 171, 90, 0.16), transparent 24%),
+      linear-gradient(180deg, #1c2128 0%, #22272e 42%, #1a1f24 100%);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .page {
+    max-width: 1260px;
+    margin: 0 auto;
+  }
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 28px;
+    background:
+      linear-gradient(135deg, rgba(45, 51, 59, 0.92), rgba(28, 33, 40, 0.9)),
+      var(--panel);
+    box-shadow: var(--shadow);
+    margin-bottom: 26px;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -10% -50% 55%;
+    height: 220px;
+    background: radial-gradient(circle, rgba(152, 110, 226, 0.22), transparent 60%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 3.8vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: #f0f6fc;
+    margin-bottom: 10px;
+  }
+
+  .lede {
+    max-width: 780px;
+    font-size: 0.98rem;
+    color: #cdd9e5;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
+    gap: 18px;
+    margin-top: 22px;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .pill {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #cdd9e5;
+    font-size: 0.82rem;
+  }
+
+  .leader-pill {
+    border-color: rgba(83, 155, 245, 0.4);
+    color: #dbe9ff;
+    background: rgba(83, 155, 245, 0.12);
+  }
+
+  .snapshot {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 16px 18px;
+    background: rgba(13, 17, 23, 0.28);
+  }
+
+  .snapshot h2 {
+    font-size: 0.95rem;
+    color: #f0f6fc;
+    margin-bottom: 8px;
+  }
+
+  .snapshot p {
+    font-size: 0.84rem;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-top: 28px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+    color: #f0f6fc;
+  }
+
+  .section-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    background:
+      linear-gradient(180deg, rgba(45, 51, 59, 0.95), rgba(28, 33, 40, 0.93));
+    box-shadow: 0 14px 32px rgba(9, 12, 16, 0.18);
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    border-radius: 18px 0 0 18px;
+    background: var(--blue);
+  }
+
+  .card.green::before { background: var(--green); }
+  .card.blue::before { background: var(--blue); }
+  .card.yellow::before { background: var(--yellow); }
+  .card.red::before { background: var(--red); }
+  .card.purple::before { background: var(--purple); }
+
+  .card h3 {
+    font-size: 0.98rem;
+    color: #f0f6fc;
+    margin-bottom: 10px;
+    letter-spacing: 0.01em;
+  }
+
+  .card-note {
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    padding-top: 10px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  tr:last-child {
+    border-bottom: none;
+  }
+
+  td {
+    vertical-align: top;
+    padding: 6px 0;
+    font-size: 0.84rem;
+  }
+
+  td:first-child {
+    width: 46%;
+    padding-right: 12px;
+    white-space: nowrap;
+  }
+
+  td:last-child {
+    color: #c2ccd6;
+  }
+
+  .label {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-right: 6px;
+    color: #0d1117;
+  }
+
+  .normal { background: var(--blue); }
+  .insert { background: var(--green); }
+  .visual { background: var(--purple); color: #f6f8fa; }
+  .command { background: var(--yellow); }
+
+  kbd {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid #5c6773;
+    border-bottom-width: 2px;
+    background: #2d333b;
+    color: #f0f6fc;
+    font-family: "JetBrains Mono", "SFMono-Regular", monospace;
+    font-size: 0.79rem;
+    line-height: 1.45;
+    white-space: nowrap;
+  }
+
+  code {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f0f6fc;
+    font-family: "JetBrains Mono", "SFMono-Regular", monospace;
+    font-size: 0.78rem;
+  }
+
+  .leader {
+    border-color: rgba(83, 155, 245, 0.6);
+    color: #dbe9ff;
+    background: rgba(83, 155, 245, 0.16);
+  }
+
+  .mode-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .mode-card {
+    flex: 1 1 160px;
+    min-width: 140px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .mode-card strong {
+    display: block;
+    color: #f0f6fc;
+    margin-bottom: 4px;
+    font-size: 0.86rem;
+  }
+
+  .mode-card span {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .mini-list {
+    display: grid;
+    gap: 8px;
+    font-size: 0.83rem;
+    color: #c2ccd6;
+  }
+
+  .mini-list div {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .footer {
+    margin-top: 30px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  @media (max-width: 900px) {
+    .meta-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    body {
+      padding: 18px 14px 40px;
+    }
+
+    .hero,
+    .card {
+      border-radius: 18px;
+    }
+
+    td:first-child {
+      width: auto;
+      white-space: normal;
+    }
+  }
+
+  @media print {
+    body {
+      background: #fff;
+      color: #111;
+      padding: 12px;
+    }
+
+    .hero,
+    .card,
+    .snapshot,
+    .mode-card,
+    .mini-list div {
+      box-shadow: none;
+      background: #fff;
+      border-color: #d0d7de;
+    }
+
+    .hero::after {
+      display: none;
+    }
+
+    h1,
+    .section-title,
+    .card h3,
+    .snapshot h2,
+    .mode-card strong {
+      color: #111;
+    }
+
+    .lede,
+    td:last-child,
+    .section-desc,
+    .snapshot p,
+    .mode-card span,
+    .card-note,
+    .footer,
+    .eyebrow {
+      color: #555;
+    }
+
+    kbd {
+      color: #111;
+      background: #f6f8fa;
+      border-color: #c9d1d9;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">0maru's dotfiles / config/nvim</p>
+    <h1>Neovim Cheatsheet</h1>
+    <p class="lede">現在の設定とプラグインに合わせた実運用版。キーマップは自前定義を優先し、補助プラグインは実際に repo に入っているものだけを載せています。</p>
+
+    <div class="meta-grid">
+      <div>
+        <div class="pill-row">
+          <span class="pill leader-pill">Leader = <kbd class="leader">Space</kbd></span>
+          <span class="pill">Theme: github_dark_dimmed</span>
+          <span class="pill">lazy.nvim</span>
+          <span class="pill">40 plugins</span>
+          <span class="pill">WezTerm integrated splits</span>
+          <span class="pill">No LazyVim extras</span>
+        </div>
+
+        <div class="mode-line">
+          <div class="mode-card">
+            <strong>Normal</strong>
+            <span><kbd>Esc</kbd> で戻る / 基本操作の中心</span>
+          </div>
+          <div class="mode-card">
+            <strong>Insert</strong>
+            <span><kbd>i</kbd> <kbd>a</kbd> <kbd>o</kbd> で入力開始</span>
+          </div>
+          <div class="mode-card">
+            <strong>Visual</strong>
+            <span><kbd>v</kbd> <kbd>V</kbd> <kbd>Ctrl+v</kbd> で選択</span>
+          </div>
+          <div class="mode-card">
+            <strong>Command</strong>
+            <span><kbd>:</kbd> でコマンド入力</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="snapshot">
+        <h2>設定スナップショット</h2>
+        <p>相対行番号、2 スペース、折り返し無効、<code>clipboard=unnamedplus</code>、<code>colorcolumn=100</code>、<code>listchars</code> 表示、<code>FocusLost</code> / <code>BufLeave</code> で自動保存、Markdown 系を除いて保存時に末尾空白を削除。</p>
+      </aside>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Daily Flow</h2>
+        <p class="section-desc">毎日使う起点と移動</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <article class="card green">
+        <h3>起動直後によく使うもの</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>w</kbd></td><td>保存</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>q</kbd></td><td>現在ウィンドウを閉じる</td></tr>
+          <tr><td><span class="label normal">N</span><kbd>Esc</kbd></td><td>検索ハイライトを消す</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>?</kbd></td><td>現在バッファのキーマップ一覧</td></tr>
+          <tr><td><span class="label command">C</span><kbd>:wq</kbd></td><td>保存して終了</td></tr>
+          <tr><td><span class="label command">C</span><kbd>:q!</kbd></td><td>保存せず終了</td></tr>
+        </table>
+        <p class="card-note">自動保存が有効なので、手動保存は切りの良いタイミングで使う程度で足ります。</p>
+      </article>
+
+      <article class="card blue">
+        <h3>検索とファイル移動</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>ff</kbd></td><td>ファイル検索</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fr</kbd></td><td>最近開いたファイル</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fb</kbd></td><td>バッファ一覧</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fg</kbd></td><td>全文検索</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fw</kbd></td><td>カーソル語で grep</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>:</kbd></td><td>コマンド履歴</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>sh</kbd></td><td>ヘルプ検索</td></tr>
+        </table>
+        <p class="card-note"><code>snacks.nvim</code> の picker を中心に組んでいるので、ファイル移動はほぼこの列だけで回せます。</p>
+      </article>
+
+      <article class="card yellow">
+        <h3>バッファ・分割・ファイラー</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd>Shift+h</kbd> / <kbd>Shift+l</kbd></td><td>前 / 次のバッファ</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>bd</kbd></td><td>バッファを閉じる</td></tr>
+          <tr><td><span class="label normal">N</span><kbd>Ctrl+h</kbd> / <kbd>Ctrl+j</kbd> / <kbd>Ctrl+k</kbd> / <kbd>Ctrl+l</kbd></td><td>Neovim / WezTerm をまたいでペイン移動</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>e</kbd></td><td>Oil で親ディレクトリを開く</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>E</kbd></td><td>Neo-tree をトグル</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>tt</kbd></td><td>ターミナルを開閉</td></tr>
+        </table>
+        <p class="card-note"><code>oil.nvim</code> はディレクトリをバッファとして開く運用。リネームや整理をそのまま編集感覚で扱えます。</p>
+      </article>
+
+      <article class="card purple">
+        <h3>素の Vim 動作で押さえるところ</h3>
+        <table>
+          <tr><td><kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td>基本移動</td></tr>
+          <tr><td><kbd>w</kbd> / <kbd>b</kbd> / <kbd>e</kbd></td><td>単語単位で移動</td></tr>
+          <tr><td><kbd>0</kbd> / <kbd>^</kbd> / <kbd>$</kbd></td><td>行頭 / 先頭文字 / 行末</td></tr>
+          <tr><td><kbd>/</kbd>pattern</td><td>前方検索、<kbd>n</kbd> / <kbd>N</kbd> で次へ / 前へ</td></tr>
+          <tr><td><kbd>u</kbd> / <kbd>Ctrl+r</kbd></td><td>Undo / Redo</td></tr>
+          <tr><td><kbd>.</kbd></td><td>直前の変更を繰り返す</td></tr>
+        </table>
+        <p class="card-note"><kbd>j</kbd> / <kbd>k</kbd> は、カウント未指定のときだけ折り返し行に追従するよう調整済みです。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Code And Navigation</h2>
+        <p class="section-desc">LSP、構文ジャンプ、整形</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <article class="card blue">
+        <h3>LSP と診断</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd>gd</kbd></td><td>定義へジャンプ</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>k</kbd></td><td>hover を開く</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>la</kbd></td><td>コードアクション</td></tr>
+          <tr><td><span class="label normal">N</span><kbd>[d</kbd> / <kbd>]d</kbd></td><td>前 / 次の診断へ移動</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>ld</kbd></td><td>行の診断をフロート表示</td></tr>
+          <tr><td><span class="label insert">I</span><kbd>Tab</kbd></td><td>inline completion が出ているときだけ確定</td></tr>
+        </table>
+        <p class="card-note">LSP は <code>lua_ls</code>, <code>pyright</code>, <code>gopls</code>, <code>rust_analyzer</code>, <code>dartls</code>, <code>volar</code>, <code>tailwindcss</code>, <code>eslint</code>, <code>biome</code> などを有効化しています。</p>
+      </article>
+
+      <article class="card green">
+        <h3>シンボルと文脈ジャンプ</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>ss</kbd></td><td>現在バッファの LSP シンボル一覧</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>sw</kbd></td><td>ワークスペースシンボル一覧</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>;</kbd></td><td>dropbar から現在文脈のシンボルを選ぶ</td></tr>
+          <tr><td><span class="label normal">N</span><kbd>[;</kbd> / <kbd>];</kbd></td><td>文脈の先頭へ / 次の文脈へ</td></tr>
+          <tr><td><span class="label normal">N</span><kbd>s</kbd></td><td>Flash で画面内ジャンプ</td></tr>
+          <tr><td><span class="label normal">N</span><kbd>S</kbd></td><td>Flash Treesitter ジャンプ</td></tr>
+        </table>
+        <p class="card-note"><code>flash.nvim</code> の <kbd>r</kbd> と <kbd>R</kbd> も operator / visual 用に有効です。検索中は <kbd>Ctrl+s</kbd> で Flash search を切り替えられます。</p>
+      </article>
+
+      <article class="card purple">
+        <h3>Treesitter テキストオブジェクト</h3>
+        <table>
+          <tr><td><kbd>]f</kbd> / <kbd>[f</kbd></td><td>次 / 前の関数先頭</td></tr>
+          <tr><td><kbd>]F</kbd> / <kbd>[F</kbd></td><td>次 / 前の関数末尾</td></tr>
+          <tr><td><kbd>]c</kbd> / <kbd>[c</kbd></td><td>次 / 前のクラス先頭</td></tr>
+          <tr><td><kbd>]a</kbd> / <kbd>[a</kbd></td><td>次 / 前の引数</td></tr>
+          <tr><td><kbd>af</kbd> / <kbd>if</kbd></td><td>関数 outer / inner を選択</td></tr>
+          <tr><td><kbd>ac</kbd> / <kbd>ic</kbd></td><td>クラス outer / inner を選択</td></tr>
+          <tr><td><kbd>aa</kbd> / <kbd>ia</kbd></td><td>引数 outer / inner を選択</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>tc</kbd></td><td>Treesitter Context をトグル</td></tr>
+        </table>
+        <p class="card-note"><code>daf</code>, <code>cif</code>, <code>yaa</code> のように operator と組み合わせる運用が前提です。</p>
+      </article>
+
+      <article class="card yellow">
+        <h3>整形と編集補助</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd class="leader">Space</kbd><kbd>cf</kbd></td><td>Conform で明示的にフォーマット</td></tr>
+          <tr><td>保存時</td><td>JS / TS / JSON / CSS 系は <code>biome</code> で整形</td></tr>
+          <tr><td>LSP format</td><td>Conform 対象ファイルでは fallback させない</td></tr>
+          <tr><td>入力時</td><td><code>blink.cmp</code> が補完 popup と signature help を表示</td></tr>
+          <tr><td>入力時</td><td><code>nvim-autopairs</code> が括弧と引用符を補完</td></tr>
+          <tr><td>HTML / JSX</td><td><code>nvim-ts-autotag</code> が閉じタグを補完</td></tr>
+        </table>
+        <p class="card-note">自動整形の責務を <code>conform.nvim</code> に寄せており、Biome がいないときに LSP に勝手に逃がさない構成です。</p>
+      </article>
+
+      <article class="card red">
+        <h3>ビジュアル編集</h3>
+        <table>
+          <tr><td><span class="label visual">V</span><kbd>&lt;</kbd> / <kbd>&gt;</kbd></td><td>選択を維持したままインデント</td></tr>
+          <tr><td><span class="label visual">V</span><kbd>J</kbd> / <kbd>K</kbd></td><td>選択行を下 / 上へ移動</td></tr>
+          <tr><td><kbd>Ctrl+v</kbd></td><td>矩形選択</td></tr>
+          <tr><td><kbd>q</kbd>{reg} ... <kbd>q</kbd></td><td>マクロ録画</td></tr>
+          <tr><td><kbd>@</kbd>{reg} / <kbd>@@</kbd></td><td>マクロ再生 / 直前再生</td></tr>
+          <tr><td><kbd>*</kbd> - <kbd>cgn</kbd> - <kbd>.</kbd></td><td>同一単語を順に置換する定番パターン</td></tr>
+        </table>
+        <p class="card-note">この構成では複数カーソルより、Vim の operator とマクロを軸にした方が素直です。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Git And Utility</h2>
+        <p class="section-desc">Git 操作、差分確認、Markdown 補助</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <article class="card yellow">
+        <h3>Git 操作の起点</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>gg</kbd></td><td>Lazygit を開く</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>gs</kbd></td><td>Git status picker</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>gl</kbd></td><td>Git log picker</td></tr>
+          <tr><td><span class="label command">C</span><kbd>:DiffviewOpen</kbd></td><td>差分ビューを開く</td></tr>
+          <tr><td><span class="label command">C</span><kbd>:DiffviewClose</kbd></td><td>差分ビューを閉じる</td></tr>
+          <tr><td><span class="label command">C</span><kbd>:DiffviewFileHistory %</kbd></td><td>現在ファイルの履歴を見る</td></tr>
+        </table>
+        <p class="card-note">コミット前の確認は <code>leader gg</code>、履歴比較は <code>Diffview</code> に寄せると迷いません。</p>
+      </article>
+
+      <article class="card red">
+        <h3>Gitsigns ハンク操作</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd>]h</kbd> / <kbd>[h</kbd></td><td>次 / 前のハンクへ</td></tr>
+          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd class="leader">Space</kbd><kbd>hs</kbd></td><td>ハンクを stage</td></tr>
+          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd class="leader">Space</kbd><kbd>hr</kbd></td><td>ハンクを reset</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hS</kbd></td><td>バッファ全体を stage</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hu</kbd></td><td>stage 済みハンクを戻す</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hP</kbd></td><td>ハンクを preview</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hb</kbd></td><td>現在行の blame を開く</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>tb</kbd></td><td>行末 blame 表示をトグル</td></tr>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hd</kbd> / <kbd>hD</kbd></td><td>index / HEAD との差分</td></tr>
+          <tr><td><span class="label visual">V</span><kbd>ih</kbd></td><td>ハンクをテキストオブジェクトとして選択</td></tr>
+        </table>
+        <p class="card-note">この repo では <code>current_line_blame</code> が初期で有効です。邪魔なら <kbd class="leader">Space</kbd><kbd>tb</kbd> で切り替えます。</p>
+      </article>
+
+      <article class="card green">
+        <h3>Markdown と画像貼り付け</h3>
+        <table>
+          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>p</kbd></td><td>クリップボード画像を貼る</td></tr>
+          <tr><td>保存先</td><td><code>assets/</code> に保存</td></tr>
+          <tr><td>Markdown</td><td>相対パスの画像リンクを挿入</td></tr>
+          <tr><td>MDX</td><td><code>mdx.nvim</code> 用の filetype が設定済み</td></tr>
+          <tr><td>Markview</td><td>Markdown 表示補助プラグインを導入済み</td></tr>
+        </table>
+        <p class="card-note">画像名は貼り付け時に確認されます。ドキュメント更新やブログ執筆向けの構成です。</p>
+      </article>
+
+      <article class="card blue">
+        <h3>CSV と一時ビュー</h3>
+        <table>
+          <tr><td><span class="label command">C</span><kbd>:CsvViewToggle</kbd></td><td>CSV 表示を切り替える</td></tr>
+          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd>Tab</kbd> / <kbd>Shift+Tab</kbd></td><td>次 / 前のフィールドへ</td></tr>
+          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd>Enter</kbd> / <kbd>Shift+Enter</kbd></td><td>次 / 前の行へ</td></tr>
+          <tr><td><span class="label visual">V</span><kbd>if</kbd> / <kbd>af</kbd></td><td>CSV フィールド inner / outer を選択</td></tr>
+          <tr><td>一時バッファ</td><td><code>help</code>, <code>man</code>, <code>qf</code>, <code>checkhealth</code> は <kbd>q</kbd> で閉じる</td></tr>
+        </table>
+        <p class="card-note">CSV を触る頻度が高いなら、<code>CsvViewToggle</code> はかなり強いです。ナビゲーションが Excel 風になります。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Current Setup</h2>
+        <p class="section-desc">見た目と自動動作の把握用</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <article class="card purple">
+        <h3>自動動作</h3>
+        <div class="mini-list">
+          <div>外部変更を <code>FocusGained</code>, <code>BufEnter</code>, <code>CursorHold</code> で <code>checktime</code> して自動反映</div>
+          <div>ヤンク時は 200ms ハイライト</div>
+          <div>前回閉じた位置にカーソルを復元</div>
+          <div>Markdown / MDX 以外では保存時に末尾空白を削除</div>
+          <div><kbd>q</kbd> で閉じる専用バッファを用意</div>
+        </div>
+      </article>
+
+      <article class="card blue">
+        <h3>見た目と操作感</h3>
+        <div class="mini-list">
+          <div>テーマは <code>github_dark_dimmed</code></div>
+          <div>相対行番号、カーソル行ハイライト、signcolumn 常時表示</div>
+          <div>ステータスラインは <code>lualine.nvim</code>、バッファ一覧は <code>bufferline.nvim</code></div>
+          <div><code>hlchunk.nvim</code> でインデントとチャンクを補助</div>
+          <div><code>nvim-scrollbar</code>、<code>dropbar.nvim</code> を導入</div>
+        </div>
+      </article>
+
+      <article class="card yellow">
+        <h3>導入プラグインの要点</h3>
+        <div class="mini-list">
+          <div>検索と起動系: <code>snacks.nvim</code>, <code>which-key.nvim</code>, <code>dashboard-nvim</code></div>
+          <div>ファイラー系: <code>oil.nvim</code>, <code>neo-tree.nvim</code>, <code>smart-splits.nvim</code></div>
+          <div>編集系: <code>blink.cmp</code>, <code>conform.nvim</code>, <code>flash.nvim</code>, <code>nvim-treesitter</code>, <code>csvview.nvim</code>, <code>dial.nvim</code></div>
+          <div>LSP 系: <code>nvim-lspconfig</code>, <code>typescript-tools.nvim</code>, <code>rustaceanvim</code>, <code>namu.nvim</code>, <code>tiny-inline-diagnostic.nvim</code></div>
+          <div>Git / 文書系: <code>gitsigns.nvim</code>, <code>diffview.nvim</code>, <code>img-clip.nvim</code>, <code>markview.nvim</code>, <code>grug-far.nvim</code>, <code>glance.nvim</code>, <code>nvim-ufo</code></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <p class="footer">
+    Generated from <code>config/nvim</code> and <code>cheatsheet/neovim-cheatsheet.html</code><br>
+    Updated: 2026-04-15
+  </p>
+</main>
+</body>
+</html>
