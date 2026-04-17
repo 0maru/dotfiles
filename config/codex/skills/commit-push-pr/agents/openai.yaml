@@ -1,0 +1,4 @@
+interface:
+  display_name: "コミット・PR作成"
+  short_description: "変更を整理し日本語コミットと PR 作成まで進める"
+  default_prompt: "Use $commit-push-pr to この変更をコミットして push し、PR まで作成して。"

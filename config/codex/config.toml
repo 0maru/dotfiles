@@ -1,0 +1,39 @@
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+model_reasoning_summary = "none"
+personality = "pragmatic"
+network_access = true
+
+[tools]
+web_search = true
+
+[agents]
+max_threads = 6
+max_depth = 1
+
+[features]
+codex_hooks = true
+multi_agent = true
+
+[[skills.config]]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[mcp_servers.serena]
+command = "uvx"
+args = [
+  "--from",
+  "git+https://github.com/oraios/serena",
+  "serena-mcp-server",
+  "--context",
+  "codex",
+  "--enable-web-dashboard",
+  "false",
+  "--project-from-cwd",
+]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@latest"]
