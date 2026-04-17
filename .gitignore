@@ -1,0 +1,54 @@
+.idea
+**/.DS_Store
+
+# Nix
+result
+result-*
+
+# zsh cache
+.zcompdump
+.zcompdump.*
+.zsh_sessions/
+.zcompcache/
+.zsh_history
+
+# VSCode local settings
+settings.local.json
+
+# Editor temporary files
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+
+# macOS
+.localized
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Compiled binaries
+**/bin/
+
+# Claude Code local settings (in subdirectories)
+**/.claude/settings.local.json
+
+config/claude/*
+!config/claude/CLAUDE.md
+!config/claude/commands/
+!config/claude/hooks/
+!config/claude/skills/
+!config/claude/settings.json
+!config/claude/statusline.ts
+
+# zsh local settings
+config/zsh/local.zsh
+
+# ou (Git worktree manager)
+.ou/
+plans/
