@@ -10,7 +10,8 @@ mkdir -p \
   "$HOME/.claude/hooks" \
   "$HOME/.claude/skills" \
   "$HOME/.codex" \
-  "$HOME/.codex/skills"
+  "$HOME/.codex/skills" \
+  "$HOME/.codex/rules"
 
 # リポジトリのconfig ディレクトリにあるファイルをXDG_CONFIG_HOME にシンボリックリンクを貼る
 ln -sfv "$REPO_DIR/config/"* "$XDG_CONFIG_HOME"
@@ -48,7 +49,13 @@ else
   echo "$codex_config_dest already exists. skip copying."
 fi
 
+ln -sfv "$XDG_CONFIG_HOME/codex/AGENTS.md" "$HOME/.codex/AGENTS.md"
 ln -sfv "$XDG_CONFIG_HOME/codex/hooks.json" "$HOME/.codex/hooks.json"
+
+for codex_rule in "$XDG_CONFIG_HOME"/codex/rules/*; do
+  [ -e "$codex_rule" ] || continue
+  ln -sfv "$codex_rule" "$HOME/.codex/rules"
+done
 
 # repo 管理の Codex skill を ~/.codex/skills に追加する
 for codex_skill in "$XDG_CONFIG_HOME"/codex/skills/*; do

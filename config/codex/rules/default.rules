@@ -1,0 +1,91 @@
+# 読み取り専用の Git / GitHub 操作は自動で許可する。
+prefix_rule(
+    pattern = ["git", "status"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "diff"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "log"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "fetch"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "switch", "-c"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "add"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["gh", "pr", "view"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["gh", "pr", "checks"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["gh", "run", "view"],
+    decision = "allow",
+)
+
+# 履歴や外部状態を変える操作は毎回レビューする。
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "prompt",
+    justification = "ローカル履歴の更新は内容を確認してから行う。",
+)
+prefix_rule(
+    pattern = ["git", "reset"],
+    decision = "prompt",
+    justification = "履歴を書き換える可能性があるため確認してから行う。",
+)
+prefix_rule(
+    pattern = ["git", "push"],
+    decision = "prompt",
+    justification = "リモート反映は確認してから行う。",
+)
+prefix_rule(
+    pattern = ["gh", "pr", "create"],
+    decision = "prompt",
+    justification = "Pull Request の作成は確認してから行う。",
+)
+prefix_rule(
+    pattern = ["gh", "pr", "edit"],
+    decision = "prompt",
+    justification = "Pull Request の更新は確認してから行う。",
+)
+prefix_rule(
+    pattern = ["gh", "api"],
+    decision = "prompt",
+    justification = "GitHub API は read/write の両方があり得るため毎回確認する。",
+)
+
+# 破壊的な操作は自動実行させない。
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "forbidden",
+    justification = "破壊的な履歴操作は手動で実行する。",
+)
+prefix_rule(
+    pattern = ["git", "clean", "-fd"],
+    decision = "forbidden",
+    justification = "未追跡ファイルの削除は手動で実行する。",
+)
+prefix_rule(
+    pattern = ["git", "push", ["--force", "--force-with-lease", "-f"]],
+    decision = "forbidden",
+    justification = "強制 push は手動で実行する。",
+)
+prefix_rule(
+    pattern = ["rm", "-rf"],
+    decision = "forbidden",
+    justification = "再帰削除は手動で実行する。",
+)
