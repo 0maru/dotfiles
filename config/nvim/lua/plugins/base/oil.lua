@@ -4,5 +4,9 @@ return {
   keys = {
     { "<leader>e", function() require("oil").open() end, desc = "Open parent directory" },
   },
-  opts = {},
+  opts = {
+    view_options = {
+      show_hidden = true,
+    },
+  },
 }
