@@ -1,0 +1,45 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex session-start"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex user-prompt-submit"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex activity-log"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex stop"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+cask_args appdir: "/Applications"
+
+tap "FelixKratz/formulae"
+tap "0maru/formulae"
+tap "nikitabobko/tap"
+
+# Language (Rust only — Go/Node/Python are managed by Nix)
+brew "rust"
+brew "taplo"
+
+# Tools (macOS-specific / not in nixpkgs)
+brew "aerospace"
+brew "agent-browser"
+brew "awscli"
+brew "aws-cdk"
+brew "azookey"
+brew "codex"
+brew "k6"
+brew "k9s"
+brew "mas"
+brew "ou"
+brew "pngpaste"
+brew "sketchybar"
+
+# Application
+cask "1password"
+cask "1password-cli"
+cask "arc"
+cask "charles"
+cask "chatgpt"
+cask "claude"
+cask "figma"
+cask "google-chrome"
+cask "gpg-suite"
+cask "iterm2"
+cask "jordanbaird-ice"
+cask "karabiner-elements"
+cask "keycastr"
+cask "linear-linear"
+cask "notion-calendar"
+cask "obsidian"
+cask "orbstack"
+cask "postman"
+cask "raycast"
+cask "slack"
+cask "visual-studio-code"
+cask "wezterm@nightly"
+cask "zoom"
+
+# Fonts
+cask "font-hack-nerd-font"
+cask "font-zen-kaku-gothic-new"
+
+mas "Messenger", id: 1480068668
+mas "Xcode", id: 497799835

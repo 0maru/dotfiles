@@ -1,0 +1,7 @@
+# Machine-specific zsh settings
+# Copy this file to local.zsh and customize
+#
+# Example:
+#   export HTTP_PROXY="http://proxy.example.com:8080"
+#   alias e='code'
+#   export PATH="$HOME/company-tools/bin:$PATH"

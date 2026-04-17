@@ -1,0 +1,16 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+[character]
+format = "[\\$](green bold) "
+
+[git_branch]
+symbol = ''
+format = '\([$symbol$branch(:$remote_branch)]($style)\)'
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
