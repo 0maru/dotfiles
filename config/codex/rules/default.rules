@@ -1,4 +1,4 @@
-# 読み取り専用の Git / GitHub 操作は自動で許可する。
+# 読み取り専用の Git / GitHub 操作と、日常的に AI へ任せる操作は自動で許可する。
 prefix_rule(
     pattern = ["git", "status"],
     decision = "allow",
@@ -35,12 +35,15 @@ prefix_rule(
     pattern = ["gh", "run", "view"],
     decision = "allow",
 )
+prefix_rule(
+    pattern = ["gh", "pr", "create"],
+    decision = "allow",
+)
 
-# 履歴や外部状態を変える操作は毎回レビューする。
+# 日常的に AI へ任せる Git 操作は自動で許可する。
 prefix_rule(
     pattern = ["git", "commit"],
-    decision = "prompt",
-    justification = "ローカル履歴の更新は内容を確認してから行う。",
+    decision = "allow",
 )
 prefix_rule(
     pattern = ["git", "reset"],
@@ -49,14 +52,10 @@ prefix_rule(
 )
 prefix_rule(
     pattern = ["git", "push"],
-    decision = "prompt",
-    justification = "リモート反映は確認してから行う。",
+    decision = "allow",
 )
-prefix_rule(
-    pattern = ["gh", "pr", "create"],
-    decision = "prompt",
-    justification = "Pull Request の作成は確認してから行う。",
-)
+
+# 外部状態の更新は毎回レビューする。
 prefix_rule(
     pattern = ["gh", "pr", "edit"],
     decision = "prompt",
@@ -89,3 +88,16 @@ prefix_rule(
     decision = "forbidden",
     justification = "再帰削除は手動で実行する。",
 )
+prefix_rule(pattern=["git", "fetch", "origin"], decision="allow")
+prefix_rule(pattern=["/opt/homebrew/bin/mise", "install", "node@24.15.0"], decision="allow")
+prefix_rule(pattern=["/opt/homebrew/bin/mise", "exec", "node@24.15.0", "--", "pnpm", "build"], decision="allow")
+prefix_rule(pattern=["/Users/0maru/.local/share/mise/installs/flutter/3.35.5-stable/bin/dart", "format"], decision="allow")
+prefix_rule(pattern=["/Users/0maru/.local/share/mise/installs/flutter/3.35.5-stable/bin/flutter", "test"], decision="allow")
+prefix_rule(pattern=["/Users/0maru/.local/share/mise/installs/flutter/3.35.5-stable/bin/flutter", "analyze"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+prefix_rule(pattern=["git", "switch", "-c"], decision="allow")
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "commit", "-m"], decision="allow")
+prefix_rule(pattern=["env", "HUSKY=0", "git", "commit", "-m", "Sentryのストレージ不足エラーを確実に除外", "-m", "Sentry の beforeSend からストレージ不足起因のイベント判定を切り出し、exception chain や message からも検出できるようにした。\\n\\nNo space left on device が OSError を先頭に持つイベントでも GitHub issue 化されないようにするため。"], decision="allow")
+prefix_rule(pattern=["git", "commit", "--no-verify"], decision="allow")
+prefix_rule(pattern=["make", "setupGitHooks"], decision="allow")
