@@ -299,6 +299,12 @@
         "repo": "awslabs/agent-plugins"
       },
       "autoUpdate": true
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
     }
   },
   "language": "japanese",
