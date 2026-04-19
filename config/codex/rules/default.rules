@@ -1,4 +1,4 @@
-# 読み取り専用の Git / GitHub 操作は自動で許可する。
+# 読み取り専用の Git / GitHub 操作と、日常的に AI へ任せる操作は自動で許可する。
 prefix_rule(
     pattern = ["git", "status"],
     decision = "allow",
@@ -35,6 +35,10 @@ prefix_rule(
     pattern = ["gh", "run", "view"],
     decision = "allow",
 )
+prefix_rule(
+    pattern = ["gh", "pr", "create"],
+    decision = "allow",
+)
 
 # 日常的に AI へ任せる Git 操作は自動で許可する。
 prefix_rule(
@@ -52,11 +56,6 @@ prefix_rule(
 )
 
 # 外部状態の更新は毎回レビューする。
-prefix_rule(
-    pattern = ["gh", "pr", "create"],
-    decision = "prompt",
-    justification = "Pull Request の作成は確認してから行う。",
-)
 prefix_rule(
     pattern = ["gh", "pr", "edit"],
     decision = "prompt",
