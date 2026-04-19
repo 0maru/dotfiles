@@ -88,16 +88,3 @@ prefix_rule(
     decision = "forbidden",
     justification = "再帰削除は手動で実行する。",
 )
-prefix_rule(pattern=["git", "fetch", "origin"], decision="allow")
-prefix_rule(pattern=["/opt/homebrew/bin/mise", "install", "node@24.15.0"], decision="allow")
-prefix_rule(pattern=["/opt/homebrew/bin/mise", "exec", "node@24.15.0", "--", "pnpm", "build"], decision="allow")
-prefix_rule(pattern=["/Users/0maru/.local/share/mise/installs/flutter/3.35.5-stable/bin/dart", "format"], decision="allow")
-prefix_rule(pattern=["/Users/0maru/.local/share/mise/installs/flutter/3.35.5-stable/bin/flutter", "test"], decision="allow")
-prefix_rule(pattern=["/Users/0maru/.local/share/mise/installs/flutter/3.35.5-stable/bin/flutter", "analyze"], decision="allow")
-prefix_rule(pattern=["git", "commit"], decision="allow")
-prefix_rule(pattern=["git", "switch", "-c"], decision="allow")
-prefix_rule(pattern=["git", "add"], decision="allow")
-prefix_rule(pattern=["git", "commit", "-m"], decision="allow")
-prefix_rule(pattern=["env", "HUSKY=0", "git", "commit", "-m", "Sentryのストレージ不足エラーを確実に除外", "-m", "Sentry の beforeSend からストレージ不足起因のイベント判定を切り出し、exception chain や message からも検出できるようにした。\\n\\nNo space left on device が OSError を先頭に持つイベントでも GitHub issue 化されないようにするため。"], decision="allow")
-prefix_rule(pattern=["git", "commit", "--no-verify"], decision="allow")
-prefix_rule(pattern=["make", "setupGitHooks"], decision="allow")
