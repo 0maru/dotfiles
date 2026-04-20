@@ -1,794 +1,567 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=1194, initial-scale=1, viewport-fit=cover" />
-<title>nvim cheatsheet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    /* github_dark_dimmed palette
-       canvas.default #22272e, canvas.subtle #2d333b, canvas.inset #1c2128
-       border.default #444c56, border.muted #373e47
-       fg.default #adbac7, fg.muted #768390, fg.subtle #545d68 */
-    --bg:     #22272e;
-    --bg-1:   #2d333b;
-    --bg-2:   #1c2128;
-    --bg-3:   #373e47;
-    --line:   #373e47;
-    --line-2: #444c56;
-
-    --fg:         #cdd9e5;
-    --fg-dim:     #adbac7;
-    --fg-dimmer:  #768390;
-    --fg-faint:   #545d68;
-
-    /* mode accents — github_dark_dimmed accent hues */
-    --m-n: #539bf5; /* accent.fg — normal: blue */
-    --m-i: #57ab5a; /* success.fg — insert: green */
-    --m-v: #986ee2; /* done.fg — visual: purple */
-    --m-c: #daaa3f; /* attention.fg — command: amber */
-    --m-o: #909dab; /* muted — operator */
-
-    /* levels — tinted bands using github_dark_dimmed muted tones */
-    --lv-1:    #57ab5a;   /* 初級 green (success.fg) */
-    --lv-1-bg: #1b2d21;
-    --lv-2:    #539bf5;   /* 中級 blue (accent.fg) */
-    --lv-2-bg: #1b2a3d;
-    --lv-3:    #986ee2;   /* 上級 purple (done.fg) */
-    --lv-3-bg: #26223a;
-    --lv-4:    #e5534b;   /* さらに上 red (danger.fg) */
-    --lv-4-bg: #3a1f22;
-
-    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-  }
-
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: geometricPrecision;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ============== top bar (sticky) ============== */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--line);
-    background: color-mix(in srgb, var(--bg) 94%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 0 16px;
-    gap: 16px;
-  }
-  .brand {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .brand-mark {
-    font-family: var(--mono);
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--fg);
-    letter-spacing: -0.01em;
-  }
-  .brand-mark .accent { color: var(--m-i); }
-  .brand-sub {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--fg-dimmer);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .topbar-legend {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-left: auto;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--fg-dimmer);
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .legend-item .mode-dot { width: 6px; height: 6px; }
-  .leader-pill {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--fg-dim);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .leader-pill .k {
-    display: inline-block;
-    padding: 2px 7px;
-    background: var(--bg-2);
-    border: 1px solid var(--line-2);
-    border-radius: 3px;
-    color: var(--fg);
-    font-size: 10px;
-  }
-  .legend-sep { width: 1px; height: 12px; background: var(--line); }
-
-  /* ============== content ============== */
-  main {
-    flex: 1;
-    padding: 0 16px 40px;
-  }
-
-  .level-band {
-    margin-top: 22px;
-  }
-  .level-head {
-    position: sticky;
-    top: 42px;
-    z-index: 30;
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    padding: 10px 12px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    background: var(--level-bg, var(--bg-1));
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--level-accent, var(--fg-faint));
-  }
-  .level-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--fg-dimmer);
-    letter-spacing: 0.1em;
-  }
-  .level-title {
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--fg);
-    letter-spacing: -0.005em;
-  }
-  .level-title .jp { margin-right: 8px; }
-  .level-sub {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--fg-dim);
-  }
-  .level-count {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--fg-dimmer);
-    margin-left: auto;
-  }
-
-  .level-grid {
-    column-count: 3;
-    column-gap: 14px;
-    column-fill: balance;
-  }
-
-  /* ============== section ============== */
-  .section {
-    break-inside: avoid;
-    margin-bottom: 14px;
-    border: 1px solid var(--line);
-    background: var(--bg-1);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding: 8px 12px 7px;
-    border-bottom: 1px solid var(--line);
-    background: var(--bg-2);
-  }
-  .section-title {
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--fg);
-    letter-spacing: 0.005em;
-  }
-  .section-category {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--fg-dimmer);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .section-body { padding: 2px 0; }
-
-  /* ============== row ============== */
-  .row {
-    display: grid;
-    grid-template-columns: 12px minmax(0, auto) 1fr;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 12px;
-    font-size: 12.5px;
-    line-height: 1.3;
-  }
-  .row + .row { border-top: 1px solid var(--line); }
-  .row.hidden { display: none; }
-
-  .row-mode { display: flex; align-items: center; justify-content: center; }
-  .mode-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--fg-faint);
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.25) inset;
-  }
-  .mode-dot[data-mode="N"]  { background: var(--m-n); }
-  .mode-dot[data-mode="I"]  { background: var(--m-i); }
-  .mode-dot[data-mode="V"]  { background: var(--m-v); }
-  .mode-dot[data-mode="C"]  { background: var(--m-c); }
-  .mode-dot[data-mode="O"]  { background: var(--m-o); }
-  .mode-dot[data-mode="NV"] { background: linear-gradient(90deg, var(--m-n) 50%, var(--m-v) 50%); }
-  .mode-dot[data-mode="OV"] { background: linear-gradient(90deg, var(--m-o) 50%, var(--m-v) 50%); }
-
-  .row-keys {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-wrap: wrap;
-    min-width: 0;
-  }
-  .key {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 500;
-    color: var(--fg);
-    background: var(--bg-1);
-    border: 1px solid var(--line-2);
-    border-bottom-color: #2f363e;
-    border-radius: 4px;
-    padding: 2px 7px;
-    min-width: 20px;
-    text-align: center;
-    letter-spacing: 0.01em;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
-    white-space: nowrap;
-  }
-  .key.cmd {
-    background: var(--bg-2);
-    border-color: var(--line-2);
-    color: var(--fg-dim);
-  }
-  .key-static {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--fg-dim);
-    padding: 1px 6px;
-    background: transparent;
-    border: 1px dashed var(--line-2);
-    border-radius: 3px;
-    letter-spacing: 0.02em;
-  }
-  .key-sep {
-    color: var(--fg-dimmer);
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 0 1px;
-  }
-
-  .row-desc {
-    font-family: var(--sans);
-    color: var(--fg-dim);
-    font-size: 12px;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* ============== notes & plugins ============== */
-  .notes { padding: 6px 12px 8px; }
-  .notes .note {
-    display: flex;
-    gap: 8px;
-    padding: 3px 0;
-    color: var(--fg-dim);
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .notes .note::before {
-    content: '·';
-    color: var(--fg-dimmer);
-    font-family: var(--mono);
-    flex: 0 0 auto;
-  }
-  .notes .note code {
-    font-family: var(--mono);
-    color: var(--fg);
-    background: var(--bg-2);
-    border: 1px solid var(--line-2);
-    border-radius: 3px;
-    padding: 0 4px;
-    font-size: 11px;
-  }
-
-  .plugin-groups {
-    padding: 8px 10px 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 14px;
-  }
-  .plugin-group { padding: 2px 0; }
-  .plugin-group-label {
-    font-family: var(--sans);
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--fg-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 5px;
-  }
-  .plugin-list { display: flex; flex-wrap: wrap; gap: 4px 6px; }
-  .plugin-chip {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--fg);
-    padding: 1px 7px;
-    border: 1px solid var(--line-2);
-    border-radius: 3px;
-    background: var(--bg-2);
-  }
-
-  /* ============== Tweaks panel ============== */
-  .tweaks {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    background: var(--bg-2);
-    border: 1px solid var(--line-2);
-    border-radius: 8px;
-    padding: 12px 14px;
-    display: none;
-    z-index: 1000;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.55);
-    min-width: 260px;
-  }
-  .tweaks.open { display: block; }
-  .tweaks-title {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--fg-dim);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .tweaks-group { margin-bottom: 12px; }
-  .tweaks-group:last-child { margin-bottom: 0; }
-  .tweaks-label {
-    font-family: var(--sans);
-    font-size: 10.5px;
-    color: var(--fg-dim);
-    margin-bottom: 6px;
-  }
-  .tweaks-buttons { display: flex; gap: 4px; flex-wrap: wrap; }
-  .tw-btn {
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 4px 9px;
-    background: var(--bg-1);
-    border: 1px solid var(--line-2);
-    border-radius: 4px;
-    color: var(--fg-dim);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .tw-btn.on {
-    background: var(--bg-3);
-    border-color: #56606e;
-    color: var(--fg);
-  }
-  .tw-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--fg-faint);
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>nvim cheatsheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              "Inter",
+              "-apple-system",
+              "BlinkMacSystemFont",
+              "Hiragino Kaku Gothic ProN",
+              "Yu Gothic",
+              "sans-serif",
+            ],
+            mono: [
+              "JetBrains Mono",
+              "ui-monospace",
+              "SFMono-Regular",
+              "Menlo",
+              "monospace",
+            ],
+          },
+          colors: {
+            canvas: {
+              950: "#1c2128",
+              900: "#22272e",
+              800: "#2d333b",
+              700: "#373e47",
+              600: "#444c56",
+            },
+            ink: {
+              100: "#cdd9e5",
+              200: "#adbac7",
+              300: "#768390",
+              400: "#545d68",
+            },
+          },
+        },
+      },
+    };
+  </script>
 </head>
-<body>
 
-<header class="topbar">
-  <div class="brand">
-    <span class="brand-mark"><span class="accent">n</span>vim</span>
-    <span class="brand-sub">cheatsheet</span>
+<body class="min-h-screen select-none bg-canvas-900 font-sans text-ink-100 antialiased">
+  <div class="min-h-screen bg-[radial-gradient(circle_at_top,rgba(83,155,245,0.10),transparent_32%)]">
+    <header class="border-b border-canvas-700/90 bg-canvas-900/92 backdrop-blur">
+      <div class="mx-auto flex w-full max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 lg:px-6">
+        <div class="flex items-baseline gap-3">
+          <div class="font-mono text-base font-semibold text-white">
+            <span class="text-[#57ab5a]">n</span>vim
+          </div>
+          <div class="font-mono text-xs uppercase tracking-[0.18em] text-ink-300">
+            cheatsheet
+          </div>
+        </div>
+
+        <div
+          class="inline-flex items-center gap-2 rounded-full border border-canvas-600 bg-canvas-950/70 px-3 py-1 font-mono text-xs text-ink-200">
+          <span>leader</span>
+          <span
+            class="inline-flex items-center justify-center rounded-md border border-canvas-600 bg-canvas-800 px-2 py-1 text-xs leading-none text-ink-100">Space</span>
+          <span class="h-3 w-px bg-canvas-600"></span>
+          <span>move</span>
+          <span
+            class="inline-flex items-center justify-center rounded-md border border-canvas-600 bg-canvas-800 px-2 py-1 text-xs leading-none text-ink-100">hjkl</span>
+        </div>
+
+        <div class="ml-auto flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-ink-300">
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#539bf5] ring-1 ring-black/25 ring-inset"></span>
+            <span>Normal</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#57ab5a] ring-1 ring-black/25 ring-inset"></span>
+            <span>Insert</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#986ee2] ring-1 ring-black/25 ring-inset"></span>
+            <span>Visual</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#daaa3f] ring-1 ring-black/25 ring-inset"></span>
+            <span>Command</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#909dab] ring-1 ring-black/25 ring-inset"></span>
+            <span>Operator</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto flex w-full max-w-[1400px] flex-col px-4 pb-10 pt-5 lg:px-6">
+      <div id="bands" class="space-y-8"></div>
+    </main>
   </div>
-  <div class="leader-pill">leader <span class="k">Space</span></div>
-  <div class="topbar-legend">
-    <div class="legend-item"><span class="mode-dot" data-mode="N"></span>Normal</div>
-    <div class="legend-item"><span class="mode-dot" data-mode="I"></span>Insert</div>
-    <div class="legend-item"><span class="mode-dot" data-mode="V"></span>Visual</div>
-    <div class="legend-item"><span class="mode-dot" data-mode="C"></span>Command</div>
-    <div class="legend-item"><span class="mode-dot" data-mode="O"></span>Operator</div>
-  </div>
-</header>
 
-<main id="bands"></main>
+  <aside id="tweaks"
+    class="fixed bottom-4 right-4 z-40 hidden w-[min(92vw,320px)] rounded-2xl border border-canvas-600 bg-canvas-950/95 p-4 shadow-2xl shadow-black/40 backdrop-blur">
+    <div class="font-mono text-xs uppercase tracking-[0.18em] text-ink-300">Tweaks</div>
 
-<!-- Tweaks panel -->
-<div class="tweaks" id="tweaks">
-  <div class="tweaks-title">Tweaks</div>
-  <div class="tweaks-group">
-    <div class="tweaks-label">表示する習熟度</div>
-    <div class="tweaks-buttons" id="tw-levels">
-      <button class="tw-btn" data-lv="1"><span class="tw-dot" style="background:var(--lv-1)"></span>初級</button>
-      <button class="tw-btn" data-lv="2"><span class="tw-dot" style="background:var(--lv-2)"></span>中級</button>
-      <button class="tw-btn" data-lv="3"><span class="tw-dot" style="background:var(--lv-3)"></span>上級</button>
-      <button class="tw-btn" data-lv="4"><span class="tw-dot" style="background:var(--lv-4)"></span>さらに上</button>
+    <div class="mt-4">
+      <div class="mb-2 text-xs text-ink-200">表示する習熟度</div>
+      <div id="tw-levels" class="flex flex-wrap gap-2">
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="1" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#57ab5a]"></span>
+          <span>初級</span>
+        </button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="2" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#539bf5]"></span>
+          <span>中級</span>
+        </button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="3" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#986ee2]"></span>
+          <span>上級</span>
+        </button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="4" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#e5534b]"></span>
+          <span>さらに上</span>
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="tweaks-group">
-    <div class="tweaks-label">密度</div>
-    <div class="tweaks-buttons" id="tw-density">
-      <button class="tw-btn" data-density="compact">Compact</button>
-      <button class="tw-btn" data-density="comfy">Comfy</button>
+
+    <div class="mt-4">
+      <div class="mb-2 text-xs text-ink-200">密度</div>
+      <div id="tw-density" class="flex flex-wrap gap-2">
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-density="compact" type="button">Compact</button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-density="comfy" type="button">Comfy</button>
+      </div>
     </div>
-  </div>
-  <div class="tweaks-group">
-    <div class="tweaks-label">列数</div>
-    <div class="tweaks-buttons" id="tw-cols">
-      <button class="tw-btn" data-cols="2">2</button>
-      <button class="tw-btn" data-cols="3">3</button>
-      <button class="tw-btn" data-cols="4">4</button>
+
+    <div class="mt-4">
+      <div class="mb-2 text-xs text-ink-200">列数</div>
+      <div id="tw-cols" class="flex flex-wrap gap-2">
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-cols="2" type="button">2</button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-cols="3" type="button">3</button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-cols="4" type="button">4</button>
+      </div>
     </div>
-  </div>
-</div>
+  </aside>
 
-<script>
-/*EDITMODE-BEGIN*/const TWEAK_DEFAULTS = {
-  "levels": [1, 2, 3, 4],
-  "density": "compact",
-  "cols": 3
-}/*EDITMODE-END*/;
+  <script>
+    const TWEAK_DEFAULTS = {
+      levels: [1, 2, 3, 4],
+      density: "compact",
+      cols: 3,
+    };
 
-const STATE = Object.assign({}, TWEAK_DEFAULTS);
-try {
-  const saved = JSON.parse(localStorage.getItem('nvim-cheat-state') || 'null');
-  if (saved) Object.assign(STATE, saved);
-} catch(e){}
+    const STORAGE_KEY = "nvim-cheat-state";
+    const STATE = {
+      levels: [...TWEAK_DEFAULTS.levels],
+      density: TWEAK_DEFAULTS.density,
+      cols: TWEAK_DEFAULTS.cols,
+    };
+  </script>
+  <script src="data.js"></script>
+  <script>
+    const data = window.CHEATSHEET;
 
-function persistLocal() {
-  localStorage.setItem('nvim-cheat-state', JSON.stringify(STATE));
-}
-function persistEdits(edits) {
-  try { window.parent.postMessage({type:'__edit_mode_set_keys', edits}, '*'); } catch(e){}
-}
-</script>
-<script src="data.js"></script>
-<script>
-const data = window.CHEATSHEET;
+    const LEVELS = [
+      {lv: 1, num: "LV-01", title: "初級", sub: "毎日必ず使う基礎", accent: "#57ab5a", bg: "#1b2d21"},
+      {lv: 2, num: "LV-02", title: "中級", sub: "体に入れたい定番", accent: "#539bf5", bg: "#1b2a3d"},
+      {lv: 3, num: "LV-03", title: "上級", sub: "慣れてきたら活きる", accent: "#986ee2", bg: "#26223a"},
+      {lv: 4, num: "LV-04", title: "さらに上", sub: "コンボ・高度ジャンプ", accent: "#e5534b", bg: "#3a1f22"},
+      {lv: 0, num: "SETUP", title: "Setup", sub: "自動動作・見た目・プラグイン", accent: "#768390", bg: "#1c2128"},
+    ];
 
-// Level band definitions
-const LEVELS = [
-  { lv: 1, num: 'LV·01', title: '初級',     sub: '毎日必ず使う基礎',       accent: 'var(--lv-1)', bg: 'var(--lv-1-bg)' },
-  { lv: 2, num: 'LV·02', title: '中級',     sub: '体に入れたい定番',         accent: 'var(--lv-2)', bg: 'var(--lv-2-bg)' },
-  { lv: 3, num: 'LV·03', title: '上級',     sub: '慣れてきたら活きる',       accent: 'var(--lv-3)', bg: 'var(--lv-3-bg)' },
-  { lv: 4, num: 'LV·04', title: 'さらに上', sub: 'コンボ・高度ジャンプ',     accent: 'var(--lv-4)', bg: 'var(--lv-4-bg)' },
-  { lv: 0, num: 'SETUP', title: 'Setup',    sub: '自動動作・見た目・プラグイン', accent: 'var(--fg-dim)', bg: 'var(--bg-2)' },
-];
+    const MODE_BACKGROUNDS = {
+      N: "#539bf5",
+      I: "#57ab5a",
+      V: "#986ee2",
+      C: "#daaa3f",
+      O: "#909dab",
+      NV: "linear-gradient(90deg, #539bf5 50%, #986ee2 50%)",
+      OV: "linear-gradient(90deg, #909dab 50%, #986ee2 50%)",
+    };
 
-function keyEl(k, { cmd=false, static_=false } = {}) {
-  if (static_) {
-    const s = document.createElement('span');
-    s.className = 'key-static';
-    s.textContent = k;
-    return s;
-  }
-  if (k === '→') {
-    const s = document.createElement('span');
-    s.className = 'key-sep';
-    s.textContent = '→';
-    return s;
-  }
-  const el = document.createElement('span');
-  el.className = 'key' + (cmd ? ' cmd' : '');
-  el.textContent = k;
-  return el;
-}
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
 
-function renderItem(item) {
-  const row = document.createElement('div');
-  row.className = 'row';
-  row.dataset.lv = item.lv || '';
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        if (Array.isArray(saved.levels)) {
+          STATE.levels = saved.levels
+            .map(Number)
+            .filter(lv => Number.isInteger(lv) && lv >= 1 && lv <= 4)
+            .sort((a, b) => a - b);
+        }
+        if (saved.density === "compact" || saved.density === "comfy") {
+          STATE.density = saved.density;
+        }
+        if ([2, 3, 4].includes(Number(saved.cols))) {
+          STATE.cols = Number(saved.cols);
+        }
+        if (STATE.levels.length === 0) {
+          STATE.levels = [...TWEAK_DEFAULTS.levels];
+        }
+      } catch (error) {
+        STATE.levels = [...TWEAK_DEFAULTS.levels];
+        STATE.density = TWEAK_DEFAULTS.density;
+        STATE.cols = TWEAK_DEFAULTS.cols;
+      }
+    }
 
-  const modeCell = document.createElement('div');
-  modeCell.className = 'row-mode';
-  const dot = document.createElement('span');
-  dot.className = 'mode-dot';
-  if (item.mode) dot.dataset.mode = item.mode;
-  modeCell.appendChild(dot);
-  row.appendChild(modeCell);
+    function persistLocal() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+      } catch (error) { }
+    }
 
-  const keysCell = document.createElement('div');
-  keysCell.className = 'row-keys';
-  const cmd = item.mode === 'C' || (item.keys[0] && /^:/.test(item.keys[0]));
-  item.keys.forEach(k => keysCell.appendChild(keyEl(k, { cmd, static_: !!item.static })));
-  row.appendChild(keysCell);
+    function persistEdits(edits) {
+      try {
+        window.parent.postMessage({type: "__edit_mode_set_keys", edits}, "*");
+      } catch (error) { }
+    }
 
-  const descCell = document.createElement('div');
-  descCell.className = 'row-desc';
-  descCell.textContent = item.desc;
-  row.appendChild(descCell);
+    function densityRowClass() {
+      return STATE.density === "comfy"
+        ? "px-4 py-3 text-sm leading-6"
+        : "px-4 py-2.5 text-sm leading-5";
+    }
 
-  return row;
-}
+    function effectiveCols() {
+      if (window.innerWidth < 760) return 1;
+      if (window.innerWidth < 1180) return Math.min(STATE.cols, 2);
+      return STATE.cols;
+    }
 
-function makeSectionBox(title, category) {
-  const box = document.createElement('div');
-  box.className = 'section';
-  const head = document.createElement('div');
-  head.className = 'section-head';
-  const t = document.createElement('div');
-  t.className = 'section-title';
-  t.textContent = title;
-  head.appendChild(t);
-  if (category) {
-    const c = document.createElement('div');
-    c.className = 'section-category';
-    c.textContent = category;
-    head.appendChild(c);
-  }
-  box.appendChild(head);
-  const body = document.createElement('div');
-  body.className = 'section-body';
-  box.appendChild(body);
-  return { box, body };
-}
+    function keyHtml(key, {cmd = false, staticKey = false} = {}) {
+      if (staticKey) {
+        return `<span class="inline-flex items-center rounded-md border border-dashed border-canvas-600 px-2 py-1 font-mono text-xs leading-none text-ink-200">${escapeHtml(key)}</span>`;
+      }
+      if (key === "→") {
+        return `<span class="px-0.5 font-mono text-xs text-ink-300">→</span>`;
+      }
+      return `<span class="inline-flex min-w-5 items-center justify-center whitespace-nowrap rounded-md border border-canvas-600 px-2 py-1 font-mono text-xs font-medium leading-none shadow-[0_1px_0_rgba(0,0,0,0.3)] ${cmd ? "bg-canvas-950 text-ink-200" : "bg-canvas-800 text-ink-100"}">${escapeHtml(key)}</span>`;
+    }
 
-// Flatten data into (item + sourceCategory + sourceSectionTitle)
-function collectKeyItems() {
-  const out = [];
-  data.tabs.forEach(tab => {
-    tab.sections.forEach(sec => {
-      if (!sec.items) return;
-      sec.items.forEach(it => {
-        out.push({
-          ...it,
-          _cat: tab.label,
-          _catSub: tab.sublabel,
-          _section: sec.title,
+    function renderItem(item, index) {
+      const cmd = item.mode === "C" || (item.keys[0] && /^:/.test(item.keys[0]));
+      const modeStyle = MODE_BACKGROUNDS[item.mode] || "#545d68";
+      const keys = item.keys.map(key => keyHtml(key, {cmd, staticKey: !!item.static})).join("");
+
+      return `
+        <div class="flex items-center gap-3 ${densityRowClass()}${index > 0 ? " border-t border-canvas-700/80" : ""}">
+          <div class="flex w-3 shrink-0 justify-center">
+            <span class="h-2 w-2 rounded-full ring-1 ring-black/25 ring-inset" style="background:${modeStyle}"></span>
+          </div>
+          <div class="flex min-w-0 flex-wrap items-center gap-1">${keys}</div>
+          <div class="min-w-0 flex-1 truncate text-sm text-ink-200">${escapeHtml(item.desc)}</div>
+        </div>
+      `;
+    }
+
+    function renderRichNote(note) {
+      const parts = [];
+      const regex = /`([^`]+)`/g;
+      let lastIndex = 0;
+      let match;
+
+      while ((match = regex.exec(note)) !== null) {
+        const plain = note.slice(lastIndex, match.index);
+        if (plain) parts.push(escapeHtml(plain));
+        parts.push(`<code class="rounded border border-canvas-600 bg-canvas-950/70 px-1.5 py-0.5 font-mono text-xs text-white">${escapeHtml(match[1])}</code>`);
+        lastIndex = regex.lastIndex;
+      }
+
+      const tail = note.slice(lastIndex);
+      if (tail) parts.push(escapeHtml(tail));
+
+      return parts.join("");
+    }
+
+    function renderNotes(notes) {
+      return `
+        <div class="px-4 py-3">
+          ${notes.map(note => `
+            <div class="flex gap-3 py-1.5 text-sm leading-6 text-ink-200">
+              <span class="font-mono text-ink-300">·</span>
+              <div>${renderRichNote(note)}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderPluginGroups(groups) {
+      return `
+        <div class="grid gap-4 px-4 py-4 md:grid-cols-2">
+          ${groups.map(group => `
+            <div class="space-y-2">
+              <div class="font-mono text-xs uppercase tracking-[0.14em] text-ink-300">${escapeHtml(group.label)}</div>
+              <div class="flex flex-wrap gap-2">
+                ${group.plugins.map(plugin => `<span class="inline-flex items-center rounded-full border border-canvas-600 bg-canvas-950/60 px-2.5 py-1 font-mono text-xs text-ink-100">${escapeHtml(plugin)}</span>`).join("")}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderSection(title, category, bodyHtml) {
+      return `
+        <section class="overflow-hidden rounded-2xl border border-canvas-700 bg-canvas-800/90">
+          <div class="flex items-start justify-between gap-4 border-b border-canvas-700 bg-canvas-950/65 px-4 py-3">
+            <div class="text-sm font-semibold text-white">${escapeHtml(title)}</div>
+            ${category ? `<div class="font-mono text-xs uppercase tracking-[0.14em] text-ink-300">${escapeHtml(category)}</div>` : ""}
+          </div>
+          ${bodyHtml}
+        </section>
+      `;
+    }
+
+    function collectKeyItems() {
+      const items = [];
+      data.tabs.forEach(tab => {
+        tab.sections.forEach(section => {
+          if (!section.items) return;
+          section.items.forEach(item => {
+            items.push({
+              ...item,
+              _category: tab.label,
+              _section: section.title,
+            });
+          });
         });
       });
-    });
-  });
-  return out;
-}
+      return items;
+    }
 
-function collectSetupSections() {
-  const setupTab = data.tabs.find(t => t.id === 'setup');
-  return setupTab ? setupTab.sections : [];
-}
-
-function renderLevelBand(levelDef) {
-  const band = document.createElement('section');
-  band.className = 'level-band';
-  band.dataset.lv = levelDef.lv;
-
-  const head = document.createElement('div');
-  head.className = 'level-head';
-  head.style.setProperty('--level-accent', levelDef.accent);
-  head.style.setProperty('--level-bg', levelDef.bg);
-  head.innerHTML = `
-    <span class="level-num">${levelDef.num}</span>
-    <span class="level-title"><span class="jp">${levelDef.title}</span></span>
-    <span class="level-sub">${levelDef.sub}</span>
-    <span class="level-count" data-role="count"></span>
-  `;
-  band.appendChild(head);
-
-  const grid = document.createElement('div');
-  grid.className = 'level-grid';
-  band.appendChild(grid);
-
-  return { band, grid, head };
-}
-
-function render() {
-  const root = document.getElementById('bands');
-  root.innerHTML = '';
-
-  const keyItems = collectKeyItems();
-
-  // Group by level, then by source section (preserve category ordering)
-  const sectionOrder = [];
-  data.tabs.forEach(tab => tab.sections.forEach(sec => {
-    if (sec.items) sectionOrder.push({ cat: tab.label, section: sec.title });
-  }));
-
-  // Build a lookup: level -> section key -> items[]
-  for (const lvDef of LEVELS) {
-    if (lvDef.lv === 0) continue; // setup handled below
-
-    const { band, grid, head } = renderLevelBand(lvDef);
-
-    // Group items in this level
-    const grouped = new Map(); // key: cat|section -> { cat, section, items }
-    keyItems.forEach(it => {
-      if ((it.lv || 0) !== lvDef.lv) return;
-      const key = it._cat + '|' + it._section;
-      if (!grouped.has(key)) grouped.set(key, { cat: it._cat, section: it._section, items: [] });
-      grouped.get(key).items.push(it);
-    });
-
-    // Order grouped sections by sectionOrder
-    const ordered = sectionOrder
-      .map(o => grouped.get(o.cat + '|' + o.section))
-      .filter(Boolean);
-
-    let count = 0;
-    ordered.forEach(g => {
-      const { box, body } = makeSectionBox(g.section, g.cat);
-      g.items.forEach(it => body.appendChild(renderItem(it)));
-      count += g.items.length;
-      grid.appendChild(box);
-    });
-
-    head.querySelector('[data-role="count"]').textContent = count + ' keys';
-
-    if (count === 0) continue; // skip empty
-    root.appendChild(band);
-  }
-
-  // Setup band
-  const setupDef = LEVELS.find(l => l.lv === 0);
-  const { band: sBand, grid: sGrid, head: sHead } = renderLevelBand(setupDef);
-  const setupSections = collectSetupSections();
-  let setupCount = 0;
-  setupSections.forEach(sec => {
-    const { box, body } = makeSectionBox(sec.title, 'Setup');
-    if (sec.notes) {
-      body.className = 'notes';
-      sec.notes.forEach(n => {
-        const d = document.createElement('div');
-        d.className = 'note';
-        d.innerHTML = n.replace(/`([^`]+)`/g, '<code>$1</code>');
-        body.appendChild(d);
-        setupCount++;
-      });
-    } else if (sec.groups) {
-      body.className = 'plugin-groups';
-      sec.groups.forEach(g => {
-        const grp = document.createElement('div');
-        grp.className = 'plugin-group';
-        const lab = document.createElement('div');
-        lab.className = 'plugin-group-label';
-        lab.textContent = g.label;
-        grp.appendChild(lab);
-        const list = document.createElement('div');
-        list.className = 'plugin-list';
-        g.plugins.forEach(p => {
-          const chip = document.createElement('span');
-          chip.className = 'plugin-chip';
-          chip.textContent = p;
-          list.appendChild(chip);
-          setupCount++;
+    function collectSectionOrder() {
+      const order = [];
+      data.tabs.forEach(tab => {
+        tab.sections.forEach(section => {
+          if (!section.items) return;
+          order.push({category: tab.label, section: section.title});
         });
-        grp.appendChild(list);
-        body.appendChild(grp);
+      });
+      return order;
+    }
+
+    function renderLevelBand(level, keyItems, sectionOrder) {
+      const grouped = new Map();
+      keyItems.forEach(item => {
+        if ((item.lv || 0) !== level.lv) return;
+        const key = `${item._category}|${item._section}`;
+        if (!grouped.has(key)) {
+          grouped.set(key, {category: item._category, section: item._section, items: []});
+        }
+        grouped.get(key).items.push(item);
+      });
+
+      const ordered = sectionOrder
+        .map(entry => grouped.get(`${entry.category}|${entry.section}`))
+        .filter(Boolean);
+
+      const count = ordered.reduce((total, group) => total + group.items.length, 0);
+      if (count === 0) return "";
+
+      const gridStyle = `grid-template-columns: repeat(${effectiveCols()}, minmax(0, 1fr));`;
+      const sections = ordered.map(group => {
+        const body = group.items.map((item, index) => renderItem(item, index)).join("");
+        return renderSection(group.section, group.category, body);
+      }).join("");
+
+      return `
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-canvas-700 px-4 py-3" style="background:${level.bg}; border-left:4px solid ${level.accent};">
+            <span class="font-mono text-xs tracking-[0.16em] text-ink-300">${level.num}</span>
+            <span class="text-base font-semibold text-white">${escapeHtml(level.title)}</span>
+            <span class="font-mono text-xs text-ink-200">${escapeHtml(level.sub)}</span>
+            <span class="ml-auto font-mono text-xs text-ink-300">${count} keys</span>
+          </div>
+          <div class="grid gap-4" style="${gridStyle}">
+            ${sections}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSetupBand() {
+      const setup = LEVELS.find(level => level.lv === 0);
+      const setupTab = data.tabs.find(tab => tab.id === "setup");
+      if (!setup || !setupTab) return "";
+
+      const count = setupTab.sections.reduce((total, section) => {
+        if (section.notes) return total + section.notes.length;
+        if (section.groups) {
+          return total + section.groups.reduce((sum, group) => sum + group.plugins.length, 0);
+        }
+        return total;
+      }, 0);
+
+      const gridStyle = `grid-template-columns: repeat(${effectiveCols()}, minmax(0, 1fr));`;
+      const sections = setupTab.sections.map(section => {
+        const body = section.notes
+          ? renderNotes(section.notes)
+          : renderPluginGroups(section.groups || []);
+        return renderSection(section.title, "Setup", body);
+      }).join("");
+
+      return `
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-canvas-700 px-4 py-3" style="background:${setup.bg}; border-left:4px solid ${setup.accent};">
+            <span class="font-mono text-xs tracking-[0.16em] text-ink-300">${setup.num}</span>
+            <span class="text-base font-semibold text-white">${escapeHtml(setup.title)}</span>
+            <span class="font-mono text-xs text-ink-200">${escapeHtml(setup.sub)}</span>
+            <span class="ml-auto font-mono text-xs text-ink-300">${count} items</span>
+          </div>
+          <div class="grid gap-4" style="${gridStyle}">
+            ${sections}
+          </div>
+        </section>
+      `;
+    }
+
+    function render() {
+      const root = document.getElementById("bands");
+      const visibleLevels = new Set(STATE.levels);
+      const keyItems = collectKeyItems();
+      const sectionOrder = collectSectionOrder();
+
+      const html = LEVELS
+        .filter(level => level.lv !== 0 && visibleLevels.has(level.lv))
+        .map(level => renderLevelBand(level, keyItems, sectionOrder))
+        .join("") + renderSetupBand();
+
+      root.innerHTML = html;
+    }
+
+    function syncTweaksUI() {
+      document.querySelectorAll("#tw-levels .tw-btn").forEach(button => {
+        button.classList.toggle("border-slate-400", STATE.levels.includes(Number(button.dataset.lv)));
+        button.classList.toggle("bg-canvas-700", STATE.levels.includes(Number(button.dataset.lv)));
+        button.classList.toggle("text-white", STATE.levels.includes(Number(button.dataset.lv)));
+      });
+
+      document.querySelectorAll("#tw-density .tw-btn").forEach(button => {
+        const active = button.dataset.density === STATE.density;
+        button.classList.toggle("border-slate-400", active);
+        button.classList.toggle("bg-canvas-700", active);
+        button.classList.toggle("text-white", active);
+      });
+
+      document.querySelectorAll("#tw-cols .tw-btn").forEach(button => {
+        const active = Number(button.dataset.cols) === STATE.cols;
+        button.classList.toggle("border-slate-400", active);
+        button.classList.toggle("bg-canvas-700", active);
+        button.classList.toggle("text-white", active);
       });
     }
-    sGrid.appendChild(box);
-  });
-  sHead.querySelector('[data-role="count"]').textContent = setupCount + ' items';
-  root.appendChild(sBand);
 
-  applyFilters();
-}
+    function wireTweaks() {
+      document.querySelectorAll("#tw-levels .tw-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          const level = Number(button.dataset.lv);
+          const index = STATE.levels.indexOf(level);
+          if (index >= 0) {
+            STATE.levels.splice(index, 1);
+          } else {
+            STATE.levels.push(level);
+          }
+          STATE.levels.sort((a, b) => a - b);
+          if (STATE.levels.length === 0) {
+            STATE.levels = [...TWEAK_DEFAULTS.levels];
+          }
+          persistLocal();
+          persistEdits({levels: STATE.levels});
+          syncTweaksUI();
+          render();
+        });
+      });
 
-function applyFilters() {
-  const lvs = new Set(STATE.levels);
-  document.querySelectorAll('.level-band').forEach(b => {
-    const lv = Number(b.dataset.lv);
-    if (lv === 0) { b.style.display = ''; return; }
-    b.style.display = lvs.has(lv) ? '' : 'none';
-  });
-  document.body.dataset.density = STATE.density;
-  document.querySelectorAll('.level-grid').forEach(g => {
-    g.style.columnCount = STATE.cols;
-  });
-}
+      document.querySelectorAll("#tw-density .tw-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          STATE.density = button.dataset.density;
+          persistLocal();
+          persistEdits({density: STATE.density});
+          syncTweaksUI();
+          render();
+        });
+      });
 
-function syncTweaksUI() {
-  document.querySelectorAll('#tw-levels .tw-btn').forEach(b => {
-    b.classList.toggle('on', STATE.levels.includes(Number(b.dataset.lv)));
-  });
-  document.querySelectorAll('#tw-density .tw-btn').forEach(b => {
-    b.classList.toggle('on', b.dataset.density === STATE.density);
-  });
-  document.querySelectorAll('#tw-cols .tw-btn').forEach(b => {
-    b.classList.toggle('on', Number(b.dataset.cols) === STATE.cols);
-  });
-}
+      document.querySelectorAll("#tw-cols .tw-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          STATE.cols = Number(button.dataset.cols);
+          persistLocal();
+          persistEdits({cols: STATE.cols});
+          syncTweaksUI();
+          render();
+        });
+      });
+    }
 
-function wireTweaks() {
-  document.querySelectorAll('#tw-levels .tw-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      const lv = Number(b.dataset.lv);
-      const i = STATE.levels.indexOf(lv);
-      if (i >= 0) STATE.levels.splice(i,1);
-      else STATE.levels.push(lv);
-      STATE.levels.sort();
-      if (STATE.levels.length === 0) STATE.levels = [1,2,3,4];
-      persistLocal();
-      persistEdits({ levels: STATE.levels });
-      syncTweaksUI();
-      applyFilters();
+    function wireResize() {
+      let timer = null;
+      window.addEventListener("resize", () => {
+        clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          render();
+        }, 100);
+      });
+    }
+
+    window.addEventListener("message", event => {
+      const message = event.data;
+      if (!message || typeof message !== "object") return;
+
+      if (message.type === "__activate_edit_mode") {
+        document.getElementById("tweaks").classList.remove("hidden");
+      } else if (message.type === "__deactivate_edit_mode") {
+        document.getElementById("tweaks").classList.add("hidden");
+      }
     });
-  });
-  document.querySelectorAll('#tw-density .tw-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      STATE.density = b.dataset.density;
-      persistLocal();
-      persistEdits({ density: STATE.density });
-      syncTweaksUI();
-      applyFilters();
-    });
-  });
-  document.querySelectorAll('#tw-cols .tw-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      STATE.cols = Number(b.dataset.cols);
-      persistLocal();
-      persistEdits({ cols: STATE.cols });
-      syncTweaksUI();
-      applyFilters();
-    });
-  });
-}
 
-window.addEventListener('message', (e) => {
-  const msg = e.data;
-  if (!msg || typeof msg !== 'object') return;
-  if (msg.type === '__activate_edit_mode') {
-    document.getElementById('tweaks').classList.add('open');
-  } else if (msg.type === '__deactivate_edit_mode') {
-    document.getElementById('tweaks').classList.remove('open');
-  }
-});
+    loadState();
+    render();
+    syncTweaksUI();
+    wireTweaks();
+    wireResize();
 
-const denStyle = document.createElement('style');
-denStyle.textContent = `
-  body[data-density="comfy"] .row { padding: 8px 12px; font-size: 13.5px; }
-  body[data-density="comfy"] .row-desc { font-size: 13px; }
-  body[data-density="comfy"] .key { font-size: 12.5px; padding: 3px 8px; }
-  body[data-density="comfy"] .section-title { font-size: 13px; }
-`;
-document.head.appendChild(denStyle);
-
-render();
-wireTweaks();
-syncTweaksUI();
-
-try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
-</script>
+    try {
+      window.parent.postMessage({type: "__edit_mode_available"}, "*");
+    } catch (error) { }
+  </script>
 </body>
+
 </html>
