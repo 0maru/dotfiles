@@ -57,10 +57,6 @@ window.CHEATSHEET = {
         {
           title: "素の Vim 基本動作",
           items: [
-            { keys: ["h"], desc: "左", lv: 1 },
-            { keys: ["j"], desc: "下 (折り返し追従 / no-count時)", lv: 1 },
-            { keys: ["k"], desc: "上 (折り返し追従 / no-count時)", lv: 1 },
-            { keys: ["l"], desc: "右", lv: 1 },
             { keys: ["w"], desc: "次の単語の先頭", lv: 1 },
             { keys: ["b"], desc: "前の単語の先頭", lv: 1 },
             { keys: ["e"], desc: "単語の末尾", lv: 1 },
