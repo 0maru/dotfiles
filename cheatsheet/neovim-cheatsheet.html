@@ -1,709 +1,794 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neovim Cheatsheet - 0maru's dotfiles</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1194, initial-scale=1, viewport-fit=cover" />
+<title>nvim cheatsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #22272e;
-    --panel: rgba(34, 39, 46, 0.88);
-    --panel-strong: #2d333b;
-    --panel-soft: #1c2128;
-    --border: #444c56;
-    --text: #adbac7;
-    --muted: #768390;
-    --blue: #539bf5;
-    --green: #57ab5a;
-    --yellow: #c69026;
-    --red: #e5534b;
-    --purple: #986ee2;
-    --shadow: 0 18px 60px rgba(9, 12, 16, 0.36);
+    /* github_dark_dimmed palette
+       canvas.default #22272e, canvas.subtle #2d333b, canvas.inset #1c2128
+       border.default #444c56, border.muted #373e47
+       fg.default #adbac7, fg.muted #768390, fg.subtle #545d68 */
+    --bg:     #22272e;
+    --bg-1:   #2d333b;
+    --bg-2:   #1c2128;
+    --bg-3:   #373e47;
+    --line:   #373e47;
+    --line-2: #444c56;
+
+    --fg:         #cdd9e5;
+    --fg-dim:     #adbac7;
+    --fg-dimmer:  #768390;
+    --fg-faint:   #545d68;
+
+    /* mode accents — github_dark_dimmed accent hues */
+    --m-n: #539bf5; /* accent.fg — normal: blue */
+    --m-i: #57ab5a; /* success.fg — insert: green */
+    --m-v: #986ee2; /* done.fg — visual: purple */
+    --m-c: #daaa3f; /* attention.fg — command: amber */
+    --m-o: #909dab; /* muted — operator */
+
+    /* levels — tinted bands using github_dark_dimmed muted tones */
+    --lv-1:    #57ab5a;   /* 初級 green (success.fg) */
+    --lv-1-bg: #1b2d21;
+    --lv-2:    #539bf5;   /* 中級 blue (accent.fg) */
+    --lv-2-bg: #1b2a3d;
+    --lv-3:    #986ee2;   /* 上級 purple (done.fg) */
+    --lv-3-bg: #26223a;
+    --lv-4:    #e5534b;   /* さらに上 red (danger.fg) */
+    --lv-4-bg: #3a1f22;
+
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   }
 
-  * {
-    box-sizing: border-box;
+  * { box-sizing: border-box; }
+  html, body {
     margin: 0;
     padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
-
   body {
     min-height: 100vh;
-    padding: 32px 20px 56px;
-    color: var(--text);
-    font-family: "Avenir Next", "Hiragino Sans", "Noto Sans JP", sans-serif;
-    line-height: 1.6;
-    background:
-      radial-gradient(circle at top left, rgba(83, 155, 245, 0.18), transparent 28%),
-      radial-gradient(circle at top right, rgba(87, 171, 90, 0.16), transparent 24%),
-      linear-gradient(180deg, #1c2128 0%, #22272e 42%, #1a1f24 100%);
-  }
-
-  a {
-    color: inherit;
-  }
-
-  .page {
-    max-width: 1260px;
-    margin: 0 auto;
-  }
-
-  .hero {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    padding: 28px;
-    background:
-      linear-gradient(135deg, rgba(45, 51, 59, 0.92), rgba(28, 33, 40, 0.9)),
-      var(--panel);
-    box-shadow: var(--shadow);
-    margin-bottom: 26px;
-  }
-
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: auto -10% -50% 55%;
-    height: 220px;
-    background: radial-gradient(circle, rgba(152, 110, 226, 0.22), transparent 60%);
-    pointer-events: none;
-  }
-
-  .eyebrow {
-    font-size: 0.76rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    font-size: clamp(2rem, 3.8vw, 3.5rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-    color: #f0f6fc;
-    margin-bottom: 10px;
-  }
-
-  .lede {
-    max-width: 780px;
-    font-size: 0.98rem;
-    color: #cdd9e5;
-  }
-
-  .meta-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
-    gap: 18px;
-    margin-top: 22px;
-  }
-
-  .pill-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  /* ============== top bar (sticky) ============== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0 16px;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
     gap: 10px;
-    align-items: flex-start;
   }
-
-  .pill {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
-    padding: 7px 12px;
-    background: rgba(255, 255, 255, 0.03);
-    color: #cdd9e5;
-    font-size: 0.82rem;
+  .brand-mark {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--fg);
+    letter-spacing: -0.01em;
   }
-
-  .leader-pill {
-    border-color: rgba(83, 155, 245, 0.4);
-    color: #dbe9ff;
-    background: rgba(83, 155, 245, 0.12);
-  }
-
-  .snapshot {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 16px 18px;
-    background: rgba(13, 17, 23, 0.28);
-  }
-
-  .snapshot h2 {
-    font-size: 0.95rem;
-    color: #f0f6fc;
-    margin-bottom: 8px;
-  }
-
-  .snapshot p {
-    font-size: 0.84rem;
-    color: var(--muted);
-  }
-
-  .section {
-    margin-top: 28px;
-  }
-
-  .section-head {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 14px;
-  }
-
-  .section-title {
-    font-size: 1.2rem;
-    color: #f0f6fc;
-  }
-
-  .section-desc {
-    font-size: 0.84rem;
-    color: var(--muted);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-  }
-
-  .card {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 18px 18px 16px;
-    background:
-      linear-gradient(180deg, rgba(45, 51, 59, 0.95), rgba(28, 33, 40, 0.93));
-    box-shadow: 0 14px 32px rgba(9, 12, 16, 0.18);
-  }
-
-  .card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 4px;
-    border-radius: 18px 0 0 18px;
-    background: var(--blue);
-  }
-
-  .card.green::before { background: var(--green); }
-  .card.blue::before { background: var(--blue); }
-  .card.yellow::before { background: var(--yellow); }
-  .card.red::before { background: var(--red); }
-  .card.purple::before { background: var(--purple); }
-
-  .card h3 {
-    font-size: 0.98rem;
-    color: #f0f6fc;
-    margin-bottom: 10px;
-    letter-spacing: 0.01em;
-  }
-
-  .card-note {
-    margin-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-    padding-top: 10px;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  tr {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  }
-
-  tr:last-child {
-    border-bottom: none;
-  }
-
-  td {
-    vertical-align: top;
-    padding: 6px 0;
-    font-size: 0.84rem;
-  }
-
-  td:first-child {
-    width: 46%;
-    padding-right: 12px;
-    white-space: nowrap;
-  }
-
-  td:last-child {
-    color: #c2ccd6;
-  }
-
-  .label {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+  .brand-mark .accent { color: var(--m-i); }
+  .brand-sub {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-right: 6px;
-    color: #0d1117;
   }
-
-  .normal { background: var(--blue); }
-  .insert { background: var(--green); }
-  .visual { background: var(--purple); color: #f6f8fa; }
-  .command { background: var(--yellow); }
-
-  kbd {
+  .topbar-legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg-dimmer);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .legend-item .mode-dot { width: 6px; height: 6px; }
+  .leader-pill {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .leader-pill .k {
     display: inline-block;
     padding: 2px 7px;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    border-radius: 3px;
+    color: var(--fg);
+    font-size: 10px;
+  }
+  .legend-sep { width: 1px; height: 12px; background: var(--line); }
+
+  /* ============== content ============== */
+  main {
+    flex: 1;
+    padding: 0 16px 40px;
+  }
+
+  .level-band {
+    margin-top: 22px;
+  }
+  .level-head {
+    position: sticky;
+    top: 42px;
+    z-index: 30;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
     border-radius: 6px;
-    border: 1px solid #5c6773;
-    border-bottom-width: 2px;
-    background: #2d333b;
-    color: #f0f6fc;
-    font-family: "JetBrains Mono", "SFMono-Regular", monospace;
-    font-size: 0.79rem;
-    line-height: 1.45;
+    background: var(--level-bg, var(--bg-1));
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--level-accent, var(--fg-faint));
+  }
+  .level-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.1em;
+  }
+  .level-title {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: -0.005em;
+  }
+  .level-title .jp { margin-right: 8px; }
+  .level-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-dim);
+  }
+  .level-count {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg-dimmer);
+    margin-left: auto;
+  }
+
+  .level-grid {
+    column-count: 3;
+    column-gap: 14px;
+    column-fill: balance;
+  }
+
+  /* ============== section ============== */
+  .section {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    border: 1px solid var(--line);
+    background: var(--bg-1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 8px 12px 7px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .section-title {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: 0.005em;
+  }
+  .section-category {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .section-body { padding: 2px 0; }
+
+  /* ============== row ============== */
+  .row {
+    display: grid;
+    grid-template-columns: 12px minmax(0, auto) 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    font-size: 12.5px;
+    line-height: 1.3;
+  }
+  .row + .row { border-top: 1px solid var(--line); }
+  .row.hidden { display: none; }
+
+  .row-mode { display: flex; align-items: center; justify-content: center; }
+  .mode-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--fg-faint);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.25) inset;
+  }
+  .mode-dot[data-mode="N"]  { background: var(--m-n); }
+  .mode-dot[data-mode="I"]  { background: var(--m-i); }
+  .mode-dot[data-mode="V"]  { background: var(--m-v); }
+  .mode-dot[data-mode="C"]  { background: var(--m-c); }
+  .mode-dot[data-mode="O"]  { background: var(--m-o); }
+  .mode-dot[data-mode="NV"] { background: linear-gradient(90deg, var(--m-n) 50%, var(--m-v) 50%); }
+  .mode-dot[data-mode="OV"] { background: linear-gradient(90deg, var(--m-o) 50%, var(--m-v) 50%); }
+
+  .row-keys {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .key {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--fg);
+    background: var(--bg-1);
+    border: 1px solid var(--line-2);
+    border-bottom-color: #2f363e;
+    border-radius: 4px;
+    padding: 2px 7px;
+    min-width: 20px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    white-space: nowrap;
+  }
+  .key.cmd {
+    background: var(--bg-2);
+    border-color: var(--line-2);
+    color: var(--fg-dim);
+  }
+  .key-static {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg-dim);
+    padding: 1px 6px;
+    background: transparent;
+    border: 1px dashed var(--line-2);
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+  }
+  .key-sep {
+    color: var(--fg-dimmer);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 0 1px;
+  }
+
+  .row-desc {
+    font-family: var(--sans);
+    color: var(--fg-dim);
+    font-size: 12px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  code {
-    display: inline-block;
-    padding: 1px 6px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #f0f6fc;
-    font-family: "JetBrains Mono", "SFMono-Regular", monospace;
-    font-size: 0.78rem;
-  }
-
-  .leader {
-    border-color: rgba(83, 155, 245, 0.6);
-    color: #dbe9ff;
-    background: rgba(83, 155, 245, 0.16);
-  }
-
-  .mode-line {
+  /* ============== notes & plugins ============== */
+  .notes { padding: 6px 12px 8px; }
+  .notes .note {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 18px;
-  }
-
-  .mode-card {
-    flex: 1 1 160px;
-    min-width: 140px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 12px 14px;
-    background: rgba(255, 255, 255, 0.025);
-  }
-
-  .mode-card strong {
-    display: block;
-    color: #f0f6fc;
-    margin-bottom: 4px;
-    font-size: 0.86rem;
-  }
-
-  .mode-card span {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-
-  .mini-list {
-    display: grid;
     gap: 8px;
-    font-size: 0.83rem;
-    color: #c2ccd6;
+    padding: 3px 0;
+    color: var(--fg-dim);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .notes .note::before {
+    content: '·';
+    color: var(--fg-dimmer);
+    font-family: var(--mono);
+    flex: 0 0 auto;
+  }
+  .notes .note code {
+    font-family: var(--mono);
+    color: var(--fg);
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 11px;
   }
 
-  .mini-list div {
-    padding: 10px 12px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  .plugin-groups {
+    padding: 8px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 14px;
+  }
+  .plugin-group { padding: 2px 0; }
+  .plugin-group-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--fg-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 5px;
+  }
+  .plugin-list { display: flex; flex-wrap: wrap; gap: 4px 6px; }
+  .plugin-chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg);
+    padding: 1px 7px;
+    border: 1px solid var(--line-2);
+    border-radius: 3px;
+    background: var(--bg-2);
   }
 
-  .footer {
-    margin-top: 30px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.76rem;
+  /* ============== Tweaks panel ============== */
+  .tweaks {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.55);
+    min-width: 260px;
   }
-
-  @media (max-width: 900px) {
-    .meta-grid {
-      grid-template-columns: 1fr;
-    }
+  .tweaks.open { display: block; }
+  .tweaks-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--fg-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
   }
-
-  @media (max-width: 720px) {
-    body {
-      padding: 18px 14px 40px;
-    }
-
-    .hero,
-    .card {
-      border-radius: 18px;
-    }
-
-    td:first-child {
-      width: auto;
-      white-space: normal;
-    }
+  .tweaks-group { margin-bottom: 12px; }
+  .tweaks-group:last-child { margin-bottom: 0; }
+  .tweaks-label {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
   }
-
-  @media print {
-    body {
-      background: #fff;
-      color: #111;
-      padding: 12px;
-    }
-
-    .hero,
-    .card,
-    .snapshot,
-    .mode-card,
-    .mini-list div {
-      box-shadow: none;
-      background: #fff;
-      border-color: #d0d7de;
-    }
-
-    .hero::after {
-      display: none;
-    }
-
-    h1,
-    .section-title,
-    .card h3,
-    .snapshot h2,
-    .mode-card strong {
-      color: #111;
-    }
-
-    .lede,
-    td:last-child,
-    .section-desc,
-    .snapshot p,
-    .mode-card span,
-    .card-note,
-    .footer,
-    .eyebrow {
-      color: #555;
-    }
-
-    kbd {
-      color: #111;
-      background: #f6f8fa;
-      border-color: #c9d1d9;
-    }
+  .tweaks-buttons { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tw-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 9px;
+    background: var(--bg-1);
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    color: var(--fg-dim);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tw-btn.on {
+    background: var(--bg-3);
+    border-color: #56606e;
+    color: var(--fg);
+  }
+  .tw-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--fg-faint);
   }
 </style>
 </head>
 <body>
-<main class="page">
-  <header class="hero">
-    <p class="eyebrow">0maru's dotfiles / config/nvim</p>
-    <h1>Neovim Cheatsheet</h1>
-    <p class="lede">現在の設定とプラグインに合わせた実運用版。キーマップは自前定義を優先し、補助プラグインは実際に repo に入っているものだけを載せています。</p>
 
-    <div class="meta-grid">
-      <div>
-        <div class="pill-row">
-          <span class="pill leader-pill">Leader = <kbd class="leader">Space</kbd></span>
-          <span class="pill">Theme: github_dark_dimmed</span>
-          <span class="pill">lazy.nvim</span>
-          <span class="pill">40 plugins</span>
-          <span class="pill">WezTerm integrated splits</span>
-          <span class="pill">No LazyVim extras</span>
-        </div>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark"><span class="accent">n</span>vim</span>
+    <span class="brand-sub">cheatsheet</span>
+  </div>
+  <div class="leader-pill">leader <span class="k">Space</span></div>
+  <div class="topbar-legend">
+    <div class="legend-item"><span class="mode-dot" data-mode="N"></span>Normal</div>
+    <div class="legend-item"><span class="mode-dot" data-mode="I"></span>Insert</div>
+    <div class="legend-item"><span class="mode-dot" data-mode="V"></span>Visual</div>
+    <div class="legend-item"><span class="mode-dot" data-mode="C"></span>Command</div>
+    <div class="legend-item"><span class="mode-dot" data-mode="O"></span>Operator</div>
+  </div>
+</header>
 
-        <div class="mode-line">
-          <div class="mode-card">
-            <strong>Normal</strong>
-            <span><kbd>Esc</kbd> で戻る / 基本操作の中心</span>
-          </div>
-          <div class="mode-card">
-            <strong>Insert</strong>
-            <span><kbd>i</kbd> <kbd>a</kbd> <kbd>o</kbd> で入力開始</span>
-          </div>
-          <div class="mode-card">
-            <strong>Visual</strong>
-            <span><kbd>v</kbd> <kbd>V</kbd> <kbd>Ctrl+v</kbd> で選択</span>
-          </div>
-          <div class="mode-card">
-            <strong>Command</strong>
-            <span><kbd>:</kbd> でコマンド入力</span>
-          </div>
-        </div>
-      </div>
+<main id="bands"></main>
 
-      <aside class="snapshot">
-        <h2>設定スナップショット</h2>
-        <p>相対行番号、2 スペース、折り返し無効、<code>clipboard=unnamedplus</code>、<code>colorcolumn=100</code>、<code>listchars</code> 表示、<code>FocusLost</code> / <code>BufLeave</code> で自動保存、Markdown 系を除いて保存時に末尾空白を削除。</p>
-      </aside>
+<!-- Tweaks panel -->
+<div class="tweaks" id="tweaks">
+  <div class="tweaks-title">Tweaks</div>
+  <div class="tweaks-group">
+    <div class="tweaks-label">表示する習熟度</div>
+    <div class="tweaks-buttons" id="tw-levels">
+      <button class="tw-btn" data-lv="1"><span class="tw-dot" style="background:var(--lv-1)"></span>初級</button>
+      <button class="tw-btn" data-lv="2"><span class="tw-dot" style="background:var(--lv-2)"></span>中級</button>
+      <button class="tw-btn" data-lv="3"><span class="tw-dot" style="background:var(--lv-3)"></span>上級</button>
+      <button class="tw-btn" data-lv="4"><span class="tw-dot" style="background:var(--lv-4)"></span>さらに上</button>
     </div>
-  </header>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Daily Flow</h2>
-        <p class="section-desc">毎日使う起点と移動</p>
-      </div>
+  </div>
+  <div class="tweaks-group">
+    <div class="tweaks-label">密度</div>
+    <div class="tweaks-buttons" id="tw-density">
+      <button class="tw-btn" data-density="compact">Compact</button>
+      <button class="tw-btn" data-density="comfy">Comfy</button>
     </div>
-
-    <div class="grid">
-      <article class="card green">
-        <h3>起動直後によく使うもの</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>w</kbd></td><td>保存</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>q</kbd></td><td>現在ウィンドウを閉じる</td></tr>
-          <tr><td><span class="label normal">N</span><kbd>Esc</kbd></td><td>検索ハイライトを消す</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>?</kbd></td><td>現在バッファのキーマップ一覧</td></tr>
-          <tr><td><span class="label command">C</span><kbd>:wq</kbd></td><td>保存して終了</td></tr>
-          <tr><td><span class="label command">C</span><kbd>:q!</kbd></td><td>保存せず終了</td></tr>
-        </table>
-        <p class="card-note">自動保存が有効なので、手動保存は切りの良いタイミングで使う程度で足ります。</p>
-      </article>
-
-      <article class="card blue">
-        <h3>検索とファイル移動</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>ff</kbd></td><td>ファイル検索</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fr</kbd></td><td>最近開いたファイル</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fb</kbd></td><td>バッファ一覧</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fg</kbd></td><td>全文検索</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>fw</kbd></td><td>カーソル語で grep</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>:</kbd></td><td>コマンド履歴</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>sh</kbd></td><td>ヘルプ検索</td></tr>
-        </table>
-        <p class="card-note"><code>snacks.nvim</code> の picker を中心に組んでいるので、ファイル移動はほぼこの列だけで回せます。</p>
-      </article>
-
-      <article class="card yellow">
-        <h3>バッファ・分割・ファイラー</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd>Shift+h</kbd> / <kbd>Shift+l</kbd></td><td>前 / 次のバッファ</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>bd</kbd></td><td>バッファを閉じる</td></tr>
-          <tr><td><span class="label normal">N</span><kbd>Ctrl+h</kbd> / <kbd>Ctrl+j</kbd> / <kbd>Ctrl+k</kbd> / <kbd>Ctrl+l</kbd></td><td>Neovim / WezTerm をまたいでペイン移動</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>e</kbd></td><td>Oil で親ディレクトリを開く</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>E</kbd></td><td>Neo-tree をトグル</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>tt</kbd></td><td>ターミナルを開閉</td></tr>
-        </table>
-        <p class="card-note"><code>oil.nvim</code> はディレクトリをバッファとして開く運用。リネームや整理をそのまま編集感覚で扱えます。</p>
-      </article>
-
-      <article class="card purple">
-        <h3>素の Vim 動作で押さえるところ</h3>
-        <table>
-          <tr><td><kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td>基本移動</td></tr>
-          <tr><td><kbd>w</kbd> / <kbd>b</kbd> / <kbd>e</kbd></td><td>単語単位で移動</td></tr>
-          <tr><td><kbd>0</kbd> / <kbd>^</kbd> / <kbd>$</kbd></td><td>行頭 / 先頭文字 / 行末</td></tr>
-          <tr><td><kbd>/</kbd>pattern</td><td>前方検索、<kbd>n</kbd> / <kbd>N</kbd> で次へ / 前へ</td></tr>
-          <tr><td><kbd>u</kbd> / <kbd>Ctrl+r</kbd></td><td>Undo / Redo</td></tr>
-          <tr><td><kbd>.</kbd></td><td>直前の変更を繰り返す</td></tr>
-        </table>
-        <p class="card-note"><kbd>j</kbd> / <kbd>k</kbd> は、カウント未指定のときだけ折り返し行に追従するよう調整済みです。</p>
-      </article>
+  </div>
+  <div class="tweaks-group">
+    <div class="tweaks-label">列数</div>
+    <div class="tweaks-buttons" id="tw-cols">
+      <button class="tw-btn" data-cols="2">2</button>
+      <button class="tw-btn" data-cols="3">3</button>
+      <button class="tw-btn" data-cols="4">4</button>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Code And Navigation</h2>
-        <p class="section-desc">LSP、構文ジャンプ、整形</p>
-      </div>
-    </div>
+<script>
+/*EDITMODE-BEGIN*/const TWEAK_DEFAULTS = {
+  "levels": [1, 2, 3, 4],
+  "density": "compact",
+  "cols": 3
+}/*EDITMODE-END*/;
 
-    <div class="grid">
-      <article class="card blue">
-        <h3>LSP と診断</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd>gd</kbd></td><td>定義へジャンプ</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>k</kbd></td><td>hover を開く</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>la</kbd></td><td>コードアクション</td></tr>
-          <tr><td><span class="label normal">N</span><kbd>[d</kbd> / <kbd>]d</kbd></td><td>前 / 次の診断へ移動</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>ld</kbd></td><td>行の診断をフロート表示</td></tr>
-          <tr><td><span class="label insert">I</span><kbd>Tab</kbd></td><td>inline completion が出ているときだけ確定</td></tr>
-        </table>
-        <p class="card-note">LSP は <code>lua_ls</code>, <code>pyright</code>, <code>gopls</code>, <code>rust_analyzer</code>, <code>dartls</code>, <code>volar</code>, <code>tailwindcss</code>, <code>eslint</code>, <code>biome</code> などを有効化しています。</p>
-      </article>
+const STATE = Object.assign({}, TWEAK_DEFAULTS);
+try {
+  const saved = JSON.parse(localStorage.getItem('nvim-cheat-state') || 'null');
+  if (saved) Object.assign(STATE, saved);
+} catch(e){}
 
-      <article class="card green">
-        <h3>シンボルと文脈ジャンプ</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>ss</kbd></td><td>現在バッファの LSP シンボル一覧</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>sw</kbd></td><td>ワークスペースシンボル一覧</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>;</kbd></td><td>dropbar から現在文脈のシンボルを選ぶ</td></tr>
-          <tr><td><span class="label normal">N</span><kbd>[;</kbd> / <kbd>];</kbd></td><td>文脈の先頭へ / 次の文脈へ</td></tr>
-          <tr><td><span class="label normal">N</span><kbd>s</kbd></td><td>Flash で画面内ジャンプ</td></tr>
-          <tr><td><span class="label normal">N</span><kbd>S</kbd></td><td>Flash Treesitter ジャンプ</td></tr>
-        </table>
-        <p class="card-note"><code>flash.nvim</code> の <kbd>r</kbd> と <kbd>R</kbd> も operator / visual 用に有効です。検索中は <kbd>Ctrl+s</kbd> で Flash search を切り替えられます。</p>
-      </article>
+function persistLocal() {
+  localStorage.setItem('nvim-cheat-state', JSON.stringify(STATE));
+}
+function persistEdits(edits) {
+  try { window.parent.postMessage({type:'__edit_mode_set_keys', edits}, '*'); } catch(e){}
+}
+</script>
+<script src="data.js"></script>
+<script>
+const data = window.CHEATSHEET;
 
-      <article class="card purple">
-        <h3>Treesitter テキストオブジェクト</h3>
-        <table>
-          <tr><td><kbd>]f</kbd> / <kbd>[f</kbd></td><td>次 / 前の関数先頭</td></tr>
-          <tr><td><kbd>]F</kbd> / <kbd>[F</kbd></td><td>次 / 前の関数末尾</td></tr>
-          <tr><td><kbd>]c</kbd> / <kbd>[c</kbd></td><td>次 / 前のクラス先頭</td></tr>
-          <tr><td><kbd>]a</kbd> / <kbd>[a</kbd></td><td>次 / 前の引数</td></tr>
-          <tr><td><kbd>af</kbd> / <kbd>if</kbd></td><td>関数 outer / inner を選択</td></tr>
-          <tr><td><kbd>ac</kbd> / <kbd>ic</kbd></td><td>クラス outer / inner を選択</td></tr>
-          <tr><td><kbd>aa</kbd> / <kbd>ia</kbd></td><td>引数 outer / inner を選択</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>tc</kbd></td><td>Treesitter Context をトグル</td></tr>
-        </table>
-        <p class="card-note"><code>daf</code>, <code>cif</code>, <code>yaa</code> のように operator と組み合わせる運用が前提です。</p>
-      </article>
+// Level band definitions
+const LEVELS = [
+  { lv: 1, num: 'LV·01', title: '初級',     sub: '毎日必ず使う基礎',       accent: 'var(--lv-1)', bg: 'var(--lv-1-bg)' },
+  { lv: 2, num: 'LV·02', title: '中級',     sub: '体に入れたい定番',         accent: 'var(--lv-2)', bg: 'var(--lv-2-bg)' },
+  { lv: 3, num: 'LV·03', title: '上級',     sub: '慣れてきたら活きる',       accent: 'var(--lv-3)', bg: 'var(--lv-3-bg)' },
+  { lv: 4, num: 'LV·04', title: 'さらに上', sub: 'コンボ・高度ジャンプ',     accent: 'var(--lv-4)', bg: 'var(--lv-4-bg)' },
+  { lv: 0, num: 'SETUP', title: 'Setup',    sub: '自動動作・見た目・プラグイン', accent: 'var(--fg-dim)', bg: 'var(--bg-2)' },
+];
 
-      <article class="card yellow">
-        <h3>整形と編集補助</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd class="leader">Space</kbd><kbd>cf</kbd></td><td>Conform で明示的にフォーマット</td></tr>
-          <tr><td>保存時</td><td>JS / TS / JSON / CSS 系は <code>biome</code> で整形</td></tr>
-          <tr><td>LSP format</td><td>Conform 対象ファイルでは fallback させない</td></tr>
-          <tr><td>入力時</td><td><code>blink.cmp</code> が補完 popup と signature help を表示</td></tr>
-          <tr><td>入力時</td><td><code>nvim-autopairs</code> が括弧と引用符を補完</td></tr>
-          <tr><td>HTML / JSX</td><td><code>nvim-ts-autotag</code> が閉じタグを補完</td></tr>
-        </table>
-        <p class="card-note">自動整形の責務を <code>conform.nvim</code> に寄せており、Biome がいないときに LSP に勝手に逃がさない構成です。</p>
-      </article>
+function keyEl(k, { cmd=false, static_=false } = {}) {
+  if (static_) {
+    const s = document.createElement('span');
+    s.className = 'key-static';
+    s.textContent = k;
+    return s;
+  }
+  if (k === '→') {
+    const s = document.createElement('span');
+    s.className = 'key-sep';
+    s.textContent = '→';
+    return s;
+  }
+  const el = document.createElement('span');
+  el.className = 'key' + (cmd ? ' cmd' : '');
+  el.textContent = k;
+  return el;
+}
 
-      <article class="card red">
-        <h3>ビジュアル編集</h3>
-        <table>
-          <tr><td><span class="label visual">V</span><kbd>&lt;</kbd> / <kbd>&gt;</kbd></td><td>選択を維持したままインデント</td></tr>
-          <tr><td><span class="label visual">V</span><kbd>J</kbd> / <kbd>K</kbd></td><td>選択行を下 / 上へ移動</td></tr>
-          <tr><td><kbd>Ctrl+v</kbd></td><td>矩形選択</td></tr>
-          <tr><td><kbd>q</kbd>{reg} ... <kbd>q</kbd></td><td>マクロ録画</td></tr>
-          <tr><td><kbd>@</kbd>{reg} / <kbd>@@</kbd></td><td>マクロ再生 / 直前再生</td></tr>
-          <tr><td><kbd>*</kbd> - <kbd>cgn</kbd> - <kbd>.</kbd></td><td>同一単語を順に置換する定番パターン</td></tr>
-        </table>
-        <p class="card-note">この構成では複数カーソルより、Vim の operator とマクロを軸にした方が素直です。</p>
-      </article>
-    </div>
-  </section>
+function renderItem(item) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.dataset.lv = item.lv || '';
 
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Git And Utility</h2>
-        <p class="section-desc">Git 操作、差分確認、Markdown 補助</p>
-      </div>
-    </div>
+  const modeCell = document.createElement('div');
+  modeCell.className = 'row-mode';
+  const dot = document.createElement('span');
+  dot.className = 'mode-dot';
+  if (item.mode) dot.dataset.mode = item.mode;
+  modeCell.appendChild(dot);
+  row.appendChild(modeCell);
 
-    <div class="grid">
-      <article class="card yellow">
-        <h3>Git 操作の起点</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>gg</kbd></td><td>Lazygit を開く</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>gs</kbd></td><td>Git status picker</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>gl</kbd></td><td>Git log picker</td></tr>
-          <tr><td><span class="label command">C</span><kbd>:DiffviewOpen</kbd></td><td>差分ビューを開く</td></tr>
-          <tr><td><span class="label command">C</span><kbd>:DiffviewClose</kbd></td><td>差分ビューを閉じる</td></tr>
-          <tr><td><span class="label command">C</span><kbd>:DiffviewFileHistory %</kbd></td><td>現在ファイルの履歴を見る</td></tr>
-        </table>
-        <p class="card-note">コミット前の確認は <code>leader gg</code>、履歴比較は <code>Diffview</code> に寄せると迷いません。</p>
-      </article>
+  const keysCell = document.createElement('div');
+  keysCell.className = 'row-keys';
+  const cmd = item.mode === 'C' || (item.keys[0] && /^:/.test(item.keys[0]));
+  item.keys.forEach(k => keysCell.appendChild(keyEl(k, { cmd, static_: !!item.static })));
+  row.appendChild(keysCell);
 
-      <article class="card red">
-        <h3>Gitsigns ハンク操作</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd>]h</kbd> / <kbd>[h</kbd></td><td>次 / 前のハンクへ</td></tr>
-          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd class="leader">Space</kbd><kbd>hs</kbd></td><td>ハンクを stage</td></tr>
-          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd class="leader">Space</kbd><kbd>hr</kbd></td><td>ハンクを reset</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hS</kbd></td><td>バッファ全体を stage</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hu</kbd></td><td>stage 済みハンクを戻す</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hP</kbd></td><td>ハンクを preview</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hb</kbd></td><td>現在行の blame を開く</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>tb</kbd></td><td>行末 blame 表示をトグル</td></tr>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>hd</kbd> / <kbd>hD</kbd></td><td>index / HEAD との差分</td></tr>
-          <tr><td><span class="label visual">V</span><kbd>ih</kbd></td><td>ハンクをテキストオブジェクトとして選択</td></tr>
-        </table>
-        <p class="card-note">この repo では <code>current_line_blame</code> が初期で有効です。邪魔なら <kbd class="leader">Space</kbd><kbd>tb</kbd> で切り替えます。</p>
-      </article>
+  const descCell = document.createElement('div');
+  descCell.className = 'row-desc';
+  descCell.textContent = item.desc;
+  row.appendChild(descCell);
 
-      <article class="card green">
-        <h3>Markdown と画像貼り付け</h3>
-        <table>
-          <tr><td><span class="label normal">N</span><kbd class="leader">Space</kbd><kbd>p</kbd></td><td>クリップボード画像を貼る</td></tr>
-          <tr><td>保存先</td><td><code>assets/</code> に保存</td></tr>
-          <tr><td>Markdown</td><td>相対パスの画像リンクを挿入</td></tr>
-          <tr><td>MDX</td><td><code>mdx.nvim</code> 用の filetype が設定済み</td></tr>
-          <tr><td>Markview</td><td>Markdown 表示補助プラグインを導入済み</td></tr>
-        </table>
-        <p class="card-note">画像名は貼り付け時に確認されます。ドキュメント更新やブログ執筆向けの構成です。</p>
-      </article>
+  return row;
+}
 
-      <article class="card blue">
-        <h3>CSV と一時ビュー</h3>
-        <table>
-          <tr><td><span class="label command">C</span><kbd>:CsvViewToggle</kbd></td><td>CSV 表示を切り替える</td></tr>
-          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd>Tab</kbd> / <kbd>Shift+Tab</kbd></td><td>次 / 前のフィールドへ</td></tr>
-          <tr><td><span class="label normal">N</span><span class="label visual">V</span><kbd>Enter</kbd> / <kbd>Shift+Enter</kbd></td><td>次 / 前の行へ</td></tr>
-          <tr><td><span class="label visual">V</span><kbd>if</kbd> / <kbd>af</kbd></td><td>CSV フィールド inner / outer を選択</td></tr>
-          <tr><td>一時バッファ</td><td><code>help</code>, <code>man</code>, <code>qf</code>, <code>checkhealth</code> は <kbd>q</kbd> で閉じる</td></tr>
-        </table>
-        <p class="card-note">CSV を触る頻度が高いなら、<code>CsvViewToggle</code> はかなり強いです。ナビゲーションが Excel 風になります。</p>
-      </article>
-    </div>
-  </section>
+function makeSectionBox(title, category) {
+  const box = document.createElement('div');
+  box.className = 'section';
+  const head = document.createElement('div');
+  head.className = 'section-head';
+  const t = document.createElement('div');
+  t.className = 'section-title';
+  t.textContent = title;
+  head.appendChild(t);
+  if (category) {
+    const c = document.createElement('div');
+    c.className = 'section-category';
+    c.textContent = category;
+    head.appendChild(c);
+  }
+  box.appendChild(head);
+  const body = document.createElement('div');
+  body.className = 'section-body';
+  box.appendChild(body);
+  return { box, body };
+}
 
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <h2 class="section-title">Current Setup</h2>
-        <p class="section-desc">見た目と自動動作の把握用</p>
-      </div>
-    </div>
+// Flatten data into (item + sourceCategory + sourceSectionTitle)
+function collectKeyItems() {
+  const out = [];
+  data.tabs.forEach(tab => {
+    tab.sections.forEach(sec => {
+      if (!sec.items) return;
+      sec.items.forEach(it => {
+        out.push({
+          ...it,
+          _cat: tab.label,
+          _catSub: tab.sublabel,
+          _section: sec.title,
+        });
+      });
+    });
+  });
+  return out;
+}
 
-    <div class="grid">
-      <article class="card purple">
-        <h3>自動動作</h3>
-        <div class="mini-list">
-          <div>外部変更を <code>FocusGained</code>, <code>BufEnter</code>, <code>CursorHold</code> で <code>checktime</code> して自動反映</div>
-          <div>ヤンク時は 200ms ハイライト</div>
-          <div>前回閉じた位置にカーソルを復元</div>
-          <div>Markdown / MDX 以外では保存時に末尾空白を削除</div>
-          <div><kbd>q</kbd> で閉じる専用バッファを用意</div>
-        </div>
-      </article>
+function collectSetupSections() {
+  const setupTab = data.tabs.find(t => t.id === 'setup');
+  return setupTab ? setupTab.sections : [];
+}
 
-      <article class="card blue">
-        <h3>見た目と操作感</h3>
-        <div class="mini-list">
-          <div>テーマは <code>github_dark_dimmed</code></div>
-          <div>相対行番号、カーソル行ハイライト、signcolumn 常時表示</div>
-          <div>ステータスラインは <code>lualine.nvim</code>、バッファ一覧は <code>bufferline.nvim</code></div>
-          <div><code>hlchunk.nvim</code> でインデントとチャンクを補助</div>
-          <div><code>nvim-scrollbar</code>、<code>dropbar.nvim</code> を導入</div>
-        </div>
-      </article>
+function renderLevelBand(levelDef) {
+  const band = document.createElement('section');
+  band.className = 'level-band';
+  band.dataset.lv = levelDef.lv;
 
-      <article class="card yellow">
-        <h3>導入プラグインの要点</h3>
-        <div class="mini-list">
-          <div>検索と起動系: <code>snacks.nvim</code>, <code>which-key.nvim</code>, <code>dashboard-nvim</code></div>
-          <div>ファイラー系: <code>oil.nvim</code>, <code>neo-tree.nvim</code>, <code>smart-splits.nvim</code></div>
-          <div>編集系: <code>blink.cmp</code>, <code>conform.nvim</code>, <code>flash.nvim</code>, <code>nvim-treesitter</code>, <code>csvview.nvim</code>, <code>dial.nvim</code></div>
-          <div>LSP 系: <code>nvim-lspconfig</code>, <code>typescript-tools.nvim</code>, <code>rustaceanvim</code>, <code>namu.nvim</code>, <code>tiny-inline-diagnostic.nvim</code></div>
-          <div>Git / 文書系: <code>gitsigns.nvim</code>, <code>diffview.nvim</code>, <code>img-clip.nvim</code>, <code>markview.nvim</code>, <code>grug-far.nvim</code>, <code>glance.nvim</code>, <code>nvim-ufo</code></div>
-        </div>
-      </article>
-    </div>
-  </section>
+  const head = document.createElement('div');
+  head.className = 'level-head';
+  head.style.setProperty('--level-accent', levelDef.accent);
+  head.style.setProperty('--level-bg', levelDef.bg);
+  head.innerHTML = `
+    <span class="level-num">${levelDef.num}</span>
+    <span class="level-title"><span class="jp">${levelDef.title}</span></span>
+    <span class="level-sub">${levelDef.sub}</span>
+    <span class="level-count" data-role="count"></span>
+  `;
+  band.appendChild(head);
 
-  <p class="footer">
-    Generated from <code>config/nvim</code> and <code>cheatsheet/neovim-cheatsheet.html</code><br>
-    Updated: 2026-04-15
-  </p>
-</main>
+  const grid = document.createElement('div');
+  grid.className = 'level-grid';
+  band.appendChild(grid);
+
+  return { band, grid, head };
+}
+
+function render() {
+  const root = document.getElementById('bands');
+  root.innerHTML = '';
+
+  const keyItems = collectKeyItems();
+
+  // Group by level, then by source section (preserve category ordering)
+  const sectionOrder = [];
+  data.tabs.forEach(tab => tab.sections.forEach(sec => {
+    if (sec.items) sectionOrder.push({ cat: tab.label, section: sec.title });
+  }));
+
+  // Build a lookup: level -> section key -> items[]
+  for (const lvDef of LEVELS) {
+    if (lvDef.lv === 0) continue; // setup handled below
+
+    const { band, grid, head } = renderLevelBand(lvDef);
+
+    // Group items in this level
+    const grouped = new Map(); // key: cat|section -> { cat, section, items }
+    keyItems.forEach(it => {
+      if ((it.lv || 0) !== lvDef.lv) return;
+      const key = it._cat + '|' + it._section;
+      if (!grouped.has(key)) grouped.set(key, { cat: it._cat, section: it._section, items: [] });
+      grouped.get(key).items.push(it);
+    });
+
+    // Order grouped sections by sectionOrder
+    const ordered = sectionOrder
+      .map(o => grouped.get(o.cat + '|' + o.section))
+      .filter(Boolean);
+
+    let count = 0;
+    ordered.forEach(g => {
+      const { box, body } = makeSectionBox(g.section, g.cat);
+      g.items.forEach(it => body.appendChild(renderItem(it)));
+      count += g.items.length;
+      grid.appendChild(box);
+    });
+
+    head.querySelector('[data-role="count"]').textContent = count + ' keys';
+
+    if (count === 0) continue; // skip empty
+    root.appendChild(band);
+  }
+
+  // Setup band
+  const setupDef = LEVELS.find(l => l.lv === 0);
+  const { band: sBand, grid: sGrid, head: sHead } = renderLevelBand(setupDef);
+  const setupSections = collectSetupSections();
+  let setupCount = 0;
+  setupSections.forEach(sec => {
+    const { box, body } = makeSectionBox(sec.title, 'Setup');
+    if (sec.notes) {
+      body.className = 'notes';
+      sec.notes.forEach(n => {
+        const d = document.createElement('div');
+        d.className = 'note';
+        d.innerHTML = n.replace(/`([^`]+)`/g, '<code>$1</code>');
+        body.appendChild(d);
+        setupCount++;
+      });
+    } else if (sec.groups) {
+      body.className = 'plugin-groups';
+      sec.groups.forEach(g => {
+        const grp = document.createElement('div');
+        grp.className = 'plugin-group';
+        const lab = document.createElement('div');
+        lab.className = 'plugin-group-label';
+        lab.textContent = g.label;
+        grp.appendChild(lab);
+        const list = document.createElement('div');
+        list.className = 'plugin-list';
+        g.plugins.forEach(p => {
+          const chip = document.createElement('span');
+          chip.className = 'plugin-chip';
+          chip.textContent = p;
+          list.appendChild(chip);
+          setupCount++;
+        });
+        grp.appendChild(list);
+        body.appendChild(grp);
+      });
+    }
+    sGrid.appendChild(box);
+  });
+  sHead.querySelector('[data-role="count"]').textContent = setupCount + ' items';
+  root.appendChild(sBand);
+
+  applyFilters();
+}
+
+function applyFilters() {
+  const lvs = new Set(STATE.levels);
+  document.querySelectorAll('.level-band').forEach(b => {
+    const lv = Number(b.dataset.lv);
+    if (lv === 0) { b.style.display = ''; return; }
+    b.style.display = lvs.has(lv) ? '' : 'none';
+  });
+  document.body.dataset.density = STATE.density;
+  document.querySelectorAll('.level-grid').forEach(g => {
+    g.style.columnCount = STATE.cols;
+  });
+}
+
+function syncTweaksUI() {
+  document.querySelectorAll('#tw-levels .tw-btn').forEach(b => {
+    b.classList.toggle('on', STATE.levels.includes(Number(b.dataset.lv)));
+  });
+  document.querySelectorAll('#tw-density .tw-btn').forEach(b => {
+    b.classList.toggle('on', b.dataset.density === STATE.density);
+  });
+  document.querySelectorAll('#tw-cols .tw-btn').forEach(b => {
+    b.classList.toggle('on', Number(b.dataset.cols) === STATE.cols);
+  });
+}
+
+function wireTweaks() {
+  document.querySelectorAll('#tw-levels .tw-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const lv = Number(b.dataset.lv);
+      const i = STATE.levels.indexOf(lv);
+      if (i >= 0) STATE.levels.splice(i,1);
+      else STATE.levels.push(lv);
+      STATE.levels.sort();
+      if (STATE.levels.length === 0) STATE.levels = [1,2,3,4];
+      persistLocal();
+      persistEdits({ levels: STATE.levels });
+      syncTweaksUI();
+      applyFilters();
+    });
+  });
+  document.querySelectorAll('#tw-density .tw-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      STATE.density = b.dataset.density;
+      persistLocal();
+      persistEdits({ density: STATE.density });
+      syncTweaksUI();
+      applyFilters();
+    });
+  });
+  document.querySelectorAll('#tw-cols .tw-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      STATE.cols = Number(b.dataset.cols);
+      persistLocal();
+      persistEdits({ cols: STATE.cols });
+      syncTweaksUI();
+      applyFilters();
+    });
+  });
+}
+
+window.addEventListener('message', (e) => {
+  const msg = e.data;
+  if (!msg || typeof msg !== 'object') return;
+  if (msg.type === '__activate_edit_mode') {
+    document.getElementById('tweaks').classList.add('open');
+  } else if (msg.type === '__deactivate_edit_mode') {
+    document.getElementById('tweaks').classList.remove('open');
+  }
+});
+
+const denStyle = document.createElement('style');
+denStyle.textContent = `
+  body[data-density="comfy"] .row { padding: 8px 12px; font-size: 13.5px; }
+  body[data-density="comfy"] .row-desc { font-size: 13px; }
+  body[data-density="comfy"] .key { font-size: 12.5px; padding: 3px 8px; }
+  body[data-density="comfy"] .section-title { font-size: 13px; }
+`;
+document.head.appendChild(denStyle);
+
+render();
+wireTweaks();
+syncTweaksUI();
+
+try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
+</script>
 </body>
 </html>
