@@ -111,3 +111,11 @@ function run_claude() {
 }
 zle -N run_claude
 bindkey 'c;' run_claude
+
+# codex
+function run_codex() {
+  BUFFER="codex"
+  zle accept-line
+}
+zle -N run_codex
+bindkey 'x;' run_codex
