@@ -168,7 +168,7 @@ C = [
 ]
 D = [
   'EV2750',
-  'EX-LDQ273DB',
+  'EX-LDQ271DB',
   'EX-LDQ273DS \(1\)',
   'DELL S2721DS',
   'KA270H \(2\)',
@@ -176,7 +176,7 @@ D = [
 ]
 F = [
   'EV2750',
-  'EX-LDQ273DB',
+  'EX-LDQ271DB',
   'EX-LDQ273DS \(1\)',
   'DELL S2721DS',
   'KA270H \(2\)',
@@ -184,7 +184,7 @@ F = [
 ]
 G = [
   'EV2750',
-  'EX-LDQ273DB',
+  'EX-LDQ271DB',
   'EX-LDQ273DS \(1\)',
   'DELL S2721DS',
   'KA270H \(2\)',
