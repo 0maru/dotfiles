@@ -97,47 +97,53 @@ outer.right = 0
 
 [workspace-to-monitor-force-assignment]
 # メインモニター: 文字入力系（開発）
-1 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-2 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-3 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-4 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-5 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-6 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-7 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-8 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
-9 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1']
+1 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+2 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+3 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+4 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+5 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+6 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+7 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+8 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+9 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'EX-LDQ273DS', '1']
+# Editor (VS Code)
 E = [
   'SDM27Q10S',
   'EX-LDQ273DS \(2\)',
   'T27h-30',
+  'EX-LDQ273DS',
+  'KA270H',
   'KA270H \(1\)',
   '1',
-] # Editor (VS Code)
-S = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', '1'] # Slack
+]
+# Slack
+S = ['SDM27Q10S', 'EX-LDQ273DS', 'KA270H', 'T27h-30', 'EX-LDQ273DS \(2\)', 'KA270H \(1\)', '1']
+# Terminal
+T = [
+  'SDM27Q10S',
+  'T27h-30',
+  'EX-LDQ273DS',
+  'EX-LDQ273DS \(2\)',
+  'KA270H \(1\)',
+  '1',
+] # Terminal (WezTerm)
 
 # サブモニター: 調べ物・参照系
-A = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+A = ['EV2750', 'KA270H', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
 B = [
   'EV2750',
+  'KA270H',
   'EX-LDQ273DS \(1\)',
   'DELL S2721DS',
   'KA270H \(2\)',
   '2',
 ] # Browser (Arc/Chrome)
-C = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
-D = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
-F = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
-G = ['EV2750', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+C = ['EV2750', 'KA270H', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+D = ['EV2750', 'KA270H', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+F = ['EV2750', 'KA270H', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
+G = ['EV2750', 'KA270H', 'EX-LDQ273DS \(1\)', 'DELL S2721DS', 'KA270H \(2\)', '2']
 
 # iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
-T = [
-  'SDM27Q10S',
-  'T27h-30',
-  'EX-LDQ273DS \(2\)',
-  'KA270H \(1\)',
-  'KA270H',
-  '1',
-] # Terminal (WezTerm)
 X = [
   'KA270H',
   'Sidecar Display \(AirPlay\)',
