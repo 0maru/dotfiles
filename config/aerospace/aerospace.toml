@@ -52,17 +52,7 @@ automatically-unhide-macos-hidden-apps = true
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = [
-  "B",
-  "C",
-  "E",
-  "O",
-  "R",
-  "S",
-  "T",
-  "X",
-  "Z",
-]
+persistent-workspaces = ["B", "C", "E", "O", "R", "S", "T", "X", "Z"]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -109,23 +99,9 @@ outer.right = 0
 8 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'KA270H', '1']
 9 = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H \(1\)', 'KA270H', '1']
 # Editor (VS Code)
-E = [
-  'SDM27Q10S',
-  'EX-LDQ273DS \(2\)',
-  'T27h-30',
-  'KA270H',
-  'KA270H \(1\)',
-  '1',
-]
+E = ['SDM27Q10S', 'EX-LDQ273DS \(2\)', 'T27h-30', 'KA270H', 'KA270H \(1\)', '1']
 # Slack
-S = [
-  'SDM27Q10S',
-  'KA270H',
-  'T27h-30',
-  'EX-LDQ273DS \(2\)',
-  'KA270H \(1\)',
-  '1',
-]
+S = ['SDM27Q10S', 'KA270H', 'T27h-30', 'EX-LDQ273DS \(2\)', 'KA270H \(1\)', '1']
 # Terminal
 T = [
   'SDM27Q10S',
