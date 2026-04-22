@@ -53,20 +53,15 @@ automatically-unhide-macos-hidden-apps = true
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
 persistent-workspaces = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
   "B",
   "C",
   "E",
+  "O",
+  "R",
   "S",
   "T",
+  "X",
+  "Z",
 ]
 
 # A callback that runs every time binding mode changes
@@ -190,21 +185,45 @@ G = [
   'KA270H \(2\)',
   '2',
 ]
+O = [
+  'EV2750',
+  'EX-LDQ271DB',
+  'EX-LDQ273DS \(1\)',
+  'DELL S2721DS',
+  'KA270H \(2\)',
+  '2',
+]
+R = [
+  'EV2750',
+  'EX-LDQ271DB',
+  'EX-LDQ273DS \(1\)',
+  'DELL S2721DS',
+  'KA270H \(2\)',
+  '2',
+]
 
-# iPad優先: 並列タスク（iPad未接続時はメインモニターへフォールバック）
+# メインモニター優先: AI支援開発（未接続時は iPad/サブモニターへフォールバック）
 X = [
-  'EX-LDH271DB',
+  'SDM27Q10S',
+  'EX-LDQ273DS \(2\)',
+  'T27h-30',
+  'KA270H',
+  'KA270H \(1\)',
+  '1',
   'Sidecar Display \(AirPlay\)',
   'EV2750',
-  'EX-LDQ273DS \(2\)',
-  '1',
+  'EX-LDH271DB',
 ] # Claude Desktop
 Z = [
-  'EX-LDH271DB',
+  'SDM27Q10S',
+  'EX-LDQ273DS \(2\)',
+  'T27h-30',
+  'KA270H',
+  'KA270H \(1\)',
+  '1',
   'Sidecar Display \(AirPlay\)',
   'EV2750',
-  'EX-LDQ273DS \(2\)',
-  '1',
+  'EX-LDH271DB',
 ] # Codex
 I = ['Sidecar Display \(AirPlay\)']
 P = ['Sidecar Display \(AirPlay\)']
@@ -385,6 +404,15 @@ run = 'move-node-to-workspace B'
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome.canary'
 run = 'move-node-to-workspace B'
+
+# -- ノート/タスク管理 → サブモニター --
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace O'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.reminders'
+run = 'move-node-to-workspace R'
 
 # -- Floating のみ（ワークスペース指定なし） --
 [[on-window-detected]]

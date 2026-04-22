@@ -3,6 +3,9 @@
 ### START-OF-ICON-MAP
 function __icon_map() {
     case "$1" in
+   "1Password")
+        icon_result=":find_my:"
+        ;;
    "Activity Monitor")
         icon_result=":activity_monitor:"
         ;;
@@ -52,6 +55,9 @@ function __icon_map() {
         icon_result=":chatgpt:"
         ;;
    "Google Chrome")
+        icon_result=":chrome:"
+        ;;
+   "Google Chrome Canary")
         icon_result=":chrome:"
         ;;
    "Clock")

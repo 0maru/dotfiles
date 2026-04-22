@@ -4,9 +4,9 @@ local settings = require("settings")
 local app_icons = require("helpers.icon_map")
 
 local spaces = {}
-local workspace_ids = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "B", "C", "E", "S", "T" }
+local workspace_ids = { "B", "C", "E", "O", "R", "S", "T", "X", "Z" }
 
-local colors_spaces = {
+local workspace_colors = {
 	colors.cmap_1,
 	colors.cmap_2,
 	colors.cmap_3,
@@ -22,6 +22,10 @@ local colors_spaces = {
 	colors.cmap_13,
 	colors.cmap_14,
 }
+
+local function space_color(index)
+	return workspace_colors[((index - 1) % #workspace_colors) + 1]
+end
 
 -- Register custom event for AeroSpace workspace changes
 sbar.add("event", "aerospace_workspace_change")
@@ -41,7 +45,7 @@ for i, sid in ipairs(workspace_ids) do
 		label = {
 			padding_right = 10,
 			padding_left = 3,
-			color = colors_spaces[i],
+			color = space_color(i),
 			font = "sketchybar-app-font-bg:Regular:21.0",
 			y_offset = -2,
 		},
@@ -62,10 +66,10 @@ for i, sid in ipairs(workspace_ids) do
 		local prev = env.PREV_WORKSPACE == sid
 		if focused or prev then
 			space:set({
-				icon = { color = focused and colors_spaces[i] or colors.tn_black1 },
+				icon = { color = focused and space_color(i) or colors.tn_black1 },
 				background = {
 					height = 25,
-					color = focused and colors.with_alpha(colors_spaces[i], 0.3) or colors.transparent,
+					color = focused and colors.with_alpha(space_color(i), 0.3) or colors.transparent,
 					corner_radius = focused and 6 or 0,
 				},
 			})
@@ -123,7 +127,7 @@ local function update_workspace_icons()
 			sbar.animate("tanh", 10, function()
 				spaces[i]:set({
 					label = icon_line,
-					icon = { color = has_apps and colors_spaces[i] or colors.tn_black1 },
+					icon = { color = has_apps and space_color(i) or colors.tn_black1 },
 				})
 			end)
 		end
@@ -136,10 +140,10 @@ sbar.exec("aerospace list-workspaces --focused", function(focused_ws)
 	for i, sid in ipairs(workspace_ids) do
 		local focused = (focused_ws == sid)
 		spaces[i]:set({
-			icon = { color = focused and colors_spaces[i] or colors.tn_black1 },
+			icon = { color = focused and space_color(i) or colors.tn_black1 },
 			background = {
 				height = 25,
-				color = focused and colors.with_alpha(colors_spaces[i], 0.3) or colors.transparent,
+				color = focused and colors.with_alpha(space_color(i), 0.3) or colors.transparent,
 				corner_radius = focused and 6 or 0,
 			},
 		})
