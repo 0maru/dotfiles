@@ -4,6 +4,7 @@
 -- ※ ALT キーは Aerospace が占有しているため使用禁止
 ---------------------------------------------------------------
 local wezterm = require('wezterm')
+local smart_splits = wezterm.plugin.require('https://github.com/mrjones2014/smart-splits.nvim')
 local act = wezterm.action
 
 local M = {}
@@ -97,65 +98,39 @@ local function set_pane_width_percent(percent)
   end)
 end
 
--- Neovim ペインでは CTRL+h/j/k/l をそのまま送り、
--- それ以外では WezTerm のペイン移動として扱う
-local function is_nvim_pane(pane)
-  return pane:get_user_vars().IS_NVIM == 'true'
-end
-
-local function smart_activate_pane(key, direction)
-  return wezterm.action_callback(function(window, pane)
-    if is_nvim_pane(pane) or #window:active_tab():panes() == 1 then
-      window:perform_action(act.SendKey { key = key, mods = 'CTRL' }, pane)
-      return
-    end
-
-    window:perform_action(act.ActivatePaneDirection(direction), pane)
-  end)
-end
-
 ---------------------------------------------------------------
 -- 通常キーバインド
 ---------------------------------------------------------------
 local keys = {
   -- === 一般操作 ===
-  { key = 'r', mods = 'SUPER|SHIFT', action = act.ReloadConfiguration },  -- 設定リロード
-  { key = 'p', mods = 'SUPER', action = act.ActivateCommandPalette },     -- コマンドパレット
-  { key = 'q', mods = 'SUPER', action = act.QuitApplication },            -- アプリ終了
-  { key = 'f', mods = 'SUPER', action = act.Search { CaseSensitiveString = '' } }, -- 検索
-  { key = 'c', mods = 'SUPER', action = act.CopyTo('Clipboard') },        -- コピー
-  { key = 'v', mods = 'SUPER', action = act.PasteFrom('Clipboard') },     -- 貼り付け
-  { key = 'Space', mods = 'SUPER', action = act.QuickSelect },            -- クイックセレクト
+  { key = 'r',     mods = 'SUPER|SHIFT', action = act.ReloadConfiguration },                 -- 設定リロード
+  { key = 'p',     mods = 'SUPER',       action = act.ActivateCommandPalette },              -- コマンドパレット
+  { key = 'q',     mods = 'SUPER',       action = act.QuitApplication },                     -- アプリ終了
+  { key = 'f',     mods = 'SUPER',       action = act.Search { CaseSensitiveString = '' } }, -- 検索
+  { key = 'c',     mods = 'SUPER',       action = act.CopyTo('Clipboard') },                 -- コピー
+  { key = 'v',     mods = 'SUPER',       action = act.PasteFrom('Clipboard') },              -- 貼り付け
+  { key = 'Space', mods = 'SUPER',       action = act.QuickSelect },                         -- クイックセレクト
 
   -- === タブ管理 ===
-  { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },          -- 次のタブ
-  { key = 'Tab', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },   -- 前のタブ
-  { key = 't', mods = 'SUPER', action = act { SpawnTab = 'CurrentPaneDomain' } }, -- 新しいタブ
-  { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab { confirm = true } }, -- タブを閉じる
-  { key = 'e', mods = 'SUPER', action = act.ShowTabNavigator },                   -- タブ一覧
+  { key = 'Tab',   mods = 'CTRL',        action = act.ActivateTabRelative(1) },             -- 次のタブ
+  { key = 'Tab',   mods = 'CTRL|SHIFT',  action = act.ActivateTabRelative(-1) },            -- 前のタブ
+  { key = 't',     mods = 'SUPER',       action = act { SpawnTab = 'CurrentPaneDomain' } }, -- 新しいタブ
+  { key = 'w',     mods = 'SUPER',       action = act.CloseCurrentTab { confirm = true } }, -- タブを閉じる
+  { key = 'e',     mods = 'SUPER',       action = act.ShowTabNavigator },                   -- タブ一覧
 
   -- === ペイン分割 ===
-  { key = 'v', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },   -- 上下に分割
-  { key = 's', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- 左右に分割
-  { key = 'w', mods = 'CTRL', action = act.CloseCurrentPane { confirm = true } },  -- ペインを閉じる
-  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },                -- ペインのズーム切り替え
-
-  -- === ペイン移動（Neovim 連携対応） ===
-  { key = 'h', mods = 'CTRL', action = smart_activate_pane('h', 'Left') },   -- 左のペインへ
-  { key = 'j', mods = 'CTRL', action = smart_activate_pane('j', 'Down') },   -- 下のペインへ
-  { key = 'k', mods = 'CTRL', action = smart_activate_pane('k', 'Up') },     -- 上のペインへ
-  { key = 'l', mods = 'CTRL', action = smart_activate_pane('l', 'Right') },  -- 右のペインへ
+  { key = 'v',     mods = 'LEADER',      action = act.SplitVertical { domain = 'CurrentPaneDomain' } },   -- 上下に分割
+  { key = 's',     mods = 'LEADER',      action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- 左右に分割
+  { key = 'w',     mods = 'CTRL',        action = act.CloseCurrentPane { confirm = true } },              -- ペインを閉じる
+  { key = 'z',     mods = 'LEADER',      action = act.TogglePaneZoomState },                              -- ペインのズーム切り替え
 
   -- === ツール起動 ===
   -- lazygit をオーバーレイペインで起動
-  { key = 'l', mods = 'LEADER', action = spawn_overlay_pane('lazygit', { bg_color = OVERLAY_BG }) },
+  { key = 'l',     mods = 'LEADER',      action = spawn_overlay_pane('lazygit', { bg_color = OVERLAY_BG }) },
   -- Neovim をオーバーレイペインで起動
-  { key = 'n', mods = 'LEADER', action = spawn_overlay_pane('nvim .', { bg_color = OVERLAY_BG }) },
-  -- Helix をオーバーレイペインで起動
-  { key = 'h', mods = 'LEADER', action = spawn_overlay_pane('hx .', { bg_color = OVERLAY_BG }) },
-
+  { key = 'n',     mods = 'LEADER',      action = spawn_overlay_pane('nvim .', { bg_color = OVERLAY_BG }) },
   -- === コピーモード（Vim風テキスト選択） ===
-  { key = '}', mods = 'LEADER', action = act.ActivateCopyMode },
+  { key = '}',     mods = 'LEADER',      action = act.ActivateCopyMode },
 
   -- === タブ名の変更 ===
   -- 空文字で確定するとカスタム名をリセット
@@ -180,16 +155,16 @@ local keys = {
 
   -- === デバッグ ===
   -- WezTerm のデバッグオーバーレイを表示
-  { key = 'L', mods = 'CTRL', action = act.ShowDebugOverlay },
+  { key = 'L',     mods = 'CTRL',       action = act.ShowDebugOverlay },
 
   -- === Claude Code 用 ===
   -- SHIFT+ENTER で改行を送信（Claude Code のマルチライン入力用）
-  { key = 'Enter', mods = 'SHIFT', action = act { SendString = '\x1b\r' } },
+  { key = 'Enter', mods = 'SHIFT',      action = act { SendString = '\x1b\r' } },
 
   -- === プロンプト間スクロール ===
   -- シェルのセマンティックゾーンを利用して前後のプロンプトにジャンプ
-  { key = 'p', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(-1) },  -- 前のプロンプトへ
-  { key = 'n', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },   -- 次のプロンプトへ
+  { key = 'p',     mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(-1) }, -- 前のプロンプトへ
+  { key = 'n',     mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },  -- 次のプロンプトへ
 
   -- === グリッドレイアウト ===
   -- 4paneレイアウトを一括作成（左25% + 中央50% + 右上25% + 右下25%）
@@ -223,18 +198,18 @@ local key_tables = {}
 -- LEADER+s で入るモード。Escape/q/CTRL+c で抜ける
 local setting_mode = {
   -- ペインリサイズ（1セル単位の細かい調整）
-  { key = 'h', action = act.AdjustPaneSize { 'Left', 1 } },
-  { key = 'j', action = act.AdjustPaneSize { 'Down', 1 } },
-  { key = 'k', action = act.AdjustPaneSize { 'Up', 1 } },
-  { key = 'l', action = act.AdjustPaneSize { 'Right', 1 } },
+  { key = 'h',      action = act.AdjustPaneSize { 'Left', 1 } },
+  { key = 'j',      action = act.AdjustPaneSize { 'Down', 1 } },
+  { key = 'k',      action = act.AdjustPaneSize { 'Up', 1 } },
+  { key = 'l',      action = act.AdjustPaneSize { 'Right', 1 } },
   -- 透過度の調整
-  { key = ';', action = act.EmitEvent('increase-opacity') },  -- 透過度を上げる（不透明に）
-  { key = '-', action = act.EmitEvent('decrease-opacity') },  -- 透過度を下げる（透明に）
-  { key = '0', action = act.EmitEvent('reset-opacity') },     -- 透過度をリセット
+  { key = ';',      action = act.EmitEvent('increase-opacity') }, -- 透過度を上げる（不透明に）
+  { key = '-',      action = act.EmitEvent('decrease-opacity') }, -- 透過度を下げる（透明に）
+  { key = '0',      action = act.EmitEvent('reset-opacity') },    -- 透過度をリセット
   -- モード終了
   { key = 'Escape', action = act.PopKeyTable },
-  { key = 'q', action = act.PopKeyTable },
-  { key = 'c', mods = 'CTRL', action = act.PopKeyTable },
+  { key = 'q',      action = act.PopKeyTable },
+  { key = 'c',      mods = 'CTRL',                             action = act.PopKeyTable },
 }
 
 -- ペインの高さをパーセンテージで指定（1〜9キー → 10%〜90%）
@@ -265,34 +240,34 @@ key_tables.copy_mode = {
   { key = 'k', action = act.CopyMode('MoveUp') },
   { key = 'l', action = act.CopyMode('MoveRight') },
   -- 単語移動
-  { key = 'w', action = act.CopyMode('MoveForwardWord') },     -- 次の単語の先頭へ
-  { key = 'b', action = act.CopyMode('MoveBackwardWord') },    -- 前の単語の先頭へ
-  { key = 'e', action = act.CopyMode('MoveForwardWordEnd') },  -- 単語の末尾へ
+  { key = 'w', action = act.CopyMode('MoveForwardWord') },                                                                                     -- 次の単語の先頭へ
+  { key = 'b', action = act.CopyMode('MoveBackwardWord') },                                                                                    -- 前の単語の先頭へ
+  { key = 'e', action = act.CopyMode('MoveForwardWordEnd') },                                                                                  -- 単語の末尾へ
   -- 行内移動
-  { key = '0', action = act.CopyMode('MoveToStartOfLine') },                     -- 行頭へ
-  { key = '^', mods = 'SHIFT', action = act.CopyMode('MoveToStartOfLineContent') }, -- 行頭（空白除く）へ
-  { key = '$', mods = 'SHIFT', action = act.CopyMode('MoveToEndOfLineContent') },   -- 行末へ
+  { key = '0', action = act.CopyMode('MoveToStartOfLine') },                                                                                   -- 行頭へ
+  { key = '^', mods = 'SHIFT',                                               action = act.CopyMode('MoveToStartOfLineContent') },              -- 行頭（空白除く）へ
+  { key = '$', mods = 'SHIFT',                                               action = act.CopyMode('MoveToEndOfLineContent') },                -- 行末へ
   -- ページ移動
-  { key = 'u', mods = 'CTRL', action = act.CopyMode('PageUp') },    -- 半ページ上へ
-  { key = 'd', mods = 'CTRL', action = act.CopyMode('PageDown') },  -- 半ページ下へ
-  { key = 'b', mods = 'CTRL', action = act.CopyMode('PageUp') },    -- 1ページ上へ
-  { key = 'f', mods = 'CTRL', action = act.CopyMode('PageDown') },  -- 1ページ下へ
+  { key = 'u', mods = 'CTRL',                                                action = act.CopyMode('PageUp') },                                -- 半ページ上へ
+  { key = 'd', mods = 'CTRL',                                                action = act.CopyMode('PageDown') },                              -- 半ページ下へ
+  { key = 'b', mods = 'CTRL',                                                action = act.CopyMode('PageUp') },                                -- 1ページ上へ
+  { key = 'f', mods = 'CTRL',                                                action = act.CopyMode('PageDown') },                              -- 1ページ下へ
   -- ドキュメント先頭・末尾
-  { key = 'g', action = act.CopyMode('MoveToScrollbackTop') },                    -- スクロールバッファの先頭へ
-  { key = 'G', mods = 'SHIFT', action = act.CopyMode('MoveToScrollbackBottom') }, -- スクロールバッファの末尾へ
+  { key = 'g', action = act.CopyMode('MoveToScrollbackTop') },                                                                                 -- スクロールバッファの先頭へ
+  { key = 'G', mods = 'SHIFT',                                               action = act.CopyMode('MoveToScrollbackBottom') },                -- スクロールバッファの末尾へ
   -- 画面内位置
-  { key = 'H', mods = 'SHIFT', action = act.CopyMode('MoveToViewportTop') },     -- 画面上端へ
-  { key = 'M', mods = 'SHIFT', action = act.CopyMode('MoveToViewportMiddle') },  -- 画面中央へ
-  { key = 'L', mods = 'SHIFT', action = act.CopyMode('MoveToViewportBottom') },  -- 画面下端へ
+  { key = 'H', mods = 'SHIFT',                                               action = act.CopyMode('MoveToViewportTop') },                     -- 画面上端へ
+  { key = 'M', mods = 'SHIFT',                                               action = act.CopyMode('MoveToViewportMiddle') },                  -- 画面中央へ
+  { key = 'L', mods = 'SHIFT',                                               action = act.CopyMode('MoveToViewportBottom') },                  -- 画面下端へ
   -- 文字検索（f/F/t/T）
-  { key = 'f', action = act.CopyMode { JumpForward = { prev_char = false } } },                 -- 前方の文字へジャンプ
-  { key = 'F', mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = false } } }, -- 後方の文字へジャンプ
-  { key = 't', action = act.CopyMode { JumpForward = { prev_char = true } } },                   -- 前方の文字の手前へ
-  { key = 'T', mods = 'SHIFT', action = act.CopyMode { JumpBackward = { prev_char = true } } },  -- 後方の文字の手前へ
+  { key = 'f', action = act.CopyMode { JumpForward = { prev_char = false } } },                                                                -- 前方の文字へジャンプ
+  { key = 'F', mods = 'SHIFT',                                               action = act.CopyMode { JumpBackward = { prev_char = false } } }, -- 後方の文字へジャンプ
+  { key = 't', action = act.CopyMode { JumpForward = { prev_char = true } } },                                                                 -- 前方の文字の手前へ
+  { key = 'T', mods = 'SHIFT',                                               action = act.CopyMode { JumpBackward = { prev_char = true } } },  -- 後方の文字の手前へ
   -- 選択モード
-  { key = 'v', action = act.CopyMode { SetSelectionMode = 'Cell' } },               -- 文字単位選択
-  { key = 'V', mods = 'SHIFT', action = act.CopyMode { SetSelectionMode = 'Line' } }, -- 行単位選択
-  { key = 'v', mods = 'CTRL', action = act.CopyMode { SetSelectionMode = 'Block' } }, -- 矩形選択
+  { key = 'v', action = act.CopyMode { SetSelectionMode = 'Cell' } },                                                                          -- 文字単位選択
+  { key = 'V', mods = 'SHIFT',                                               action = act.CopyMode { SetSelectionMode = 'Line' } },            -- 行単位選択
+  { key = 'v', mods = 'CTRL',                                                action = act.CopyMode { SetSelectionMode = 'Block' } },           -- 矩形選択
   -- ヤンク（コピーしてコピーモードを終了）
   {
     key = 'y',
@@ -302,26 +277,26 @@ key_tables.copy_mode = {
     },
   },
   -- 検索
-  { key = '/', action = act.CopyMode('EditPattern') },    -- 検索パターンを入力
-  { key = 'n', action = act.CopyMode('NextMatch') },      -- 次のマッチへ
-  { key = 'N', mods = 'SHIFT', action = act.CopyMode('PriorMatch') }, -- 前のマッチへ
+  { key = '/',      action = act.CopyMode('EditPattern') },                                                  -- 検索パターンを入力
+  { key = 'n',      action = act.CopyMode('NextMatch') },                                                    -- 次のマッチへ
+  { key = 'N',      mods = 'SHIFT',                                   action = act.CopyMode('PriorMatch') }, -- 前のマッチへ
   -- セマンティックゾーン移動（プロンプト間の移動等）
-  { key = '[', action = act.CopyMode('MoveBackwardSemanticZone') },  -- 前のゾーンへ
-  { key = ']', action = act.CopyMode('MoveForwardSemanticZone') },   -- 次のゾーンへ
+  { key = '[',      action = act.CopyMode('MoveBackwardSemanticZone') },                                     -- 前のゾーンへ
+  { key = ']',      action = act.CopyMode('MoveForwardSemanticZone') },                                      -- 次のゾーンへ
   -- モード終了
   { key = 'Escape', action = act.CopyMode('Close') },
-  { key = 'q', action = act.CopyMode('Close') },
+  { key = 'q',      action = act.CopyMode('Close') },
 }
 
 -- === 検索モード ===
 -- コピーモード内で / を押すと入る。検索パターンの入力と結果のナビゲーション
 key_tables.search_mode = {
-  { key = 'Enter', action = act.CopyMode('PriorMatch') },                       -- 前のマッチへ（確定）
-  { key = 'Escape', action = act.CopyMode('Close') },                           -- 検索を終了
-  { key = 'n', mods = 'CTRL', action = act.CopyMode('NextMatch') },             -- 次のマッチへ
-  { key = 'p', mods = 'CTRL', action = act.CopyMode('PriorMatch') },            -- 前のマッチへ
-  { key = 'r', mods = 'CTRL', action = act.CopyMode('CycleMatchType') },        -- マッチ方式を切り替え（文字列/正規表現）
-  { key = 'u', mods = 'CTRL', action = act.CopyMode('ClearPattern') },          -- 検索パターンをクリア
+  { key = 'Enter',  action = act.CopyMode('PriorMatch') },                                         -- 前のマッチへ（確定）
+  { key = 'Escape', action = act.CopyMode('Close') },                                              -- 検索を終了
+  { key = 'n',      mods = 'CTRL',                      action = act.CopyMode('NextMatch') },      -- 次のマッチへ
+  { key = 'p',      mods = 'CTRL',                      action = act.CopyMode('PriorMatch') },     -- 前のマッチへ
+  { key = 'r',      mods = 'CTRL',                      action = act.CopyMode('CycleMatchType') }, -- マッチ方式を切り替え（文字列/正規表現）
+  { key = 'u',      mods = 'CTRL',                      action = act.CopyMode('ClearPattern') },   -- 検索パターンをクリア
 }
 
 ---------------------------------------------------------------
@@ -337,6 +312,15 @@ function M.apply_to_config(config)
     timeout_milliseconds = 2000,
   }
   config.keys = keys
+  smart_splits.apply_to_config(config, {
+    direction_keys = {
+      move = { 'h', 'j', 'k', 'l' },
+      resize = {},
+    },
+    modifiers = {
+      move = 'CTRL'
+    }
+  })
   config.key_tables = key_tables
 end
 
