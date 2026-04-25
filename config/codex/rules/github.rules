@@ -1,0 +1,31 @@
+# 読み取り専用の GitHub CLI 操作は自動で許可する。
+prefix_rule(
+    pattern = ["gh", "pr", "view"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["gh", "pr", "checks"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["gh", "run", "view"],
+    decision = "allow",
+)
+
+# PR 作成は commit-push-pr スキルの通常フローで使うため許可する。
+prefix_rule(
+    pattern = ["gh", "pr", "create"],
+    decision = "allow",
+)
+
+# 外部状態の更新は毎回レビューする。
+prefix_rule(
+    pattern = ["gh", "pr", "edit"],
+    decision = "prompt",
+    justification = "Pull Request の更新は確認してから行う。",
+)
+prefix_rule(
+    pattern = ["gh", "api"],
+    decision = "prompt",
+    justification = "GitHub API は read/write の両方があり得るため毎回確認する。",
+)

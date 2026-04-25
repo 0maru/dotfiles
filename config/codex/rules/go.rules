@@ -1,0 +1,5 @@
+# Go の日常的な検証は自動で許可する。
+prefix_rule(
+    pattern = ["go", "test"],
+    decision = "allow",
+)
