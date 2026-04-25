@@ -1,5 +1,6 @@
 model = "gpt-5.4"
 model_reasoning_effort = "xhigh"
+approvals_reviewer = "auto_review"
 model_reasoning_summary = "none"
 personality = "pragmatic"
 approval_policy = "on-request"
@@ -12,6 +13,8 @@ web_search = true
 
 [sandbox_workspace_write]
 network_access = true
+exclude_tmpdir_env_var = true
+exclude_slash_tmp = true
 
 [agents]
 max_threads = 6
@@ -25,6 +28,12 @@ multi_agent = true
 enabled = true
 
 [plugins."github@openai-curated"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."browser-use@openai-bundled"]
 enabled = true
 
 [mcp_servers.serena]
@@ -43,3 +52,7 @@ args = [
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp@latest"]
+
+[mcp_servers.atlassian]
+enabled = true
+url = "https://mcp.atlassian.com/v1/sse"
