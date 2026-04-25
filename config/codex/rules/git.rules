@@ -1,0 +1,85 @@
+# 読み取り専用の Git 操作は自動で許可する。
+prefix_rule(
+    pattern = ["git", "status"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "diff"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "log"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "show"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "branch"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "remote"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "rev-parse"],
+    decision = "allow",
+)
+
+# 日常的に AI へ任せる Git 操作は自動で許可する。
+prefix_rule(
+    pattern = ["git", "fetch"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "pull", "--ff-only"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "switch"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "add"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "allow",
+)
+
+# 強制 push は明示的に許可したブランチだけ通し、それ以外は禁止する。
+prefix_rule(
+    pattern = ["git", "push", "--force-with-lease", "origin", "tui-input-adr"],
+    decision = "allow",
+)
+
+# 履歴や作業ツリーへの影響が大きい操作は確認または禁止する。
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "forbidden",
+    justification = "破壊的な履歴操作は手動で実行する。",
+)
+prefix_rule(
+    pattern = ["git", "clean", "-fd"],
+    decision = "forbidden",
+    justification = "未追跡ファイルの削除は手動で実行する。",
+)
+prefix_rule(
+    pattern = ["git", "push", ["--force", "--force-with-lease", "-f"]],
+    decision = "forbidden",
+    justification = "強制 push は手動で実行する。",
+)
+
+# 通常の push は自動で許可する。
+prefix_rule(
+    pattern = ["git", "push"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["git", "reset"],
+    decision = "prompt",
+    justification = "履歴を書き換える可能性があるため確認してから行う。",
+)
