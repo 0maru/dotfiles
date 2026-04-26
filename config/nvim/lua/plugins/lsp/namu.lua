@@ -7,7 +7,7 @@ return {
     },
   },
   keys = {
-    { "<leader>ss", "<Cmd>Namu symbols<CR>", desc = "Jump to LSP symbol" },
-    { "<leader>sw", "<Cmd>Namu workspace<CR>", desc = "LSP Symbols - Workspace" },
+    { "<leader>ls", "<Cmd>Namu symbols<CR>", desc = "Jump to LSP symbol" },
+    { "<leader>lw", "<Cmd>Namu workspace<CR>", desc = "LSP Symbols - Workspace" },
   },
 }

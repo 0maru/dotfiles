@@ -19,8 +19,11 @@ window.CHEATSHEET = {
         {
           title: "起動直後",
           items: [
+            { mode: "NIV", keys: ["Ctrl+s"], desc: "保存", lv: 1 },
             { mode: "N", keys: ["Space", "w"], desc: "保存", lv: 1 },
             { mode: "N", keys: ["Space", "q"], desc: "現在ウィンドウを閉じる", lv: 1 },
+            { mode: "I", keys: ["j", "k"], desc: "Insert を抜ける", lv: 1 },
+            { mode: "NV", keys: [";"], desc: "コマンドラインを開く", lv: 1 },
             { mode: "N", keys: ["Esc"], desc: "検索ハイライトを消す", lv: 1 },
             { mode: "N", keys: ["Space", "?"], desc: "バッファのキーマップ一覧", lv: 2 },
             { mode: "C", keys: [":wq"], desc: "保存して終了", lv: 1 },
@@ -30,13 +33,14 @@ window.CHEATSHEET = {
         {
           title: "検索 / ファイル移動 (snacks picker)",
           items: [
+            { mode: "N", keys: ["Space", "Space"], desc: "スマートピッカー", lv: 1 },
             { mode: "N", keys: ["Space", "ff"], desc: "ファイル検索", lv: 1 },
             { mode: "N", keys: ["Space", "fr"], desc: "最近開いたファイル", lv: 1 },
             { mode: "N", keys: ["Space", "fb"], desc: "バッファ一覧", lv: 1 },
             { mode: "N", keys: ["Space", "fg"], desc: "全文検索", lv: 1 },
             { mode: "N", keys: ["Space", "fw"], desc: "カーソル語で grep", lv: 2 },
             { mode: "N", keys: ["Space", ":"], desc: "コマンド履歴", lv: 2 },
-            { mode: "N", keys: ["Space", "sh"], desc: "ヘルプ検索", lv: 2 },
+            { mode: "N", keys: ["Space", "fh"], desc: "ヘルプ検索", lv: 2 },
           ],
         },
         {
@@ -45,8 +49,8 @@ window.CHEATSHEET = {
             { mode: "N", keys: ["Shift+h"], desc: "前のバッファ", lv: 1 },
             { mode: "N", keys: ["Shift+l"], desc: "次のバッファ", lv: 1 },
             { mode: "N", keys: ["Space", "bd"], desc: "バッファを閉じる", lv: 1 },
-            { mode: "N", keys: ["Ctrl+w", "s"], desc: "下に水平分割", lv: 2 },
-            { mode: "N", keys: ["Ctrl+w", "v"], desc: "右に垂直分割", lv: 2 },
+            { mode: "N", keys: ["Space", "s"], desc: "下に水平分割", lv: 1 },
+            { mode: "N", keys: ["Space", "v"], desc: "右に垂直分割", lv: 1 },
             { mode: "N", keys: ["Ctrl+w", "c"], desc: "現在ペインを閉じる", lv: 2 },
             { mode: "N", keys: ["Ctrl+w", "o"], desc: "現在以外のペインを閉じる", lv: 2 },
             { mode: "N", keys: ["Ctrl+w", "="], desc: "ペイン幅を揃える", lv: 2 },
@@ -73,8 +77,10 @@ window.CHEATSHEET = {
             { keys: ["^"], desc: "行の最初の非空白", lv: 1 },
             { keys: ["$"], desc: "行末", lv: 1 },
             { keys: ["/", "pat"], desc: "前方検索", lv: 1 },
-            { keys: ["n"], desc: "次のマッチ", lv: 1 },
-            { keys: ["N"], desc: "前のマッチ", lv: 1 },
+            { keys: ["n"], desc: "次のマッチ (中央維持)", lv: 1 },
+            { keys: ["N"], desc: "前のマッチ (中央維持)", lv: 1 },
+            { keys: ["Ctrl+d"], desc: "半ページ下へ (中央維持)", lv: 1 },
+            { keys: ["Ctrl+u"], desc: "半ページ上へ (中央維持)", lv: 1 },
             { keys: ["u"], desc: "Undo", lv: 1 },
             { keys: ["Ctrl+r"], desc: "Redo", lv: 1 },
             { keys: ["."], desc: "直前の変更を繰り返す", lv: 2 },
@@ -114,8 +120,8 @@ window.CHEATSHEET = {
         {
           title: "シンボル / Flash ジャンプ",
           items: [
-            { mode: "N", keys: ["Space", "ss"], desc: "バッファの LSP シンボル", lv: 2 },
-            { mode: "N", keys: ["Space", "sw"], desc: "ワークスペースシンボル", lv: 2 },
+            { mode: "N", keys: ["Space", "ls"], desc: "バッファの LSP シンボル", lv: 2 },
+            { mode: "N", keys: ["Space", "lw"], desc: "ワークスペースシンボル", lv: 2 },
             { mode: "N", keys: ["Space", ";"], desc: "dropbar で文脈を選ぶ", lv: 3 },
             { mode: "N", keys: ["[;"], desc: "文脈の先頭へ", lv: 3 },
             { mode: "N", keys: ["];"], desc: "次の文脈へ", lv: 3 },

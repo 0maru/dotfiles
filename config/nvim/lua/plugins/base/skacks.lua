@@ -33,6 +33,7 @@ return {
   },
   keys = {
     -- ファイル検索
+    { '<leader><leader>', function() Snacks.picker.smart() end, desc = 'Smart Picker' },
     { '<leader>ff', function() Snacks.picker.smart() end, desc = 'Find Files' },
     { '<leader>fr', function() Snacks.picker.recent() end, desc = 'Recent Files' },
     { '<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffers' },
@@ -45,7 +46,7 @@ return {
     { '<leader>gl', function() Snacks.picker.git_log() end, desc = 'Git Log' },
     -- その他
     { '<leader>:', function() Snacks.picker.command_history() end, desc = 'Command History' },
-    { '<leader>sh', function() Snacks.picker.help() end, desc = 'Help Pages' },
+    { '<leader>fh', function() Snacks.picker.help() end, desc = 'Help Pages' },
     -- terminal
     { '<leader>tt', function() Snacks.terminal() end, desc = 'Terminal', mode = { 'n', 't'} }
   },
