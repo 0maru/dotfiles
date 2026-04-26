@@ -39,6 +39,7 @@
     bat
     wget
     zoxide
+    yazi
 
     # Data processing
     jq
