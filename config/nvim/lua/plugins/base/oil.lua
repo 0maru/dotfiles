@@ -10,6 +10,7 @@ return {
       ["<C-j>"] = false,
       ["<C-k>"] = false,
       ["<C-l>"] = false,
+      ["<C-s>"] = false,
       ["gr"] = "actions.refresh",
     },
     view_options = {

@@ -12,7 +12,17 @@ end
 
 -- 保存 / 終了
 map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save" })
+map({ "n", "i", "v" }, "<C-s>", "<Cmd>w<CR>", { desc = "Save" })
 map("n", "<Leader>q", "<Cmd>q<CR>", { desc = "Quit" })
+
+-- クリップボード / レジスタ
+map({ "n", "v" }, "<Leader>y", [["+y]], { desc = "Yank to system clipboard" })
+map("n", "<Leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
+map({ "n", "v" }, "<Leader>d", [["_d]], { desc = "Delete without yanking" })
+
+-- コマンドラインを Shift なしで開く
+map({ "n", "v" }, ";", ":", { desc = "Enter command-line mode" })
+map({ "n", "v" }, ":", ";", { desc = "Repeat latest f/t search" })
 
 -- 折り返し行での移動を改善
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })

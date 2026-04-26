@@ -21,6 +21,9 @@ export SAVEHIST=30000
 # gpg
 export GPG_TTY=$(tty)
 
+# Ctrl-S を Neovim の保存に渡すため、端末の XON/XOFF を無効化する
+[[ -t 0 ]] && stty -ixon
+
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 setopt hist_ignore_all_dups
@@ -43,4 +46,3 @@ source <(fzf --zsh)
 
 # Load local settings (not tracked by git)
 [[ -f "$ZDOTDIR/local.zsh" ]] && source "$ZDOTDIR/local.zsh"
-
