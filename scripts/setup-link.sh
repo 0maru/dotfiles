@@ -40,14 +40,9 @@ codex_config_src="$XDG_CONFIG_HOME/codex/config.toml"
 codex_config_dest="$HOME/.codex/config.toml"
 
 # config.toml は個別に編集できるよう、シンボリックリンクではなく実ファイルで配置する
-if [ -L "$codex_config_dest" ]; then
-  rm -v "$codex_config_dest"
-  cp -v "$codex_config_src" "$codex_config_dest"
-elif [ ! -e "$codex_config_dest" ]; then
-  cp -v "$codex_config_src" "$codex_config_dest"
-else
-  echo "$codex_config_dest already exists. skip copying."
-fi
+python3 "$SCRIPTS_DIR/sync-codex-config.py" \
+  --source "$codex_config_src" \
+  --dest "$codex_config_dest"
 
 ln -sfv "$XDG_CONFIG_HOME/codex/AGENTS.md" "$HOME/.codex/AGENTS.md"
 ln -sfv "$XDG_CONFIG_HOME/codex/hooks.json" "$HOME/.codex/hooks.json"
