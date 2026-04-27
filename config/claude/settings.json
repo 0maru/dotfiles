@@ -335,10 +335,10 @@
   "effortLevel": "xhigh",
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
-  "editMode": "vim",
   "showTurnDuration": true,
   "teammateMode": "in-process",
+  "skipAutoPermissionPrompt": true,
+  "editMode": "vim",
   "mcpServers": {
     "plamo-translate": {
       "command": "/opt/homebrew/bin/npx",
