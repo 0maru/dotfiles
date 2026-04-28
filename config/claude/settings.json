@@ -32,13 +32,9 @@
       "mcp__claude_ai_Atlassian",
       "mcp__claude_ai_Sentry",
       "mcp__claude_ai_Context7",
-      "mcp__claude_ai_Figma",
       "mcp__claude_ai_Slack",
       "mcp__plugin_context7_context7",
-      "mcp__plugin_serena_serena",
       "Skill(update-config *)",
-      "Bash(*plamo-translate *)",
-      "mcp__plamo-translate",
       "Bash(codex *)",
       "Skill(update-config)"
     ],
@@ -339,17 +335,4 @@
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
   "editMode": "vim",
-  "mcpServers": {
-    "plamo-translate": {
-      "command": "/opt/homebrew/bin/npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "http://localhost:30000/mcp",
-        "--allow-http",
-        "--transport",
-        "http-only"
-      ]
-    }
-  }
 }
