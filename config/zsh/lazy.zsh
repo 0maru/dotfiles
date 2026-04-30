@@ -119,3 +119,23 @@ function run_codex() {
 }
 zle -N run_codex
 bindkey 'x;' run_codex
+
+# Claude Code と OpenAI Codex の daily コストをまとめて表示する
+function ccu() {
+  emulate -L zsh -o pipefail
+
+  echo "═══ Claude Code ═══"
+  pnpm dlx ccusage daily "$@" || return
+  echo ""
+  echo "═══ OpenAI Codex ═══"
+  pnpm dlx @ccusage/codex@latest daily "$@" || return
+  echo ""
+  echo "═══ Total ═══"
+
+  local cc cx total
+  cc=$(pnpm dlx ccusage daily --json "$@" | jq -r '.totals.totalCost // 0') || return
+  cx=$(pnpm dlx @ccusage/codex@latest daily --json "$@" | jq -r '.totals.costUSD // 0') || return
+  total=$(jq -nr --arg cc "$cc" --arg cx "$cx" '($cc | tonumber) + ($cx | tonumber)') || return
+
+  printf "Claude: \$%.2f / Codex: \$%.2f / Total: \$%.2f\n" "$cc" "$cx" "$total"
+}
