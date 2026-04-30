@@ -40,6 +40,16 @@
 - `nit` が多い場合は最大 3 件に絞り、残りは省略する。
 - 最終 findings は原則 10 件以内にする。
 
+## Cross-Agent Corroboration
+
+複数の Agent が独立に同じ箇所・同じ原因を指摘した場合、それは強いシグナル。集約時は次のように扱う:
+
+- **2 Agent 以上が独立に同じ問題を指摘**: confidence を `high` に格上げし、severity も保守的にせず採用する。merged finding に `corroborated_by: [agent-a, agent-b]` を残す。
+- **1 Agent のみの指摘で `confidence: medium`**: 根拠が具体的（file:line、再現条件、修正案）なら採用、抽象的なら確認ポイントに移す。
+- **1 Agent のみで `confidence: low`**: findings から除外する。
+
+なぜ重要か: 単独 Agent の指摘は専門観点に強くバイアスがかかる（例: security Agent は何でも怪しく見る）。独立した別観点の Agent も同じ箇所を懸念したなら、それは観点バイアスではなく実体ある問題である可能性が高い。
+
 ## False Positive 抑制
 
 次は findings に載せない:
