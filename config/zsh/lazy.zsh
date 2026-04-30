@@ -124,14 +124,27 @@ bindkey 'x;' run_codex
 function ccu() {
   emulate -L zsh -o pipefail
 
-  local cc_json cx_json
+  local cc_json cx_json current_month previous_month year month previous_year previous_month_number
+  current_month=$(date +%Y-%m) || return
+  year=$(date +%Y) || return
+  month=$(date +%m) || return
+
+  if (( 10#$month == 1 )); then
+    previous_year=$((year - 1))
+    previous_month_number=12
+  else
+    previous_year=$year
+    previous_month_number=$((10#$month - 1))
+  fi
+  previous_month=$(printf "%04d-%02d" "$previous_year" "$previous_month_number") || return
+
   cc_json=$(pnpm dlx ccusage daily --json "$@") || return
   cx_json=$(pnpm dlx @ccusage/codex@latest daily --json "$@") || return
 
   {
     print -r -- "$cc_json"
     print -r -- "$cx_json"
-  } | jq -r -s '
+  } | jq -r -s --arg previous_month "$previous_month" --arg current_month "$current_month" '
     def pad2:
       tostring | if length == 1 then "0" + . else . end;
     def month_number($month):
@@ -163,9 +176,10 @@ function ccu() {
     ($cx.daily // []) as $cxDaily |
     ($ccDaily | daily_by_date("totalCost")) as $ccByDate |
     ($cxDaily | daily_by_date("costUSD")) as $cxByDate |
-    (($ccByDate | keys) + ($cxByDate | keys) | unique | sort) as $dates |
-    (
-      $dates[] as $date |
+    (($ccByDate | keys) + ($cxByDate | keys) | unique | sort |
+      map(select((.[0:7] == $previous_month) or (.[0:7] == $current_month)))) as $dates |
+    ($dates | map(
+      . as $date |
       [
         $date,
         ($ccByDate[$date].totalTokens // 0),
@@ -175,15 +189,16 @@ function ccu() {
         (($ccByDate[$date].totalTokens // 0) + ($cxByDate[$date].totalTokens // 0)),
         (($ccByDate[$date].cost // 0) + ($cxByDate[$date].cost // 0))
       ]
-    ),
+    )) as $rows |
+    ($rows[]),
     [
       "Total",
-      ($cc.totals.totalTokens // 0),
-      ($cc.totals.totalCost // 0),
-      ($cx.totals.totalTokens // 0),
-      ($cx.totals.costUSD // 0),
-      (($cc.totals.totalTokens // 0) + ($cx.totals.totalTokens // 0)),
-      (($cc.totals.totalCost // 0) + ($cx.totals.costUSD // 0))
+      ($rows | map(.[1]) | add // 0),
+      ($rows | map(.[2]) | add // 0),
+      ($rows | map(.[3]) | add // 0),
+      ($rows | map(.[4]) | add // 0),
+      ($rows | map(.[5]) | add // 0),
+      ($rows | map(.[6]) | add // 0)
     ] | @tsv
   ' |
     awk -F '\t' '
