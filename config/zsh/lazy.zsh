@@ -132,23 +132,48 @@ function ccu() {
     print -r -- "$cc_json"
     print -r -- "$cx_json"
   } | jq -r -s '
+    def pad2:
+      tostring | if length == 1 then "0" + . else . end;
+    def month_number($month):
+      {
+        Jan: "01", Feb: "02", Mar: "03", Apr: "04",
+        May: "05", Jun: "06", Jul: "07", Aug: "08",
+        Sep: "09", Oct: "10", Nov: "11", Dec: "12"
+      }[$month] // $month;
+    def normalize_date:
+      if type == "string" and test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$") then
+        .
+      elif type == "string" and test("^[A-Z][a-z]{2} [0-9]{1,2}, [0-9]{4}$") then
+        capture("^(?<month>[A-Z][a-z]{2}) (?<day>[0-9]{1,2}), (?<year>[0-9]{4})$") as $date |
+        "\($date.year)-\(month_number($date.month))-\($date.day | tonumber | pad2)"
+      else
+        .
+      end;
+    def daily_by_date($cost_key):
+      reduce .[] as $row (
+        {};
+        ($row.date | normalize_date) as $date |
+        .[$date].totalTokens += (($row.totalTokens // 0) | tonumber) |
+        .[$date].cost += (($row[$cost_key] // 0) | tonumber)
+      );
+
     .[0] as $cc |
     .[1] as $cx |
     ($cc.daily // []) as $ccDaily |
     ($cx.daily // []) as $cxDaily |
-    ($ccDaily | map({(.date): .}) | add // {}) as $ccByDate |
-    ($cxDaily | map({(.date): .}) | add // {}) as $cxByDate |
+    ($ccDaily | daily_by_date("totalCost")) as $ccByDate |
+    ($cxDaily | daily_by_date("costUSD")) as $cxByDate |
     (($ccByDate | keys) + ($cxByDate | keys) | unique | sort) as $dates |
     (
       $dates[] as $date |
       [
         $date,
         ($ccByDate[$date].totalTokens // 0),
-        ($ccByDate[$date].totalCost // 0),
+        ($ccByDate[$date].cost // 0),
         ($cxByDate[$date].totalTokens // 0),
-        ($cxByDate[$date].costUSD // 0),
+        ($cxByDate[$date].cost // 0),
         (($ccByDate[$date].totalTokens // 0) + ($cxByDate[$date].totalTokens // 0)),
-        (($ccByDate[$date].totalCost // 0) + ($cxByDate[$date].costUSD // 0))
+        (($ccByDate[$date].cost // 0) + ($cxByDate[$date].cost // 0))
       ]
     ),
     [
