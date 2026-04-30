@@ -306,5 +306,6 @@
   "showTurnDuration": true,
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim"
+  "editMode": "vim",
+  "autoMemoryEnabled": false
 }
