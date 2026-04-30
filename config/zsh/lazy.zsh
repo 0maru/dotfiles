@@ -119,3 +119,113 @@ function run_codex() {
 }
 zle -N run_codex
 bindkey 'x;' run_codex
+
+# Claude Code と OpenAI Codex の daily 使用量をまとめて表示する
+function ccu() {
+  emulate -L zsh -o pipefail
+
+  local cc_json cx_json current_month previous_month year month previous_year previous_month_number
+  current_month=$(date +%Y-%m) || return
+  year=$(date +%Y) || return
+  month=$(date +%m) || return
+
+  if (( 10#$month == 1 )); then
+    previous_year=$((year - 1))
+    previous_month_number=12
+  else
+    previous_year=$year
+    previous_month_number=$((10#$month - 1))
+  fi
+  previous_month=$(printf "%04d-%02d" "$previous_year" "$previous_month_number") || return
+
+  cc_json=$(pnpm dlx ccusage daily --json "$@") || return
+  cx_json=$(pnpm dlx @ccusage/codex@latest daily --json "$@") || return
+
+  {
+    print -r -- "$cc_json"
+    print -r -- "$cx_json"
+  } | jq -r -s --arg previous_month "$previous_month" --arg current_month "$current_month" '
+    def pad2:
+      tostring | if length == 1 then "0" + . else . end;
+    def month_number($month):
+      {
+        Jan: "01", Feb: "02", Mar: "03", Apr: "04",
+        May: "05", Jun: "06", Jul: "07", Aug: "08",
+        Sep: "09", Oct: "10", Nov: "11", Dec: "12"
+      }[$month] // $month;
+    def normalize_date:
+      if type == "string" and test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$") then
+        .
+      elif type == "string" and test("^[A-Z][a-z]{2} [0-9]{1,2}, [0-9]{4}$") then
+        capture("^(?<month>[A-Z][a-z]{2}) (?<day>[0-9]{1,2}), (?<year>[0-9]{4})$") as $date |
+        "\($date.year)-\(month_number($date.month))-\($date.day | tonumber | pad2)"
+      else
+        .
+      end;
+    def daily_by_date($cost_key):
+      reduce .[] as $row (
+        {};
+        ($row.date | normalize_date) as $date |
+        .[$date].totalTokens += (($row.totalTokens // 0) | tonumber) |
+        .[$date].cost += (($row[$cost_key] // 0) | tonumber)
+      );
+
+    .[0] as $cc |
+    .[1] as $cx |
+    ($cc.daily // []) as $ccDaily |
+    ($cx.daily // []) as $cxDaily |
+    ($ccDaily | daily_by_date("totalCost")) as $ccByDate |
+    ($cxDaily | daily_by_date("costUSD")) as $cxByDate |
+    (($ccByDate | keys) + ($cxByDate | keys) | unique | sort |
+      map(select((.[0:7] == $previous_month) or (.[0:7] == $current_month)))) as $dates |
+    ($dates | map(
+      . as $date |
+      [
+        $date,
+        ($ccByDate[$date].totalTokens // 0),
+        ($ccByDate[$date].cost // 0),
+        ($cxByDate[$date].totalTokens // 0),
+        ($cxByDate[$date].cost // 0),
+        (($ccByDate[$date].totalTokens // 0) + ($cxByDate[$date].totalTokens // 0)),
+        (($ccByDate[$date].cost // 0) + ($cxByDate[$date].cost // 0))
+      ]
+    )) as $rows |
+    ($rows[]),
+    [
+      "Total",
+      ($rows | map(.[1]) | add // 0),
+      ($rows | map(.[2]) | add // 0),
+      ($rows | map(.[3]) | add // 0),
+      ($rows | map(.[4]) | add // 0),
+      ($rows | map(.[5]) | add // 0),
+      ($rows | map(.[6]) | add // 0)
+    ],
+    [
+      "\($previous_month) Summary",
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[1]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[2]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[3]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[4]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[5]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[6]) | add // 0)
+    ],
+    [
+      "\($current_month) Summary",
+      ($rows | map(select(.[0][0:7] == $current_month) | .[1]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[2]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[3]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[4]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[5]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[6]) | add // 0)
+    ] | @tsv
+  ' |
+    awk -F '\t' '
+      BEGIN {
+        print "Date\tClaude Tokens\tClaude USD\tChatGPT Tokens\tChatGPT USD\tTotal Tokens\tTotal USD"
+      }
+      {
+        printf "%s\t%d\t$%.2f\t%d\t$%.2f\t%d\t$%.2f\n", $1, $2, $3, $4, $5, $6, $7
+      }
+    ' |
+    column -t -s $'\t'
+}
