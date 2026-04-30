@@ -36,9 +36,28 @@
 
 - 同一ファイル・同一原因の指摘は 1 件に統合する。
 - severity が割れた場合は、根拠が具体的な Agent の severity を採用する。
-- 自動チェックに同じエラーが出ている場合は、findings ではなく `自動チェック結果` に寄せる。
+- 自動チェックに同じエラーが出ている場合は、findings ではなく `自動チェック結果` に寄せる。**ただし** reviewer の指摘が自動チェックと根本原因は同じでも、修正案が型設計・スキーマ設計などより上位レイヤに踏み込んでいる場合は findings に残し、`note: 自動チェックと同根` を併記する（自動チェック側では表現できない設計レイヤの指摘を捨てない）。
 - `nit` が多い場合は最大 3 件に絞り、残りは省略する。
 - 最終 findings は原則 10 件以内にする。
+
+## Cross-Agent Corroboration
+
+複数の reviewer が独立に同じ箇所を指摘した場合、観点バイアスが分離されたうえで一致したシグナルなので「**確からしさ（confidence）**」が高い。一方で **severity（影響度）は impact 基準（上記 Severity 表）から動かさない**。合意の有無で BLOCK/REVISE が変わるのは impact-based モデルと矛盾するため、severity を機械的に昇格させない（例: 2 reviewer が独立に major と判断しても、impact が major のままなら blocker にしない）。
+
+- **confidence の固定**: 異なる reviewer-id（観点）が 2 個以上、独立に同箇所を指摘した場合、`confidence: high` に固定する（元が low/medium でも上げてよい）。同一 reviewer-id の重複は数えない（観点が分離されていない）。
+- **severity の採用**: 各 reviewer が同じ severity を付けた場合 → そのまま採用。割れた場合は「集約ルール」に従い、**根拠が具体的な reviewer の severity** を採用する（最高 severity を機械的に採るのではなく、impact 表に整合する severity を選ぶ）。
+- **`why` の統合**: 各 reviewer の根拠（why）を箇条書きで統合し、どの観点から問題視されたかを残す。
+- **メタ情報**: `corroborated_by: [reviewer-a, reviewer-b]` を併記して、合意した reviewer を明示する。
+- **single-reviewer の medium 指摘**: 1 reviewer のみで `confidence: medium` の場合、根拠が具体的（file:line + 再現条件 + 修正案）なら採用、抽象的なら `確認ポイント` に移す。
+- **single-reviewer の low 指摘**: findings から除外する（観点バイアスの可能性が高い）。
+
+## 自動チェック結果との関連表示
+
+自動チェック失敗と同根の finding を残した場合（前述「集約ルール」末尾の例外）、二重カウント感を消すために以下を遵守する:
+
+- finding 側に `note: 自動チェックと同根（{command} @ {file}:{line}）` を併記する。
+- 自動チェック結果テーブルの `Notes` 列にも `関連 finding: {finding 短いタイトル}` を追記する。
+- 総合判定はどちらか一方で REVISE/BLOCK にカウントする（自動チェック失敗の REVISE トリガーが優先。同根 finding の severity でさらに格上げするのは可）。
 
 ## False Positive 抑制
 
