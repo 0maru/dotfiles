@@ -64,7 +64,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "UserPromptSubmit": [
@@ -288,9 +287,21 @@
       "allowLocalBinding": true
     },
     "filesystem": {
-      "allowWrite": ["/tmp/build", "/tmp", "~/workspaces"],
-      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"],
-      "allowRead": ["~/.claude/plugins"]
+      "allowWrite": [
+        "/tmp/build",
+        "/tmp",
+        "~/workspaces"
+      ],
+      "denyRead": [
+        "~/.aws",
+        "~/.ssh",
+        "**/.env",
+        "**/.env.*",
+        "**/secrets/**"
+      ],
+      "allowRead": [
+        "~/.claude/plugins"
+      ]
     },
     "excludedCommands": [
       "git commit *",
