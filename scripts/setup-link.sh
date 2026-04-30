@@ -9,6 +9,7 @@ mkdir -p \
   "$HOME/.claude/commands" \
   "$HOME/.claude/hooks" \
   "$HOME/.claude/skills" \
+  "$HOME/.claude/agents" \
   "$HOME/.codex" \
   "$HOME/.codex/skills" \
   "$HOME/.codex/rules"
@@ -31,7 +32,7 @@ ln -sfv "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sfv "$XDG_CONFIG_HOME/claude/settings.json" "$HOME/.claude/settings.json"
 ln -sfv "$XDG_CONFIG_HOME/claude/statusline.ts" "$HOME/.claude/statusline.ts"
 
-for claude_dir in commands hooks skills; do
+for claude_dir in commands hooks skills agents; do
   ln -sfv "$XDG_CONFIG_HOME/claude/$claude_dir/"* "$HOME/.claude/$claude_dir"
 done
 
