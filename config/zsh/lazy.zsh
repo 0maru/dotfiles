@@ -199,6 +199,24 @@ function ccu() {
       ($rows | map(.[4]) | add // 0),
       ($rows | map(.[5]) | add // 0),
       ($rows | map(.[6]) | add // 0)
+    ],
+    [
+      "\($previous_month) Summary",
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[1]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[2]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[3]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[4]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[5]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $previous_month) | .[6]) | add // 0)
+    ],
+    [
+      "\($current_month) Summary",
+      ($rows | map(select(.[0][0:7] == $current_month) | .[1]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[2]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[3]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[4]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[5]) | add // 0),
+      ($rows | map(select(.[0][0:7] == $current_month) | .[6]) | add // 0)
     ] | @tsv
   ' |
     awk -F '\t' '
