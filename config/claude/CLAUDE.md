@@ -73,21 +73,6 @@ CLAUDE.md 作成時は以下の要素を含める：
 - XSS対策
 - CSRF対策（該当する場合）
 
-## プロジェクト固有の指示
-
-各プロジェクトのCLAUDE.mdでは、冒頭に以下を記載：
-
-```markdown
-# CLAUDE.md
-
-このファイルは、Claude Code (claude.ai/code) がこのリポジトリのコードを扱う際のガイダンスを提供します。
-
-> 共通指示事項は ~/.claude/CLAUDE.md を参照
-
-## プロジェクト概要
-...
-```
-
 ## Superpowers ワークフロー設定
 
 ### Worktree
