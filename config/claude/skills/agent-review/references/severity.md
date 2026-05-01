@@ -53,6 +53,15 @@
 - **single-reviewer の medium 指摘**: 1 reviewer のみで `confidence: medium` の場合、根拠が具体的（file:line + 再現条件 + 修正案）なら採用、抽象的なら `確認ポイント` に移す。
 - **single-reviewer の low 指摘**: findings から除外する（観点バイアスの可能性が高い）。
 
+### Codex（別ベンダー）の特例
+
+`codex` は OpenAI 側の独立したレビューで、Anthropic 系 reviewer と観点バイアスのソースが根本的に違う。そのため通常の corroboration ルールに 1 つ特例を入れる:
+
+- **Codex 単独 + Anthropic reviewer 単独 = corroborated**: Codex が指摘し、かつ Anthropic 系 reviewer が 1 個でも独立に同箇所を指摘した場合、`confidence: high` にブーストし `corroborated_by: [codex, {anthropic-reviewer}]` を付ける（通常は Anthropic 系 2 個必要だが、Codex は別ベンダーなので 1+1 で成立）。
+- **Codex 単独指摘**: Anthropic 系 reviewer がいずれも触れていない Codex のみの指摘は、観点バイアスか実体ある問題か判別しにくいので `findings` には入れず `確認ポイント` に回す。ただし Codex 側の severity が `blocker` 相当（セキュリティ事故、データ破壊、確実な本番障害）の場合は findings に残し、`confidence: medium` + `corroborated_by: [codex]` を付ける（実害の可能性を捨てない）。
+- **Codex 出力の confidence**: プラグインから confidence は出ないので、Codex 側 finding は medium 固定として扱う（上記ブーストで high に上がりうる）。
+- **Codex の severity マッピング**: Codex プラグインが返す severity ラベルは reviewer 共通の `blocker / major / minor / nit` に正規化する。曖昧な場合は具体性と impact から判断し、機械的な最高重み採用はしない。
+
 ## 自動チェック結果との関連表示
 
 自動チェック失敗と同根の finding を残した場合（前述「集約ルール」末尾の例外）、二重カウント感を消すために以下を遵守する:
