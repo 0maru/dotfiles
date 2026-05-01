@@ -13,7 +13,7 @@
     "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
     "CLAUDE_CODE_NO_FLICKER": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": 1
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
   },
   "permissions": {
     "allow": [
@@ -63,31 +63,9 @@
   },
   "enableAllProjectMcpServers": true,
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n running | base64)\" > /dev/tty 2>/dev/null; true"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude user-prompt-submit"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "[ \"$TERM_PROGRAM\" = \"WezTerm\" ] && printf '\\033]1337;SetUserVar=claude_status=%s\\007' \"$(echo -n idle | base64)\" > /dev/tty 2>/dev/null; true"
-          },
           {
             "type": "command",
             "command": "~/.claude/hooks/wezterm-bell.sh",
@@ -97,24 +75,6 @@
             "type": "command",
             "command": "~/.claude/hooks/stop-notification.sh",
             "timeout": 5
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude stop"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude notification"
           }
         ]
       }
@@ -127,74 +87,6 @@
             "type": "command",
             "command": "~/.claude/hooks/post-edit-format.sh",
             "timeout": 10
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude activity-log"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude session-start"
-          }
-        ]
-      }
-    ],
-    "StopFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude stop-failure"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude session-end"
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude subagent-start"
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude subagent-stop"
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh claude activity-log"
           }
         ]
       }
@@ -298,11 +190,15 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "autoMemoryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "showTurnDuration": true,
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
   "editMode": "vim",
-  "autoMemoryEnabled": false
+  "theme": "dark-daltonized",
+  "autoCompactEnabled": false,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }
