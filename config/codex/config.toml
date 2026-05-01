@@ -35,6 +35,7 @@ notifications = true
 [features]
 codex_hooks = true
 multi_agent = true
+goals = true
 
 [[skills.config]]
 enabled = true
