@@ -123,8 +123,11 @@ bindkey 'x;' run_codex
 # Claude Code と OpenAI Codex の daily 使用量をまとめて表示する
 function ccu() {
   emulate -L zsh -o pipefail
+  unsetopt bg_nice
 
   local cc_json cx_json current_month previous_month year month previous_year previous_month_number
+  local cc_tmp cx_tmp cc_pid cx_pid cc_status cx_status
+  local -a ccusage_cmd ccusage_codex_cmd
   current_month=$(date +%Y-%m) || return
   year=$(date +%Y) || return
   month=$(date +%m) || return
@@ -138,8 +141,49 @@ function ccu() {
   fi
   previous_month=$(printf "%04d-%02d" "$previous_year" "$previous_month_number") || return
 
-  cc_json=$(pnpm dlx ccusage daily --json "$@") || return
-  cx_json=$(pnpm dlx @ccusage/codex@latest daily --json "$@") || return
+  if command -v ccusage >/dev/null 2>&1; then
+    ccusage_cmd=(ccusage)
+  else
+    ccusage_cmd=(bunx ccusage)
+  fi
+
+  if command -v ccusage-codex >/dev/null 2>&1; then
+    ccusage_codex_cmd=(ccusage-codex)
+  else
+    ccusage_codex_cmd=(bunx @ccusage/codex@latest)
+  fi
+
+  # 2つのログ走査は独立しているので、可能なら並列で実行する
+  if cc_tmp=$(mktemp "${TMPDIR:-/tmp}/ccu-cc.XXXXXX" 2>/dev/null) && cx_tmp=$(mktemp "${TMPDIR:-/tmp}/ccu-cx.XXXXXX" 2>/dev/null); then
+    "${ccusage_cmd[@]}" daily --json "$@" >| "$cc_tmp" &
+    cc_pid=$!
+    "${ccusage_codex_cmd[@]}" daily --json "$@" >| "$cx_tmp" &
+    cx_pid=$!
+
+    wait "$cc_pid"
+    cc_status=$?
+    wait "$cx_pid"
+    cx_status=$?
+
+    if (( cc_status != 0 || cx_status != 0 )); then
+      rm -f "$cc_tmp" "$cx_tmp"
+      return 1
+    fi
+
+    cc_json=$(<"$cc_tmp") || {
+      rm -f "$cc_tmp" "$cx_tmp"
+      return
+    }
+    cx_json=$(<"$cx_tmp") || {
+      rm -f "$cc_tmp" "$cx_tmp"
+      return
+    }
+    rm -f "$cc_tmp" "$cx_tmp"
+  else
+    rm -f "$cc_tmp" "$cx_tmp" 2>/dev/null
+    cc_json=$("${ccusage_cmd[@]}" daily --json "$@") || return
+    cx_json=$("${ccusage_codex_cmd[@]}" daily --json "$@") || return
+  fi
 
   {
     print -r -- "$cc_json"
@@ -221,7 +265,7 @@ function ccu() {
   ' |
     awk -F '\t' '
       BEGIN {
-        print "Date\tClaude Tokens\tClaude USD\tChatGPT Tokens\tChatGPT USD\tTotal Tokens\tTotal USD"
+        print "Date\tClaude Tokens\tClaude USD\tCodex Tokens\tCodex USD\tTotal Tokens\tTotal USD"
       }
       {
         printf "%s\t%d\t$%.2f\t%d\t$%.2f\t%d\t$%.2f\n", $1, $2, $3, $4, $5, $6, $7
