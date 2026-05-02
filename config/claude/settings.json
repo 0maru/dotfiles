@@ -193,12 +193,13 @@
   "autoMemoryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "showTurnDuration": true,
-  "teammateMode": "in-process",
-  "skipAutoPermissionPrompt": true,
-  "editMode": "vim",
   "theme": "dark-daltonized",
   "autoCompactEnabled": false,
+  "showTurnDuration": true,
+  "teammateMode": "in-process",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "editMode": "vim",
+  "preferredNotifChannel": "terminal_bell"
 }
