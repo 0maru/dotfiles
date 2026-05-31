@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(aerospace *)",
+      "mcp__serena",
+      "mcp__github",
+      "Read(/tmp)",
+      "Write(/tmp)",
+      "Read(~/.claude)",
+      "Read(~/.claude/skills/**)",
+      "Read(~/.config/claude/skills/**)"
+    ],
+    "deny": []
+  },
+  "model": "opus[1m]",
+  "sandbox": {
+    "enabled": false
+  }
+}
