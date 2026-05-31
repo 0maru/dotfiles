@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>nvim cheatsheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              "Inter",
+              "-apple-system",
+              "BlinkMacSystemFont",
+              "Hiragino Kaku Gothic ProN",
+              "Yu Gothic",
+              "sans-serif",
+            ],
+            mono: [
+              "JetBrains Mono",
+              "ui-monospace",
+              "SFMono-Regular",
+              "Menlo",
+              "monospace",
+            ],
+          },
+          colors: {
+            canvas: {
+              950: "#1c2128",
+              900: "#22272e",
+              800: "#2d333b",
+              700: "#373e47",
+              600: "#444c56",
+            },
+            ink: {
+              100: "#cdd9e5",
+              200: "#adbac7",
+              300: "#768390",
+              400: "#545d68",
+            },
+          },
+        },
+      },
+    };
+  </script>
+</head>
+
+<body class="min-h-screen select-none bg-canvas-900 font-sans text-ink-100 antialiased">
+  <div class="min-h-screen bg-[radial-gradient(circle_at_top,rgba(83,155,245,0.10),transparent_32%)]">
+    <header class="border-b border-canvas-700/90 bg-canvas-900/92 backdrop-blur">
+      <div class="mx-auto flex w-full max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 lg:px-6">
+        <div class="flex items-baseline gap-3">
+          <div class="font-mono text-base font-semibold text-white">
+            <span class="text-[#57ab5a]">n</span>vim
+          </div>
+          <div class="font-mono text-xs uppercase tracking-[0.18em] text-ink-300">
+            cheatsheet
+          </div>
+        </div>
+
+        <div
+          class="inline-flex items-center gap-2 rounded-full border border-canvas-600 bg-canvas-950/70 px-3 py-1 font-mono text-xs text-ink-200">
+          <span>leader</span>
+          <span
+            class="inline-flex items-center justify-center rounded-md border border-canvas-600 bg-canvas-800 px-2 py-1 text-xs leading-none text-ink-100">Space</span>
+          <span class="h-3 w-px bg-canvas-600"></span>
+          <span>move</span>
+          <span
+            class="inline-flex items-center justify-center rounded-md border border-canvas-600 bg-canvas-800 px-2 py-1 text-xs leading-none text-ink-100">hjkl</span>
+          <span class="h-3 w-px bg-canvas-600"></span>
+          <span>exit</span>
+          <span
+            class="inline-flex items-center justify-center rounded-md border border-canvas-600 bg-canvas-800 px-2 py-1 text-xs leading-none text-ink-100">jk</span>
+          <span class="h-3 w-px bg-canvas-600"></span>
+          <span>split</span>
+          <span
+            class="inline-flex items-center justify-center rounded-md border border-canvas-600 bg-canvas-800 px-2 py-1 text-xs leading-none text-ink-100">Space+s/v</span>
+        </div>
+
+        <div class="ml-auto flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-ink-300">
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#539bf5] ring-1 ring-black/25 ring-inset"></span>
+            <span>Normal</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#57ab5a] ring-1 ring-black/25 ring-inset"></span>
+            <span>Insert</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#986ee2] ring-1 ring-black/25 ring-inset"></span>
+            <span>Visual</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#daaa3f] ring-1 ring-black/25 ring-inset"></span>
+            <span>Command</span>
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#909dab] ring-1 ring-black/25 ring-inset"></span>
+            <span>Operator</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto flex w-full max-w-[1400px] flex-col px-4 pb-10 pt-5 lg:px-6">
+      <div id="bands" class="space-y-8"></div>
+    </main>
+  </div>
+
+  <aside id="tweaks"
+    class="fixed bottom-4 right-4 z-40 hidden w-[min(92vw,320px)] rounded-2xl border border-canvas-600 bg-canvas-950/95 p-4 shadow-2xl shadow-black/40 backdrop-blur">
+    <div class="font-mono text-xs uppercase tracking-[0.18em] text-ink-300">Tweaks</div>
+
+    <div class="mt-4">
+      <div class="mb-2 text-xs text-ink-200">表示する習熟度</div>
+      <div id="tw-levels" class="flex flex-wrap gap-2">
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="1" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#57ab5a]"></span>
+          <span>初級</span>
+        </button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="2" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#539bf5]"></span>
+          <span>中級</span>
+        </button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="3" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#986ee2]"></span>
+          <span>上級</span>
+        </button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-lv="4" type="button">
+          <span class="h-2 w-2 rounded-full bg-[#e5534b]"></span>
+          <span>さらに上</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <div class="mb-2 text-xs text-ink-200">密度</div>
+      <div id="tw-density" class="flex flex-wrap gap-2">
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-density="compact" type="button">Compact</button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-density="comfy" type="button">Comfy</button>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <div class="mb-2 text-xs text-ink-200">列数</div>
+      <div id="tw-cols" class="flex flex-wrap gap-2">
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-cols="2" type="button">2</button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-cols="3" type="button">3</button>
+        <button
+          class="tw-btn inline-flex items-center gap-2 rounded-xl border border-canvas-600 bg-canvas-800 px-3 py-2 font-mono text-xs text-ink-200 transition"
+          data-cols="4" type="button">4</button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    const TWEAK_DEFAULTS = {
+      levels: [1, 2, 3, 4],
+      density: "compact",
+      cols: 3,
+    };
+
+    const STORAGE_KEY = "nvim-cheat-state";
+    const STATE = {
+      levels: [...TWEAK_DEFAULTS.levels],
+      density: TWEAK_DEFAULTS.density,
+      cols: TWEAK_DEFAULTS.cols,
+    };
+  </script>
+  <script src="data.js"></script>
+  <script>
+    const data = window.CHEATSHEET;
+
+    const LEVELS = [
+      {lv: 1, num: "LV-01", title: "初級", sub: "毎日必ず使う基礎", accent: "#57ab5a", bg: "#1b2d21"},
+      {lv: 2, num: "LV-02", title: "中級", sub: "体に入れたい定番", accent: "#539bf5", bg: "#1b2a3d"},
+      {lv: 3, num: "LV-03", title: "上級", sub: "慣れてきたら活きる", accent: "#986ee2", bg: "#26223a"},
+      {lv: 4, num: "LV-04", title: "さらに上", sub: "コンボ・高度ジャンプ", accent: "#e5534b", bg: "#3a1f22"},
+      {lv: 0, num: "SETUP", title: "Setup", sub: "自動動作・見た目・プラグイン", accent: "#768390", bg: "#1c2128"},
+    ];
+
+    const MODE_BACKGROUNDS = {
+      N: "#539bf5",
+      I: "#57ab5a",
+      V: "#986ee2",
+      C: "#daaa3f",
+      O: "#909dab",
+      NV: "linear-gradient(90deg, #539bf5 50%, #986ee2 50%)",
+      OV: "linear-gradient(90deg, #909dab 50%, #986ee2 50%)",
+    };
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        if (Array.isArray(saved.levels)) {
+          STATE.levels = saved.levels
+            .map(Number)
+            .filter(lv => Number.isInteger(lv) && lv >= 1 && lv <= 4)
+            .sort((a, b) => a - b);
+        }
+        if (saved.density === "compact" || saved.density === "comfy") {
+          STATE.density = saved.density;
+        }
+        if ([2, 3, 4].includes(Number(saved.cols))) {
+          STATE.cols = Number(saved.cols);
+        }
+        if (STATE.levels.length === 0) {
+          STATE.levels = [...TWEAK_DEFAULTS.levels];
+        }
+      } catch (error) {
+        STATE.levels = [...TWEAK_DEFAULTS.levels];
+        STATE.density = TWEAK_DEFAULTS.density;
+        STATE.cols = TWEAK_DEFAULTS.cols;
+      }
+    }
+
+    function persistLocal() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+      } catch (error) { }
+    }
+
+    function persistEdits(edits) {
+      try {
+        window.parent.postMessage({type: "__edit_mode_set_keys", edits}, "*");
+      } catch (error) { }
+    }
+
+    function densityRowClass() {
+      return STATE.density === "comfy"
+        ? "px-4 py-3 text-sm leading-6"
+        : "px-4 py-2.5 text-sm leading-5";
+    }
+
+    function effectiveCols() {
+      if (window.innerWidth < 760) return 1;
+      if (window.innerWidth < 1180) return Math.min(STATE.cols, 2);
+      return STATE.cols;
+    }
+
+    function keyHtml(key, {cmd = false, staticKey = false} = {}) {
+      if (staticKey) {
+        return `<span class="inline-flex items-center rounded-md border border-dashed border-canvas-600 px-2 py-1 font-mono text-xs leading-none text-ink-200">${escapeHtml(key)}</span>`;
+      }
+      if (key === "→") {
+        return `<span class="px-0.5 font-mono text-xs text-ink-300">→</span>`;
+      }
+      return `<span class="inline-flex min-w-5 items-center justify-center whitespace-nowrap rounded-md border border-canvas-600 px-2 py-1 font-mono text-xs font-medium leading-none shadow-[0_1px_0_rgba(0,0,0,0.3)] ${cmd ? "bg-canvas-950 text-ink-200" : "bg-canvas-800 text-ink-100"}">${escapeHtml(key)}</span>`;
+    }
+
+    function renderItem(item, index) {
+      const cmd = item.mode === "C" || (item.keys[0] && /^:/.test(item.keys[0]));
+      const modeStyle = MODE_BACKGROUNDS[item.mode] || "#545d68";
+      const keys = item.keys.map(key => keyHtml(key, {cmd, staticKey: !!item.static})).join("");
+
+      return `
+        <div class="flex items-center gap-3 ${densityRowClass()}${index > 0 ? " border-t border-canvas-700/80" : ""}">
+          <div class="flex w-3 shrink-0 justify-center">
+            <span class="h-2 w-2 rounded-full ring-1 ring-black/25 ring-inset" style="background:${modeStyle}"></span>
+          </div>
+          <div class="flex min-w-0 flex-wrap items-center gap-1">${keys}</div>
+          <div class="min-w-0 flex-1 truncate text-sm text-ink-200">${escapeHtml(item.desc)}</div>
+        </div>
+      `;
+    }
+
+    function renderRichNote(note) {
+      const parts = [];
+      const regex = /`([^`]+)`/g;
+      let lastIndex = 0;
+      let match;
+
+      while ((match = regex.exec(note)) !== null) {
+        const plain = note.slice(lastIndex, match.index);
+        if (plain) parts.push(escapeHtml(plain));
+        parts.push(`<code class="rounded border border-canvas-600 bg-canvas-950/70 px-1.5 py-0.5 font-mono text-xs text-white">${escapeHtml(match[1])}</code>`);
+        lastIndex = regex.lastIndex;
+      }
+
+      const tail = note.slice(lastIndex);
+      if (tail) parts.push(escapeHtml(tail));
+
+      return parts.join("");
+    }
+
+    function renderNotes(notes) {
+      return `
+        <div class="px-4 py-3">
+          ${notes.map(note => `
+            <div class="flex gap-3 py-1.5 text-sm leading-6 text-ink-200">
+              <span class="font-mono text-ink-300">·</span>
+              <div>${renderRichNote(note)}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderPluginGroups(groups) {
+      return `
+        <div class="grid gap-4 px-4 py-4 md:grid-cols-2">
+          ${groups.map(group => `
+            <div class="space-y-2">
+              <div class="font-mono text-xs uppercase tracking-[0.14em] text-ink-300">${escapeHtml(group.label)}</div>
+              <div class="flex flex-wrap gap-2">
+                ${group.plugins.map(plugin => `<span class="inline-flex items-center rounded-full border border-canvas-600 bg-canvas-950/60 px-2.5 py-1 font-mono text-xs text-ink-100">${escapeHtml(plugin)}</span>`).join("")}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderSection(title, category, bodyHtml) {
+      return `
+        <section class="overflow-hidden rounded-2xl border border-canvas-700 bg-canvas-800/90">
+          <div class="flex items-start justify-between gap-4 border-b border-canvas-700 bg-canvas-950/65 px-4 py-3">
+            <div class="text-sm font-semibold text-white">${escapeHtml(title)}</div>
+            ${category ? `<div class="font-mono text-xs uppercase tracking-[0.14em] text-ink-300">${escapeHtml(category)}</div>` : ""}
+          </div>
+          ${bodyHtml}
+        </section>
+      `;
+    }
+
+    function collectKeyItems() {
+      const items = [];
+      data.tabs.forEach(tab => {
+        tab.sections.forEach(section => {
+          if (!section.items) return;
+          section.items.forEach(item => {
+            items.push({
+              ...item,
+              _category: tab.label,
+              _section: section.title,
+            });
+          });
+        });
+      });
+      return items;
+    }
+
+    function collectSectionOrder() {
+      const order = [];
+      data.tabs.forEach(tab => {
+        tab.sections.forEach(section => {
+          if (!section.items) return;
+          order.push({category: tab.label, section: section.title});
+        });
+      });
+      return order;
+    }
+
+    function renderLevelBand(level, keyItems, sectionOrder) {
+      const grouped = new Map();
+      keyItems.forEach(item => {
+        if ((item.lv || 0) !== level.lv) return;
+        const key = `${item._category}|${item._section}`;
+        if (!grouped.has(key)) {
+          grouped.set(key, {category: item._category, section: item._section, items: []});
+        }
+        grouped.get(key).items.push(item);
+      });
+
+      const ordered = sectionOrder
+        .map(entry => grouped.get(`${entry.category}|${entry.section}`))
+        .filter(Boolean);
+
+      const count = ordered.reduce((total, group) => total + group.items.length, 0);
+      if (count === 0) return "";
+
+      const gridStyle = `grid-template-columns: repeat(${effectiveCols()}, minmax(0, 1fr));`;
+      const sections = ordered.map(group => {
+        const body = group.items.map((item, index) => renderItem(item, index)).join("");
+        return renderSection(group.section, group.category, body);
+      }).join("");
+
+      return `
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-canvas-700 px-4 py-3" style="background:${level.bg}; border-left:4px solid ${level.accent};">
+            <span class="font-mono text-xs tracking-[0.16em] text-ink-300">${level.num}</span>
+            <span class="text-base font-semibold text-white">${escapeHtml(level.title)}</span>
+            <span class="font-mono text-xs text-ink-200">${escapeHtml(level.sub)}</span>
+            <span class="ml-auto font-mono text-xs text-ink-300">${count} keys</span>
+          </div>
+          <div class="grid gap-4" style="${gridStyle}">
+            ${sections}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSetupBand() {
+      const setup = LEVELS.find(level => level.lv === 0);
+      const setupTab = data.tabs.find(tab => tab.id === "setup");
+      if (!setup || !setupTab) return "";
+
+      const count = setupTab.sections.reduce((total, section) => {
+        if (section.notes) return total + section.notes.length;
+        if (section.groups) {
+          return total + section.groups.reduce((sum, group) => sum + group.plugins.length, 0);
+        }
+        return total;
+      }, 0);
+
+      const gridStyle = `grid-template-columns: repeat(${effectiveCols()}, minmax(0, 1fr));`;
+      const sections = setupTab.sections.map(section => {
+        const body = section.notes
+          ? renderNotes(section.notes)
+          : renderPluginGroups(section.groups || []);
+        return renderSection(section.title, "Setup", body);
+      }).join("");
+
+      return `
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-2xl border border-canvas-700 px-4 py-3" style="background:${setup.bg}; border-left:4px solid ${setup.accent};">
+            <span class="font-mono text-xs tracking-[0.16em] text-ink-300">${setup.num}</span>
+            <span class="text-base font-semibold text-white">${escapeHtml(setup.title)}</span>
+            <span class="font-mono text-xs text-ink-200">${escapeHtml(setup.sub)}</span>
+            <span class="ml-auto font-mono text-xs text-ink-300">${count} items</span>
+          </div>
+          <div class="grid gap-4" style="${gridStyle}">
+            ${sections}
+          </div>
+        </section>
+      `;
+    }
+
+    function render() {
+      const root = document.getElementById("bands");
+      const visibleLevels = new Set(STATE.levels);
+      const keyItems = collectKeyItems();
+      const sectionOrder = collectSectionOrder();
+
+      const html = LEVELS
+        .filter(level => level.lv !== 0 && visibleLevels.has(level.lv))
+        .map(level => renderLevelBand(level, keyItems, sectionOrder))
+        .join("") + renderSetupBand();
+
+      root.innerHTML = html;
+    }
+
+    function syncTweaksUI() {
+      document.querySelectorAll("#tw-levels .tw-btn").forEach(button => {
+        button.classList.toggle("border-slate-400", STATE.levels.includes(Number(button.dataset.lv)));
+        button.classList.toggle("bg-canvas-700", STATE.levels.includes(Number(button.dataset.lv)));
+        button.classList.toggle("text-white", STATE.levels.includes(Number(button.dataset.lv)));
+      });
+
+      document.querySelectorAll("#tw-density .tw-btn").forEach(button => {
+        const active = button.dataset.density === STATE.density;
+        button.classList.toggle("border-slate-400", active);
+        button.classList.toggle("bg-canvas-700", active);
+        button.classList.toggle("text-white", active);
+      });
+
+      document.querySelectorAll("#tw-cols .tw-btn").forEach(button => {
+        const active = Number(button.dataset.cols) === STATE.cols;
+        button.classList.toggle("border-slate-400", active);
+        button.classList.toggle("bg-canvas-700", active);
+        button.classList.toggle("text-white", active);
+      });
+    }
+
+    function wireTweaks() {
+      document.querySelectorAll("#tw-levels .tw-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          const level = Number(button.dataset.lv);
+          const index = STATE.levels.indexOf(level);
+          if (index >= 0) {
+            STATE.levels.splice(index, 1);
+          } else {
+            STATE.levels.push(level);
+          }
+          STATE.levels.sort((a, b) => a - b);
+          if (STATE.levels.length === 0) {
+            STATE.levels = [...TWEAK_DEFAULTS.levels];
+          }
+          persistLocal();
+          persistEdits({levels: STATE.levels});
+          syncTweaksUI();
+          render();
+        });
+      });
+
+      document.querySelectorAll("#tw-density .tw-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          STATE.density = button.dataset.density;
+          persistLocal();
+          persistEdits({density: STATE.density});
+          syncTweaksUI();
+          render();
+        });
+      });
+
+      document.querySelectorAll("#tw-cols .tw-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          STATE.cols = Number(button.dataset.cols);
+          persistLocal();
+          persistEdits({cols: STATE.cols});
+          syncTweaksUI();
+          render();
+        });
+      });
+    }
+
+    function wireResize() {
+      let timer = null;
+      window.addEventListener("resize", () => {
+        clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          render();
+        }, 100);
+      });
+    }
+
+    window.addEventListener("message", event => {
+      const message = event.data;
+      if (!message || typeof message !== "object") return;
+
+      if (message.type === "__activate_edit_mode") {
+        document.getElementById("tweaks").classList.remove("hidden");
+      } else if (message.type === "__deactivate_edit_mode") {
+        document.getElementById("tweaks").classList.add("hidden");
+      }
+    });
+
+    loadState();
+    render();
+    syncTweaksUI();
+    wireTweaks();
+    wireResize();
+
+    try {
+      window.parent.postMessage({type: "__edit_mode_available"}, "*");
+    } catch (error) { }
+  </script>
+</body>
+
+</html>

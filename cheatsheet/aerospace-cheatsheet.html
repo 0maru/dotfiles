@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AeroSpace Cheatsheet - 0maru's dotfiles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    padding: 24px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #cba6f7;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #a6adc8;
+    margin-bottom: 8px;
+  }
+
+  .leader-info {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #a6adc8;
+    margin-bottom: 24px;
+  }
+
+  .leader-info kbd.leader {
+    background: linear-gradient(135deg, rgba(203,166,247,0.25), rgba(180,190,254,0.25));
+    border-color: #cba6f7;
+    color: #cba6f7;
+  }
+
+  /* Mode cards */
+  .modes-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    justify-content: center;
+  }
+
+  .mode-card {
+    background: #181825;
+    border: 1px solid #313244;
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+  }
+
+  .mode-card .mode-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .mode-card .mode-key { font-size: 0.78rem; color: #a6adc8; }
+
+  /* Stage headers */
+  .stage-divider {
+    max-width: 1200px;
+    margin: 32px auto 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #313244;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stage-divider:first-of-type { margin-top: 0; }
+
+  .stage-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stage-1 .stage-num { background: rgba(166,227,161,0.15); color: #a6e3a1; }
+  .stage-2 .stage-num { background: rgba(137,180,250,0.15); color: #89b4fa; }
+  .stage-3 .stage-num { background: rgba(203,166,247,0.15); color: #cba6f7; }
+  .stage-extra .stage-num { background: rgba(250,179,135,0.15); color: #fab387; }
+
+  .stage-divider h2 { font-size: 1.1rem; }
+  .stage-1 h2 { color: #a6e3a1; }
+  .stage-2 h2 { color: #89b4fa; }
+  .stage-3 h2 { color: #cba6f7; }
+  .stage-extra h2 { color: #fab387; }
+
+  .stage-desc { font-size: 0.8rem; color: #a6adc8; margin-left: auto; }
+
+  /* Card grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #181825;
+    border: 1px solid #313244;
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: rgba(203,166,247,0.3); }
+
+  .card h3 {
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #313244;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stage-1-cards .card h3 { color: #a6e3a1; }
+  .stage-2-cards .card h3 { color: #89b4fa; }
+  .stage-3-cards .card h3 { color: #cba6f7; }
+  .stage-extra-cards .card h3 { color: #fab387; }
+
+  .icon { font-size: 1.05rem; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; }
+  tr { border-bottom: 1px solid #313244; }
+  tr:last-child { border-bottom: none; }
+  tr:hover { background: rgba(205,214,244,0.02); }
+
+  td {
+    padding: 4px 0;
+    font-size: 0.84rem;
+    vertical-align: top;
+  }
+
+  td:first-child {
+    width: 44%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  td:last-child { color: #a6adc8; }
+
+  /* Keys */
+  kbd {
+    background: #313244;
+    border: 1px solid #45475a;
+    border-bottom: 2px solid #585b70;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+    font-size: 0.82rem;
+    color: #cdd6f4;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 1px 0;
+    line-height: 1.5;
+  }
+
+  kbd.leader {
+    background: linear-gradient(135deg, rgba(203,166,247,0.2), rgba(180,190,254,0.2));
+    border-color: #cba6f7;
+    color: #cba6f7;
+  }
+
+  .sep { color: #585b70; margin: 0 2px; font-size: 0.75rem; }
+
+  /* Tips */
+  .tip {
+    background: rgba(249,226,175,0.06);
+    border-left: 3px solid #f9e2af;
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: #a6adc8;
+  }
+
+  .tip strong { color: #f9e2af; }
+
+  /* Mode badges */
+  .m {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 0px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-right: 3px;
+    vertical-align: middle;
+  }
+
+  .mm { background: #89b4fa; color: #1e1e2e; }  /* Main */
+  .msv { background: #f9e2af; color: #1e1e2e; }  /* Service */
+
+  /* Workspace badge */
+  .ws {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-left: 3px;
+    vertical-align: middle;
+  }
+
+  .ws-main { background: rgba(166,227,161,0.15); color: #a6e3a1; }
+  .ws-sub { background: rgba(137,180,250,0.15); color: #89b4fa; }
+  .ws-ipad { background: rgba(203,166,247,0.15); color: #cba6f7; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #313244;
+    font-size: 0.78rem;
+    color: #585b70;
+  }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    body { padding: 14px; }
+    td:first-child { width: auto; }
+  }
+
+  @media print {
+    body { background: #fff; color: #1e1e2e; padding: 12px; }
+    .card { border: 1px solid #ccc; background: #fafafa; }
+    .card h3 { color: #333 !important; border-color: #ddd; }
+    .stage-divider { border-color: #ccc; }
+    .stage-divider h2 { color: #333 !important; }
+    kbd { background: #eee; border-color: #ccc; color: #333; }
+    kbd.leader { background: #e8e0f0; color: #7c3aed; }
+    .m { color: #fff !important; }
+    .ws { border: 1px solid #ccc; }
+    .mode-card { background: #f5f5f5; border-color: #ddd; }
+    .tip { border-left-width: 2px; }
+    .footer { display: none; }
+    tr:hover { background: none; }
+  }
+</style>
+</head>
+<body>
+
+<h1>AeroSpace Cheatsheet</h1>
+<p class="subtitle">0maru's dotfiles &mdash; タイル型ウィンドウマネージャー for macOS</p>
+<p class="leader-info"><kbd class="leader">Alt</kbd> = メインモディファイア &nbsp;|&nbsp; <kbd class="leader">Alt+Shift+;</kbd> で Service モードへ</p>
+
+<!-- Modes -->
+<div class="modes-row">
+  <div class="mode-card">
+    <div class="mode-name" style="color:#89b4fa">MAIN</div>
+    <div class="mode-key">通常操作モード</div>
+  </div>
+  <div class="mode-card">
+    <div class="mode-name" style="color:#f9e2af">SERVICE</div>
+    <div class="mode-key"><kbd>Alt+Shift+;</kbd> で入る</div>
+  </div>
+</div>
+
+<!-- ===== Stage 1: フォーカス・移動 ===== -->
+<div class="stage-divider stage-1">
+  <span class="stage-num">Stage 1</span>
+  <h2>フォーカス・ウィンドウ移動</h2>
+  <span class="stage-desc">ウィンドウ間の移動と配置</span>
+</div>
+
+<div class="grid stage-1-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#127939;</span> フォーカス移動（hjkl）</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+H</kbd></td><td>左のウィンドウへ</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+J</kbd></td><td>下のウィンドウへ</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+K</kbd></td><td>上のウィンドウへ</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+L</kbd></td><td>右のウィンドウへ</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128230;</span> ウィンドウ移動</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+H</kbd></td><td>ウィンドウを左へ</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+J</kbd></td><td>ウィンドウを下へ</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+K</kbd></td><td>ウィンドウを上へ</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+L</kbd></td><td>ウィンドウを右へ</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128195;</span> レイアウト</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+/</kbd></td><td>タイル切り替え（horizontal / vertical）</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+,</kbd></td><td>アコーディオン切り替え</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#8596;&#65039;</span> リサイズ</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+-</kbd></td><td>スマートリサイズ -50</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+=</kbd></td><td>スマートリサイズ +50</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===== Stage 2: ワークスペース ===== -->
+<div class="stage-divider stage-2">
+  <span class="stage-num">Stage 2</span>
+  <h2>ワークスペース</h2>
+  <span class="stage-desc">数字・アルファベットで素早く切り替え</span>
+</div>
+
+<div class="grid stage-2-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#128194;</span> ワークスペース切り替え</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+1</kbd>〜<kbd>9</kbd></td><td>ワークスペース 1〜9</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+A</kbd>〜<kbd>Z</kbd></td><td>ワークスペース A〜Z</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Tab</kbd></td><td>直前のワークスペースに戻る</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> よく使うワークスペース: <kbd>T</kbd>=Terminal <kbd>E</kbd>=Editor <kbd>B</kbd>=Browser <kbd>S</kbd>=Slack <kbd>X</kbd>=Claude Desktop</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128228;</span> ウィンドウをワークスペースへ移動</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+1</kbd>〜<kbd>9</kbd></td><td>ワークスペース 1〜9 へ移動</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+A</kbd>〜<kbd>Z</kbd></td><td>ワークスペース A〜Z へ移動</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+Tab</kbd></td><td>ワークスペースを次のモニターへ</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128421;</span> モニター</h3>
+    <table>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+&#8592;</kbd></td><td>左のモニターにフォーカス</td></tr>
+      <tr><td><span class="m mm">M</span> <kbd>Alt+Shift+&#8594;</kbd></td><td>右のモニターにフォーカス</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===== Stage 3: ワークスペース配置・Service モード ===== -->
+<div class="stage-divider stage-3">
+  <span class="stage-num">Stage 3</span>
+  <h2>ワークスペース配置・Service モード</h2>
+  <span class="stage-desc">モニター割り当てとサービスコマンド</span>
+</div>
+
+<div class="grid stage-3-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#9879;&#65039;</span> Service モード</h3>
+    <table>
+      <tr><td><span class="m msv">SV</span> <kbd>Esc</kbd></td><td>設定リロード &amp; Main に戻る</td></tr>
+      <tr><td><span class="m msv">SV</span> <kbd>r</kbd></td><td>レイアウトをリセット（flatten）</td></tr>
+      <tr><td><span class="m msv">SV</span> <kbd>f</kbd></td><td>floating / tiling 切り替え</td></tr>
+      <tr><td><span class="m msv">SV</span> <kbd>Backspace</kbd></td><td>現在以外のウィンドウを全て閉じる</td></tr>
+      <tr><td><span class="m msv">SV</span> <kbd>Alt+Shift+H/J/K/L</kbd></td><td>指定方向のウィンドウと結合（join-with）</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128421;</span> モニター別ワークスペース配置</h3>
+    <table>
+      <tr><td><span class="ws ws-main">MAIN</span> <kbd>1</kbd>〜<kbd>9</kbd> <kbd>E</kbd> <kbd>S</kbd></td><td>メインモニター（開発系）</td></tr>
+      <tr><td><span class="ws ws-sub">SUB</span> <kbd>A</kbd>〜<kbd>G</kbd></td><td>サブモニター（参照・調べ物系）</td></tr>
+      <tr><td><span class="ws ws-ipad">iPad</span> <kbd>T</kbd> <kbd>X</kbd> <kbd>Z</kbd> <kbd>I</kbd> <kbd>P</kbd></td><td>iPad / 3台目（並列タスク）</td></tr>
+    </table>
+    <div class="tip"><strong>&#128161;</strong> iPad 未接続時はメインモニターへフォールバック</div>
+  </div>
+
+</div>
+
+<!-- ===== Extra: アプリ自動配置ルール ===== -->
+<div class="stage-divider stage-extra">
+  <span class="stage-num">Rules</span>
+  <h2>アプリ自動配置ルール</h2>
+  <span class="stage-desc">on-window-detected による自動振り分け</span>
+</div>
+
+<div class="grid stage-extra-cards">
+
+  <div class="card">
+    <h3><span class="icon">&#128187;</span> 開発ツール</h3>
+    <table>
+      <tr><td>VS Code</td><td>&#8594; ワークスペース <kbd>E</kbd> (起動時のみ)</td></tr>
+      <tr><td>WezTerm</td><td>&#8594; ワークスペース <kbd>T</kbd> + floating</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#127760;</span> ブラウザ</h3>
+    <table>
+      <tr><td>Arc</td><td>&#8594; ワークスペース <kbd>B</kbd></td></tr>
+      <tr><td>Chrome Canary</td><td>&#8594; ワークスペース <kbd>B</kbd></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#128172;</span> コミュニケーション</h3>
+    <table>
+      <tr><td>Slack</td><td>&#8594; ワークスペース <kbd>S</kbd></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">&#129302;</span> AI / その他</h3>
+    <table>
+      <tr><td>Claude Desktop</td><td>&#8594; ワークスペース <kbd>X</kbd> + floating</td></tr>
+      <tr><td>Codex</td><td>&#8594; ワークスペース <kbd>Z</kbd> + floating</td></tr>
+      <tr><td>1Password</td><td>&#8594; floating のみ</td></tr>
+      <tr><td>Finder</td><td>&#8594; floating のみ</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<p class="footer">
+  0maru's dotfiles &mdash; AeroSpace Cheatsheet &mdash; Generated from config/aerospace/aerospace.toml
+</p>
+
+</body>
+</html>
