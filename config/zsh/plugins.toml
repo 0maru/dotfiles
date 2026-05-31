@@ -1,0 +1,33 @@
+shell = "zsh"
+
+apply = ["defer"]
+
+[templates]
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+apply = ["source"]
+
+[plugins.lazy]
+local = "~/.config/zsh"
+use = ["lazy.zsh"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-git-prompt]
+github = "olivierverdier/zsh-git-prompt"
+apply = ["defer"]
+
+[plugins.orbstack]
+inline = "source ~/.orbstack/shell/init.zsh 2>/dev/null || :"
