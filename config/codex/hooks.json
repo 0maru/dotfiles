@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex session-start"
+            "command": "/bin/bash \"$HOME/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh\" codex session-start"
           }
         ]
       }
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex user-prompt-submit"
+            "command": "/bin/bash \"$HOME/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh\" codex user-prompt-submit"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex activity-log"
+            "command": "/bin/bash \"$HOME/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh\" codex activity-log"
           }
         ]
       }
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/4maru/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh codex stop"
+            "command": "/bin/bash \"$HOME/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh\" codex stop"
           }
         ]
       }
