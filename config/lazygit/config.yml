@@ -1,0 +1,56 @@
+gui:
+  showIcons: true
+  theme:
+    activeBorderColor:
+      - '#89b4fa'
+      - bold
+    inactiveBorderColor:
+      - '#a6adc8'
+    optionsTextColor:
+      - '#89b4fa'
+    selectedLineBgColor:
+      - '#313244'
+    cherryPickedCommitBgColor:
+      - '#45475a'
+    cherryPickedCommitFgColor:
+      - '#89b4fa'
+    unstagedChangesColor:
+      - '#f38ba8'
+    defaultFgColor:
+      - '#cdd6f4'
+    searchingActiveBorderColor:
+      - '#f9e2af'
+    authorColors:
+      '*': '#b4befe'
+git:
+  branchLogCmd: "git log --graph --color=always --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' {{branchName}}"
+  allBranchesLogCmds:
+    - "git log --graph --all --color=always --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
+customCommands:
+  # [CTRL+G] Generate commit message with Claude AI
+  - key: "<c-g>"
+    context: "files"
+    description: "Generate commit message with Claude AI"
+    command: |
+      MSG=$(git diff --cached | claude --no-session-persistence --print --model haiku "Generate a single-line commit message in Conventional Commits format for the following diff. Output only the commit message, nothing else.") && git commit -e -m "$MSG"
+    output: terminal
+  # [CTRL+F] Search commits by keyword
+  - key: "<c-f>"
+    context: "commits"
+    description: "Search commits"
+    prompts:
+      - type: "input"
+        title: "Search pattern:"
+        key: "Pattern"
+      - type: "menuFromCommand"
+        title: "Search results"
+        key: "Commit"
+        command: "git log --all --oneline --grep='{{.Form.Pattern}}' --color=always --pretty='%Cred%h%Creset %s %Cgreen(%cr)%Creset'"
+        filter: '(?P<hash>[0-9a-f]+) (?P<description>.*)'
+        valueFormat: '{{ .hash }}'
+        labelFormat: '{{ .hash | green }} {{ .description }}'
+    command: "git show --color=always {{.Form.Commit}} | delta --dark --paging=always"
+    output: terminal
