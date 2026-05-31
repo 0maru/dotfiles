@@ -1,0 +1,13 @@
+# Dart / Flutter の日常的な検証とツール実行は自動で許可する。
+prefix_rule(
+    pattern = ["dart"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["flutter"],
+    decision = "allow",
+)
+prefix_rule(
+    pattern = ["melos"],
+    decision = "allow",
+)

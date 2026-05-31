@@ -1,0 +1,74 @@
+model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+approvals_reviewer = "auto_review"
+model_reasoning_summary = "none"
+personality = "pragmatic"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+allow_login_shell = false
+
+[tools]
+web_search = true
+
+[sandbox_workspace_write]
+network_access = true
+exclude_tmpdir_env_var = true
+exclude_slash_tmp = true
+
+[agents]
+max_threads = 6
+max_depth = 1
+
+[tui]
+status_line = [
+  "model-with-reasoning",
+  "project-root",
+  "context-remaining",
+  "git-branch",
+  "five-hour-limit",
+  "weekly-limit",
+]
+animations = true
+notifications = true
+
+
+[features]
+hooks = true
+multi_agent = true
+goals = true
+memories = false
+
+[[skills.config]]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."browser-use@openai-bundled"]
+enabled = true
+
+[mcp_servers.serena]
+startup_timeout_sec = 15
+command = "uvx"
+args = [
+  "--from",
+  "git+https://github.com/oraios/serena",
+  "serena",
+  "start-mcp-server",
+  "--context",
+  "codex",
+  "--enable-web-dashboard",
+  "false",
+  "--project-from-cwd",
+]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@latest"]
+
+[mcp_servers.atlassian]
+enabled = true
+url = "https://mcp.atlassian.com/v1/sse"

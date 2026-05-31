@@ -1,0 +1,6 @@
+# 全体共通で危険な操作は自動実行させない。
+prefix_rule(
+    pattern = ["rm", "-rf"],
+    decision = "forbidden",
+    justification = "再帰削除は手動で実行する。",
+)
