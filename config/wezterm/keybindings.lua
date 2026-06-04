@@ -276,6 +276,42 @@ local keys = {
       pane:activate()
     end),
   },
+  -- 5paneレイアウトを一括作成し、各ペインでツールを起動
+  -- 左: codex / 左中: codex / 中央: nvim / 右上: claude / 右下: shell
+  {
+    key = 't',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(window, pane)
+      local cwd_url = pane:get_current_working_dir()
+      local cwd = cwd_url and cwd_url.path or nil
+      -- 横幅は左から 2:2:4:2。残り領域を順に切り出して比率を作る。
+      local second_pane = pane:split {
+        direction = 'Right',
+        size = 0.8,
+        cwd = cwd,
+        args = { SHELL, '-lic', 'codex' },
+      }
+      local wide_pane = second_pane:split {
+        direction = 'Right',
+        size = 0.75,
+        cwd = cwd,
+        args = { SHELL, '-lic', 'nvim .' },
+      }
+      local right_top_pane = wide_pane:split {
+        direction = 'Right',
+        size = 1 / 3,
+        cwd = cwd,
+        args = { SHELL, '-lic', 'claude' },
+      }
+      right_top_pane:split {
+        direction = 'Bottom',
+        size = 0.4,
+        cwd = cwd,
+      }
+      pane:send_text('codex\n')
+      pane:activate()
+    end),
+  },
 }
 
 -- CMD+数字キーでタブを直接切り替え（CMD+1〜9 → タブ1〜9）
