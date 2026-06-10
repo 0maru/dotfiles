@@ -1,62 +1,88 @@
-# dotfiles
+# FlowTakt
 
-## Installing
+AI-era workflow intelligence for developers.
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/0maru/dotfiles/main/install.sh)"
+FlowTakt is a local-first workflow tracker that connects work activity, AI tool usage, GitHub pull request flow, Jira context, and daily notes to help developers understand and improve how work actually gets done.
+
+## Why FlowTakt
+
+Modern development work is no longer only about time spent in an editor. Developers move between code, AI agents, pull requests, Jira tickets, Slack conversations, documentation, CI failures, and daily reporting.
+
+Traditional time trackers can show where time went, but they rarely explain how the work flowed or where the process can improve.
+
+FlowTakt aims to answer questions such as:
+
+- Where did my work time actually go today?
+- Which tasks were AI-assisted?
+- Did AI usage lead to commits, pull requests, reviews, or resolved blockers?
+- Where did I get stuck repeatedly?
+- Which parts of the development flow create waiting time or context switching?
+- Can my daily report be generated from what actually happened?
+
+## Product principles
+
+- Local-first by default.
+- User-owned data and explicit sharing.
+- No employee surveillance.
+- No screenshots by default.
+- Raw prompts are not stored by default.
+- AI analysis uses summarized and redacted data whenever possible.
+- The product should improve workflows, not rank individuals.
+
+## Initial target
+
+The first version targets macOS.
+
+- Native macOS menu bar app.
+- SwiftUI for UI.
+- AppKit and macOS APIs for activity collection.
+- Local SQLite storage.
+- ccusage import for AI tool usage.
+- Git repository and branch detection.
+- Jira key extraction from branches, window titles, notes, and pull requests.
+- Daily Markdown report generation.
+
+## Future scope
+
+- GitHub pull request flow analysis.
+- Jira integration.
+- Team-level aggregated reports.
+- Cloud sync for shared workspaces.
+- AI workflow improvement reports.
+- Optional short-lived investigation mode for deeper analysis.
+
+## Repository layout
+
+```text
+flowtakt/
+  README.md
+  docs/
+    vision.md
+    architecture.md
+    mvp.md
+    data-model.md
+    ai-usage-tracking.md
+    privacy-and-sharing.md
+    roadmap.md
+    adr/
+      0001-native-macos-first.md
+      0002-event-schema-is-the-boundary.md
+      0003-local-first-by-default.md
 ```
 
-## ツールの更新
+The Xcode project will be added later by the project owner.
 
-ツールは `nixpkgs-unstable` から入り、バージョンは `flake.lock` にピン留めされています（パッケージ一覧は `nix/home.nix` の `home.packages`）。更新は「flake input の更新 → 再適用」の流れで行います。
+## Non-goals for the first version
 
-```bash
-# 1. flake input を更新（nixpkgs / home-manager / nix-darwin の lock を最新に）
-nix flake update
+- Cross-platform desktop support.
+- Team administration.
+- Screenshot capture.
+- Browser extension tracking.
+- Full Jira or GitHub automation.
+- Cloud sync.
+- Raw prompt collection.
+- Employee productivity scoring.
 
-# 2. 差分を確認（どの input がどこまで上がったか）
-git diff flake.lock
+## License
 
-# 3. 適用（scripts/setup-nix.sh と同じコマンド）
-sudo nix run .#darwin-rebuild -- switch --flake ".#$USER"
-
-# 4. 問題なければコミット
-git add flake.lock && git commit -m "chore: update flake inputs"
-```
-
-### 補足
-
-- **個別更新**: 全部上げると差分の切り分けが難しくなるため、`nix flake update nixpkgs` のように input 単位で上げることもできます。
-- **ロールバック**: `darwin-rebuild` は世代管理されるため、不調なら `darwin-rebuild --rollback`、または `flake.lock` を `git revert` して再適用すれば戻せます。
-- **頻度**: unstable 追従なので週1〜隔週程度が目安です。
-
-## Zsh ファイル構成
-
-`config/zsh/` 内のファイルは役割ごとに分かれています。新しい設定を追加する際は以下の基準で配置先を決めてください。
-
-### 読み込み順
-
-```
-.zshenv → .zshrc → nonlazy.zsh（即時）
-                  → lazy.zsh（zsh-defer で遅延）
-                  → local.zsh（最後）
-```
-
-### 各ファイルの役割
-
-| ファイル | 役割 | 追加する設定の例 |
-|---|---|---|
-| `.zshenv` | 環境変数（全シェルで必要なもの） | `XDG_*`, `LANG`, `EDITOR`, `SSH_AUTH_SOCK` |
-| `.zshrc` | シェルの初期化 | `eval "$(ツール init zsh)"`, `setopt`, `compinit` |
-| `nonlazy.zsh` | PATH 設定 | `export PATH="...:$PATH"` |
-| `lazy.zsh` | エイリアス・関数・キーバインド | `alias`, `function`, `bindkey` |
-| `local.zsh` | マシン固有の設定（git 管理外） | 仕事用トークン、社内ツールの PATH、環境別エイリアス |
-| `plugins.toml` | sheldon プラグイン定義 | zsh プラグインの追加・削除 |
-
-### 判断フロー
-
-1. **非インタラクティブシェル（スクリプト実行時）でも必要？** → `.zshenv`
-2. **PATH の追加？** → `nonlazy.zsh`
-3. **ツールの初期化（eval）や setopt？** → `.zshrc`
-4. **エイリアス・関数・キーバインド？** → `lazy.zsh`
-5. **このマシンだけの設定？** → `local.zsh`
+TBD.
