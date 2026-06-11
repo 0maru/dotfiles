@@ -15,7 +15,6 @@
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
   },
-  "model": "fable",
   "permissions": {
     "allow": [
       "Bash(git *)",
