@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  echo "Usage: update-playwright [browser ...]"
+  echo
+  echo "Default browser: chromium"
+  exit 0
+fi
+
+browsers=("$@")
+if [ "${#browsers[@]}" -eq 0 ]; then
+  browsers=(chromium)
+fi
+
+global_bin_dir="${PNPM_GLOBAL_BIN_DIR:-$HOME/.local/bin}"
+mkdir -p "$global_bin_dir"
+
+pnpm \
+  --config.minimum-release-age=0 \
+  --config.global-bin-dir="$global_bin_dir" \
+  add -g playwright@latest
+
+export PATH="$global_bin_dir:$PATH"
+playwright install "${browsers[@]}"
+playwright --version

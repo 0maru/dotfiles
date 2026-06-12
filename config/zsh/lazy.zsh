@@ -124,17 +124,4 @@ function run_codex() {
 zle -N run_codex
 bindkey 'z;' run_codex
 
-# AI 操作用の Playwright。プロジェクト側の Playwright とは分離して使う。
-function pw-ai() {
-  pnpm --dir "$HOME/workspaces/github.com/0maru/dotfiles/tools/playwright-ai" exec playwright "$@"
-}
-
-function pw-ai-update() {
-  (
-    cd "$HOME/workspaces/github.com/0maru/dotfiles/tools/playwright-ai" &&
-      pnpm up playwright@latest &&
-      pnpm exec playwright install chromium
-  )
-}
-
 alias ccu='bunx ccusage@latest'

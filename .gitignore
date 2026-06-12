@@ -42,6 +42,9 @@ settings.local.json
 /skills/
 /config/codex/skills/
 
+# Playwright は AI 操作用の global CLI として管理する
+/tools/playwright-ai/
+
 config/claude/*
 !config/claude/CLAUDE.md
 !config/claude/commands/

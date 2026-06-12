@@ -7,8 +7,12 @@ source "$(dirname "$0")/preset.sh"
 mkdir -p \
   "$XDG_CONFIG_HOME" \
   "$XDG_CONFIG_HOME/pnpm" \
+  "$HOME/.local/bin" \
   "$HOME/.claude" \
   "$HOME/.codex"
+
+# AI 操作用のグローバル Playwright 更新コマンド
+ln -sfv "$SCRIPTS_DIR/update-playwright" "$HOME/.local/bin/update-playwright"
 
 # リポジトリの config ディレクトリにあるファイルを XDG_CONFIG_HOME にシンボリックリンクを貼る
 for config_path in "$REPO_DIR"/config/*; do
