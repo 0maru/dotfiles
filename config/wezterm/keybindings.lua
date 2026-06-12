@@ -154,6 +154,53 @@ local function create_grid_layout(columns, rows)
   end)
 end
 
+-- 現在ペインを起点に等分割グリッドを作成し、指定位置以外で同じコマンドを起動する
+local function create_grid_layout_with_command(columns, rows, command, should_skip)
+  return wezterm.action_callback(function(window, pane)
+    local cwd_url = pane:get_current_working_dir()
+    local cwd = cwd_url and cwd_url.path or nil
+    local column_panes = { pane }
+    local current_column = pane
+
+    local function command_args(column, row)
+      if should_skip and should_skip(column, row) then
+        return nil
+      end
+      return { SHELL, '-lic', command }
+    end
+
+    for i = 1, columns - 1 do
+      local remaining_columns = columns - i + 1
+      current_column = current_column:split {
+        direction = 'Right',
+        size = (remaining_columns - 1) / remaining_columns,
+        cwd = cwd,
+        args = command_args(i + 1, 1),
+      }
+      table.insert(column_panes, current_column)
+    end
+
+    for column, column_pane in ipairs(column_panes) do
+      local current_row = column_pane
+      for i = 1, rows - 1 do
+        local row = i + 1
+        local remaining_rows = rows - i + 1
+        current_row = current_row:split {
+          direction = 'Bottom',
+          size = (remaining_rows - 1) / remaining_rows,
+          cwd = cwd,
+          args = command_args(column, row),
+        }
+      end
+    end
+
+    if command_args(1, 1) then
+      pane:send_text(command .. '\n')
+    end
+    pane:activate()
+  end)
+end
+
 ---------------------------------------------------------------
 -- 通常キーバインド
 ---------------------------------------------------------------
@@ -190,6 +237,14 @@ local keys = {
   { key = 'z',     mods = 'LEADER',      action = spawn_horizontal_panes('codex', 6) },
   -- 横6分割で Claude Code を6個起動
   { key = 'x',     mods = 'LEADER',      action = spawn_horizontal_panes('claude --permission-mode auto', 6) },
+  -- 8分割して右下以外で Claude Code を起動
+  {
+    key = 'w',
+    mods = 'LEADER',
+    action = create_grid_layout_with_command(4, 2, 'claude --permission-mode auto', function(column, row)
+      return column == 4 and row == 2
+    end),
+  },
   -- === コピーモード（Vim風テキスト選択） ===
   { key = '}',     mods = 'LEADER',      action = act.ActivateCopyMode },
 
