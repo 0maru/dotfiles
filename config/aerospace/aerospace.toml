@@ -228,7 +228,8 @@ alt-shift-p = 'move-node-to-workspace P'
 alt-shift-q = 'move-node-to-workspace Q'
 alt-shift-r = 'move-node-to-workspace R'
 alt-shift-s = 'move-node-to-workspace S'
-alt-shift-t = 'move-node-to-workspace T'
+# T は WezTerm 専用にするため、手動移動は無効化する。
+# alt-shift-t = 'move-node-to-workspace T'
 alt-shift-u = 'move-node-to-workspace U'
 alt-shift-v = 'move-node-to-workspace V'
 alt-shift-w = 'move-node-to-workspace W'
@@ -325,6 +326,7 @@ run = 'move-node-to-workspace R'
 # -- Floating のみ（ワークスペース指定なし） --
 [[on-window-detected]]
 if.app-id = 'com.1password.1password'
+check-further-callbacks = true
 run = 'layout floating'
 
 [[on-window-detected]]
@@ -337,8 +339,19 @@ run = ['move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Preview'
+check-further-callbacks = true
 run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.ActivityMonitor'
 run = ['move-node-to-workspace B', 'layout floating']
+
+[[on-window-detected]]
+if.workspace = 'T'
+if.app-name-regex-substring = '^(?!WezTerm$).+'
+run = 'move-node-to-workspace C'
