@@ -12,6 +12,7 @@ local M = {}
 local SHELL = os.getenv('SHELL') or '/bin/zsh'
 -- オーバーレイペインの背景色（GitHub Dark #0d1117 と区別しやすい暗めネイビー）
 local OVERLAY_BG = '#303446'
+local WIDE_WINDOW_PIXEL_WIDTH = 2800
 
 ---------------------------------------------------------------
 -- ヘルパー関数
@@ -157,20 +158,22 @@ end
 -- 現在ペインを起点に等分割グリッドを作成し、指定位置以外で同じコマンドを起動する
 local function create_grid_layout_with_command(columns, rows, command, should_skip)
   return wezterm.action_callback(function(window, pane)
+    local resolved_columns = type(columns) == 'function' and columns(window, pane) or columns
+    local resolved_rows = type(rows) == 'function' and rows(window, pane) or rows
     local cwd_url = pane:get_current_working_dir()
     local cwd = cwd_url and cwd_url.path or nil
     local column_panes = { pane }
     local current_column = pane
 
     local function command_args(column, row)
-      if should_skip and should_skip(column, row) then
+      if should_skip and should_skip(column, row, resolved_columns, resolved_rows) then
         return nil
       end
       return { SHELL, '-lic', command }
     end
 
-    for i = 1, columns - 1 do
-      local remaining_columns = columns - i + 1
+    for i = 1, resolved_columns - 1 do
+      local remaining_columns = resolved_columns - i + 1
       current_column = current_column:split {
         direction = 'Right',
         size = (remaining_columns - 1) / remaining_columns,
@@ -182,9 +185,9 @@ local function create_grid_layout_with_command(columns, rows, command, should_sk
 
     for column, column_pane in ipairs(column_panes) do
       local current_row = column_pane
-      for i = 1, rows - 1 do
+      for i = 1, resolved_rows - 1 do
         local row = i + 1
-        local remaining_rows = rows - i + 1
+        local remaining_rows = resolved_rows - i + 1
         current_row = current_row:split {
           direction = 'Bottom',
           size = (remaining_rows - 1) / remaining_rows,
@@ -237,12 +240,16 @@ local keys = {
   { key = 'z',     mods = 'LEADER',      action = spawn_horizontal_panes('codex', 6) },
   -- 横6分割で Claude Code を6個起動
   { key = 'x',     mods = 'LEADER',      action = spawn_horizontal_panes('claude --permission-mode auto', 6) },
-  -- 8分割して右下以外で Claude Code を起動
+  -- 画面幅に応じて右下以外で Claude Code を起動
   {
     key = 'w',
     mods = 'LEADER',
-    action = create_grid_layout_with_command(4, 2, 'claude --permission-mode auto', function(column, row)
-      return column == 4 and row == 2
+    action = create_grid_layout_with_command(function(window)
+      local dimensions = window:get_dimensions()
+      -- 6K(3008x1692) では5列、WQHD(2560x1440) では従来の4列にする
+      return dimensions.pixel_width >= WIDE_WINDOW_PIXEL_WIDTH and 5 or 4
+    end, 2, 'claude --permission-mode auto', function(column, row, columns, rows)
+      return column == columns and row == rows
     end),
   },
   -- === コピーモード（Vim風テキスト選択） ===
