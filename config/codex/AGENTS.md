@@ -10,6 +10,14 @@
 - 簡単な自作 CLI や便利ツールは、原則として `~/workspaces/github.com/0maru/tools` に実装する
 - 既存の便利ツールを探すときも、dotfiles だけでなく `tools` を確認する
 
+# Git リポジトリ配置
+
+- Git リポジトリを clone するときは `git clone` ではなく `ghq get {url}` を使い、`~/workspaces` 配下に配置する
+- GitHub リポジトリのローカルパスは通常 `~/workspaces/github.com/{owner}/{repo}` になる
+- リポジトリの取得・探索では `ghq get {url}`、`ghq list -p -e {owner}/{repo}`、`ghq list -p` を優先して使う
+- `ghq` の設定はこの dotfiles リポジトリ内の `config/git/conf.d/ghq.conf` にあり、`config/git/config` から include されている
+- 別リポジトリを探す必要がある場合は、未取得と決めつける前に `ghq` と `~/workspaces` 配下を確認する
+
 # 変更と検証
 
 - 変更後は対象に応じてテスト・lint・format・型チェックを実行する
