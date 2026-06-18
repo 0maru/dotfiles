@@ -351,7 +351,7 @@ local keys = {
         direction = 'Right',
         size = 0.8,
         cwd = cwd,
-        args = { SHELL, '-lic', 'codex' },
+        args = { SHELL, '-lic', 'codex --config features.fast_mode=false' },
       }
       local wide_pane = second_pane:split {
         direction = 'Right',
@@ -370,7 +370,7 @@ local keys = {
         size = 0.4,
         cwd = cwd,
       }
-      pane:send_text('codex --enable fast_mode\n')
+      pane:send_text('codex --config features.fast_mode=true --config \'service_tier="fast"\'\n')
       pane:activate()
     end),
   },
