@@ -6,8 +6,8 @@ model_reasoning_effort = "xhigh"
 personality = "pragmatic"
 
 [features]
-codex_hooks = true
-fast_mode = true
+hooks = true
+fast_mode = false
 multi_agent = true
 shell_snapshot = true
 shell_tool = true
