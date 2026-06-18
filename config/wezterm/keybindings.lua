@@ -339,7 +339,7 @@ local keys = {
     end),
   },
   -- 5paneレイアウトを一括作成し、各ペインでツールを起動
-  -- 左: codex / 左中: codex / 中央: nvim / 右上: claude / 右下: shell
+  -- 左: codex fast_mode / 左中: codex / 中央: nvim / 右上: claude / 右下: shell
   {
     key = 't',
     mods = 'LEADER',
@@ -370,7 +370,7 @@ local keys = {
         size = 0.4,
         cwd = cwd,
       }
-      pane:send_text('codex\n')
+      pane:send_text('codex --enable fast_mode\n')
       pane:activate()
     end),
   },
