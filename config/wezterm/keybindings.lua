@@ -204,6 +204,33 @@ local function create_grid_layout_with_command(columns, rows, command, should_sk
   end)
 end
 
+-- 現在アクティブなタブ以外をすべて閉じる
+local function close_inactive_tabs()
+  return wezterm.action_callback(function(window, pane)
+    local mux_window = window:mux_window()
+    local active_tab = mux_window:active_tab()
+    if not active_tab then return end
+
+    local active_tab_id = active_tab:tab_id()
+    local tabs_to_close = {}
+    for _, tab in ipairs(mux_window:tabs()) do
+      if tab:tab_id() ~= active_tab_id then
+        table.insert(tabs_to_close, tab)
+      end
+    end
+
+    for _, tab in ipairs(tabs_to_close) do
+      local target_pane = tab:active_pane()
+      if target_pane then
+        tab:activate()
+        window:perform_action(act.CloseCurrentTab { confirm = false }, target_pane)
+      end
+    end
+
+    active_tab:activate()
+  end)
+end
+
 ---------------------------------------------------------------
 -- 通常キーバインド
 ---------------------------------------------------------------
@@ -222,6 +249,7 @@ local keys = {
   { key = 'Tab',   mods = 'CTRL|SHIFT',  action = act.ActivateTabRelative(-1) },            -- 前のタブ
   { key = 't',     mods = 'SUPER',       action = act { SpawnTab = 'CurrentPaneDomain' } }, -- 新しいタブ
   { key = 'w',     mods = 'SUPER',       action = act.CloseCurrentTab { confirm = true } }, -- タブを閉じる
+  { key = 'W',     mods = 'SUPER|SHIFT', action = close_inactive_tabs() },                  -- アクティブ以外のタブを閉じる
   { key = 'e',     mods = 'SUPER',       action = act.ShowTabNavigator },                   -- タブ一覧
 
   -- === ペイン分割 ===
