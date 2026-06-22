@@ -90,10 +90,6 @@ CLAUDE.md 作成時は以下の要素を含める：
 
 ## Superpowers ワークフロー設定
 
-### Worktree
-- worktree の作成には `ou add {branch-name}` を使用する（`git worktree add` ではなく）
-- worktree ディレクトリ: `.worktrees/` を使用
-
 ### コミット・PR
 - コミットメッセージは日本語
 - PR のタイトル・本文も日本語

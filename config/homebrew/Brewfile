@@ -1,7 +1,6 @@
 cask_args appdir: "/Applications"
 
 tap "FelixKratz/formulae"
-tap "0maru/formulae"
 tap "nikitabobko/tap"
 
 # Language (Rust only — Go/Node/Python are managed by Nix)
@@ -18,7 +17,6 @@ brew "codex"
 brew "k6"
 brew "k9s"
 brew "mas"
-brew "ou"
 brew "pngpaste"
 brew "sketchybar"
 

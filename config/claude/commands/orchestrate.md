@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git *), Bash(gh *), Bash(ou *), Agent, Skill, AskUserQuestion
+allowed-tools: Bash(git *), Bash(gh *), Agent, Skill, AskUserQuestion
 description: マルチエージェントオーケストレーター。既存スキルを連鎖実行してタスクを完遂する。
 arguments:
   - name: workflow
