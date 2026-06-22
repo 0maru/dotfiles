@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(ou add:*), Bash(ou list:*), Bash(cd:*), mcp__claude_ai_Atlassian__getJiraIssue, AskUserQuestion, Skill
+allowed-tools: Bash(git branch:*), Bash(git worktree add:*), Bash(git worktree list:*), Bash(cd:*), mcp__claude_ai_Atlassian__getJiraIssue, AskUserQuestion, Skill
 description: Jiraチケットからworktreeを作成し、実装計画を立てる
 arguments:
   - name: ticket_id
@@ -11,7 +11,7 @@ arguments:
 
 - 現在のディレクトリ: !`pwd`
 - 現在のブランチ: !`git branch --show-current 2>/dev/null || echo "(git リポジトリではありません)"`
-- ou の設定: !`cat .ou/settings.toml 2>/dev/null || echo "(ou 未初期化)"`
+- worktree 一覧: !`git worktree list 2>/dev/null || echo "(worktree を取得できません)"`
 
 ## あなたのタスク
 
@@ -39,10 +39,11 @@ AskUserQuestion でユーザーに確認を取ってください。
 ### 3. worktreeの作成
 
 ```bash
-ou add {確定したブランチ名}
+git worktree add -b {確定したブランチ名} {worktreeパス}
 ```
 
-作成後、`ou list` でworktreeのパスを確認し、そのディレクトリに移動してください。
+パスは既存の git worktree 対応ツールの配置規約を優先してください。
+作成後、`git worktree list` でworktreeのパスを確認し、そのディレクトリに移動してください。
 
 ### 4. 設計・実装計画の作成
 

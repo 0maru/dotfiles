@@ -19,7 +19,6 @@
     "allow": [
       "Bash(git *)",
       "Bash(gh *)",
-      "Bash(ou *)",
       "Bash(* --version)",
       "Bash(* --help *)",
       "Read(~/.zshrc)",
