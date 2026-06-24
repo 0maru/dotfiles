@@ -39,16 +39,13 @@ ln -sfv "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sfv "$XDG_CONFIG_HOME/claude/settings.json" "$HOME/.claude/settings.json"
 ln -sfv "$XDG_CONFIG_HOME/claude/statusline.ts" "$HOME/.claude/statusline.ts"
 
-# commands / hooks / skills / agents は per-entry symlink ではなくディレクトリ単位の
-# symlink にする。理由: 旧方式だと ~/.claude/skills/foo → ~/.config/claude/skills/foo の
-# 個別 symlink が大量にでき、Claude Code がスキル内の references を読むとき symlink
-# 解決のされ方で複数パスにヒットし permission prompt が分裂する。ディレクトリ単位
-# 1 段にすればパス系統が ~/.config/claude/skills/... に収束する。
+# commands / hooks / agents は per-entry symlink ではなくディレクトリ単位の
+# symlink にする。skills は gh skill install で管理するためここでは触らない。
 #
 # 旧構成からの移行時は既存ディレクトリの中身が全て symlink（dotfiles 由来）であることを
-# 確認してから削除する。dotfiles 外の実体（プラグイン install スキル / 手動配置ファイル等）
+# 確認してから削除する。dotfiles 外の実体（手動配置ファイル等）
 # が残っていたら停止して人手対応を促す。
-for claude_dir in commands hooks skills agents; do
+for claude_dir in commands hooks agents; do
   target="$HOME/.claude/$claude_dir"
   if [ -d "$target" ] && [ ! -L "$target" ]; then
     extras=$(find "$target" -mindepth 1 -maxdepth 1 ! -type l 2>/dev/null || true)
@@ -90,23 +87,3 @@ for codex_subdir in rules; do
   fi
   ln -sfn "$XDG_CONFIG_HOME/codex/$codex_subdir" "$target"
 done
-
-# Codex skills は gh skill install の user scope install 先として扱う。
-# 旧構成の ~/.codex/skills -> ~/.config/codex/skills symlink は、
-# install 結果を dotfiles source に混ぜるため外す。
-codex_skills_target="$HOME/.codex/skills"
-legacy_codex_skills_target="$XDG_CONFIG_HOME/codex/skills"
-if [ -L "$codex_skills_target" ]; then
-  codex_skills_link="$(readlink "$codex_skills_target")"
-  if [ "$codex_skills_link" = "$legacy_codex_skills_target" ]; then
-    rm "$codex_skills_target"
-  fi
-fi
-mkdir -p "$codex_skills_target"
-
-# 別 repo (ai-toolkit) の skill を ~/.codex/skills 配下に貼る。
-# dotfiles 内には実体を置かない。
-external_ts_aaa="$HOME/workspaces/github.com/torico-tokyo/ai-toolkit/engineering/experimental/skills/typescript-aaa-test-pattern/skills/typescript-aaa-test-pattern"
-if [ -e "$external_ts_aaa" ]; then
-  ln -sfn "$external_ts_aaa" "$HOME/.codex/skills/typescript-aaa-test-pattern"
-fi
