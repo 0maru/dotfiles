@@ -215,6 +215,5 @@
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim",
-  "model": "claude-sonnet-4-6"
+  "editMode": "vim"
 }
