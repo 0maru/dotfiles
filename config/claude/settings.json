@@ -158,6 +158,7 @@
     "network": {
       "allowedDomains": [
         "github.com",
+        "*.github.com",
         "*.githubusercontent.com",
         "*.npmjs.org",
         "registry.npmjs.org",
