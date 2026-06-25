@@ -69,6 +69,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "claude-opus-4-6[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Stop": [
@@ -118,7 +119,8 @@
     "claude-md-management@claude-plugins-official": true,
     "torico-agent-skills@0maru-private-agent-skills": true,
     "pyright-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
@@ -203,7 +205,6 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
-  "fastMode": false,
   "autoMemoryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
