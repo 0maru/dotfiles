@@ -86,14 +86,53 @@ bindkey -M vicmd '^g' ghq-fzf
 
 # fzf でgit のブランチを一覧で表示してブランチを切り替える
 function git-branches-fzf() {
-  local branch=$(
-    git branch -a |
-    fzf --preview="echo {} | tr -d ' *' | xargs git plog --color=always" |
-    head -n 1 |
-    perl -pe "s/\s//g; s/\*//g; s/remotes\/origin\///g"
+  local selected branch worktree_path
+  selected=$(
+    git for-each-ref --format='%(refname)%09%(refname:short)%09%(worktreepath)' refs/heads refs/remotes |
+    awk -F '\t' '
+      $1 == "refs/remotes/origin/HEAD" { next }
+      $1 ~ "^refs/heads/" {
+        name = $2
+        local_seen[name] = 1
+        worktree[name] = $3
+        local_order[++local_count] = name
+        next
+      }
+      $1 ~ "^refs/remotes/origin/" {
+        name = $2
+        sub(/^origin\//, "", name)
+        if (!(name in remote_seen)) {
+          remote_seen[name] = $2
+          remote_order[++remote_count] = name
+        }
+      }
+      END {
+        for (i = 1; i <= local_count; i++) {
+          name = local_order[i]
+          printf "%s\t%s\n", name, worktree[name]
+        }
+        for (i = 1; i <= remote_count; i++) {
+          name = remote_order[i]
+          if (!(name in local_seen)) {
+            printf "%s\t\n", remote_seen[name]
+          }
+        }
+      }
+    ' |
+    fzf --delimiter=$'\t' --with-nth=1,2 --preview='branch=$(printf "%s" {} | cut -f1); git plog --color=always "$branch" 2>/dev/null || git plog --color=always "${branch#origin/}"'
   )
-  if [ -n "$branch" ]; then
-    BUFFER="git switch $branch"
+  if [ -n "$selected" ]; then
+    branch=${selected%%$'\t'*}
+    worktree_path=${selected#*$'\t'}
+    if [ "$worktree_path" = "$selected" ]; then
+      worktree_path=""
+    fi
+    branch=${branch#origin/}
+    if [ -n "$worktree_path" ]; then
+      BUFFER="cd ${(q)worktree_path}"
+    else
+      BUFFER="git switch ${(q)branch}"
+    fi
     zle accept-line
   fi
   zle -R -c
