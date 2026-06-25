@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "awsAuthRefresh": "aws login",
-  "model": "claude-opus-4-6[1m]",
   "env": {
     "DISABLE_COST_WARNINGS": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
@@ -216,5 +215,6 @@
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim"
+  "editMode": "vim",
+  "model": "claude-sonnet-4-6"
 }
