@@ -53,21 +53,6 @@ enabled = true
 [plugins."browser-use@openai-bundled"]
 enabled = true
 
-[mcp_servers.serena]
-startup_timeout_sec = 15
-command = "uvx"
-args = [
-  "--from",
-  "git+https://github.com/oraios/serena",
-  "serena",
-  "start-mcp-server",
-  "--context",
-  "codex",
-  "--enable-web-dashboard",
-  "false",
-  "--project-from-cwd",
-]
-
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp@latest"]
