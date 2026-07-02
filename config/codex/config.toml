@@ -15,6 +15,9 @@ network_access = true
 exclude_tmpdir_env_var = true
 exclude_slash_tmp = true
 
+[permissions.project-edit.network]
+allowed_domains = ["api.github.com", "github.com"]
+
 [agents]
 max_threads = 6
 max_depth = 1
