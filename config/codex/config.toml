@@ -16,7 +16,7 @@ exclude_tmpdir_env_var = true
 exclude_slash_tmp = true
 
 [permissions.project-edit.network]
-allowed_domains = ["api.github.com", "github.com"]
+allowed_domains = ["api.github.com", "github.com", "npm.flatt.tech"]
 
 [agents]
 max_threads = 6
