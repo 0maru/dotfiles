@@ -73,7 +73,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-opus-4-6[1m]",
+  "model": "claude-opus-5[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Stop": [
@@ -182,22 +182,9 @@
       "allowLocalBinding": true
     },
     "filesystem": {
-      "allowWrite": [
-        "/tmp/build",
-        "/tmp",
-        "~/workspaces"
-      ],
-      "denyRead": [
-        "~/.aws",
-        "~/.ssh",
-        "**/.env",
-        "**/.env.*",
-        "**/secrets/**"
-      ],
-      "allowRead": [
-        "~/.claude/plugins",
-        "/tmp/agent-review-*.txt"
-      ]
+      "allowWrite": ["/tmp/build", "/tmp", "~/workspaces"],
+      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"],
+      "allowRead": ["~/.claude/plugins", "/tmp/agent-review-*.txt"]
     },
     "excludedCommands": [
       "git commit *",
