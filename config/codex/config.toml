@@ -15,9 +15,6 @@ network_access = true
 exclude_tmpdir_env_var = true
 exclude_slash_tmp = true
 
-[permissions.project-edit.network]
-allowed_domains = ["api.github.com", "github.com", "npm.flatt.tech"]
-
 [agents]
 max_threads = 6
 max_depth = 1
@@ -40,6 +37,14 @@ hooks = true
 multi_agent = true
 goals = true
 memories = false
+
+[features.network_proxy]
+enabled = true
+
+[features.network_proxy.domains]
+"api.github.com" = "allow"
+"github.com" = "allow"
+"npm.flatt.tech" = "allow"
 
 [[skills.config]]
 enabled = true
