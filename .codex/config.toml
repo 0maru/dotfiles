@@ -1,8 +1,6 @@
-model = "gpt-5.6-sol"
 approval_policy = "on-request"
 web_search = "cached"
 sandbox_mode = "workspace-write"
-model_reasoning_effort = "xhigh"
 personality = "pragmatic"
 
 [features]

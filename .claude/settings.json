@@ -12,7 +12,6 @@
     ],
     "deny": []
   },
-  "model": "opus[1m]",
   "sandbox": {
     "enabled": false
   }
