@@ -8,7 +8,6 @@
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
-    "CLAUDE_CODE_EFFORT_LEVEL": "xhigh",
     "CLAUDE_CODE_NEW_INIT": "1",
     "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
     "CLAUDE_CODE_NO_FLICKER": "1",
@@ -73,7 +72,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-opus-5[1m]",
+  "model": "claude-fable-5[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Stop": [
@@ -225,8 +224,8 @@
   "showTurnDuration": true,
   "teammateMode": "in-process",
   "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim",
-  "inputNeededNotifEnabled": true
+  "editMode": "vim"
 }
