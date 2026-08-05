@@ -318,6 +318,8 @@ local keys = {
   { key = 'n',     mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },  -- 次のプロンプトへ
 
   -- === グリッドレイアウト ===
+  -- 4ペインを横一列の等分割で作成
+  { key = '4',     mods = 'LEADER',      action = create_grid_layout(4, 1) },
   -- 6ペインを3列x2行の等分割グリッドで作成
   { key = '6',     mods = 'LEADER',      action = create_grid_layout(3, 2) },
   -- 8ペインを4列x2行の等分割グリッドで作成
