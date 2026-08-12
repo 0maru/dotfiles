@@ -1,0 +1,8 @@
+{
+  "trustedtaps": [
+    "torico-tokyo/tap"
+  ],
+  "trustedcasks": [
+    "torico-tokyo/tap/ssm-run"
+  ]
+}
