@@ -173,6 +173,17 @@
         "files.pythonhosted.org",
         "astral.sh",
         "djangoproject.com",
+        "proxy.golang.org",
+        "sum.golang.org",
+        "index.golang.org",
+        "crates.io",
+        "*.crates.io",
+        "static.rust-lang.org",
+        "hex.pm",
+        "*.hex.pm",
+        "deno.land",
+        "jsr.io",
+        "mise.jdx.dev",
         "*.docker.io",
         "*.docker.com"
       ],
@@ -185,7 +196,17 @@
       "allowWrite": [
         "/tmp/build",
         "/tmp",
-        "~/workspaces"
+        "~/workspaces",
+        "~/.npm",
+        "~/.cache",
+        "~/Library/Caches",
+        "~/Library/pnpm",
+        "~/go",
+        "~/.cargo",
+        "~/.rustup",
+        "~/.hex",
+        "~/.mix",
+        "~/.local/share/mise"
       ],
       "denyRead": [
         "~/.aws",
