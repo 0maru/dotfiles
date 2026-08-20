@@ -39,27 +39,6 @@ ln -sfv "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sfv "$XDG_CONFIG_HOME/claude/settings.json" "$HOME/.claude/settings.json"
 ln -sfv "$XDG_CONFIG_HOME/claude/statusline.ts" "$HOME/.claude/statusline.ts"
 
-# commands / hooks / agents は per-entry symlink ではなくディレクトリ単位の
-# symlink にする。skills は gh skill install で管理するためここでは触らない。
-#
-# 旧構成からの移行時は既存ディレクトリの中身が全て symlink（dotfiles 由来）であることを
-# 確認してから削除する。dotfiles 外の実体（手動配置ファイル等）
-# が残っていたら停止して人手対応を促す。
-for claude_dir in commands hooks agents; do
-  target="$HOME/.claude/$claude_dir"
-  if [ -d "$target" ] && [ ! -L "$target" ]; then
-    extras=$(find "$target" -mindepth 1 -maxdepth 1 ! -type l 2>/dev/null || true)
-    if [ -n "$extras" ]; then
-      echo "ERROR: $target に dotfiles 外の実体が残っています:" >&2
-      echo "$extras" >&2
-      echo "  -> 必要なら config/claude/$claude_dir/ に移し、不要なら削除してから再実行してください" >&2
-      exit 1
-    fi
-    rm -rf "$target"
-  fi
-  ln -sfn "$XDG_CONFIG_HOME/claude/$claude_dir" "$target"
-done
-
 # Codex
 codex_config_src="$XDG_CONFIG_HOME/codex/config.toml"
 codex_config_dest="$HOME/.codex/config.toml"
