@@ -2,15 +2,13 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "awsAuthRefresh": "aws login",
   "env": {
-    "DISABLE_COST_WARNINGS": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "ENABLE_TOOL_SEARCH": "1",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_NEW_INIT": "1",
-    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
-    "CLAUDE_CODE_NO_FLICKER": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
+    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "0"
   },
   "permissions": {
     "allow": [
@@ -205,8 +203,17 @@
         "~/.mix",
         "~/.local/share/mise"
       ],
-      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"],
-      "allowRead": ["~/.claude/plugins", "/tmp/agent-review-*.txt"]
+      "denyRead": [
+        "~/.aws",
+        "~/.ssh",
+        "**/.env",
+        "**/.env.*",
+        "**/secrets/**"
+      ],
+      "allowRead": [
+        "~/.claude/plugins",
+        "/tmp/agent-review-*.txt"
+      ]
     },
     "excludedCommands": [
       "git commit *",
@@ -237,5 +244,6 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim"
+  "editMode": "vim",
+  "tui": "fullscreen"
 }
