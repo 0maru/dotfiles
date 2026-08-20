@@ -230,6 +230,7 @@
       "codex *"
     ]
   },
+  "outputStyle": "Concise",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "autoMemoryEnabled": false,
