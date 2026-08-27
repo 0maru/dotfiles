@@ -3,3 +3,17 @@ prefix_rule(
     pattern = ["swiftlint", "lint"],
     decision = "allow",
 )
+
+# 信頼済みリポジトリのテスト・ビルドは、SwiftPMやXcodeが必要とする
+# 一時領域とmacOSサービスへアクセスできるようsandbox外で実行する。
+prefix_rule(
+    pattern = ["swift", "test"],
+    decision = "allow",
+    justification = "信頼済みリポジトリのSwiftテストを実行する。",
+)
+
+prefix_rule(
+    pattern = ["xcodebuild"],
+    decision = "allow",
+    justification = "信頼済みXcodeプロジェクトをビルドする。",
+)
