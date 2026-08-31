@@ -4,7 +4,7 @@ approvals_reviewer = "auto_review"
 model_reasoning_summary = "none"
 personality = "pragmatic"
 approval_policy = "on-request"
-sandbox_mode = "workspace-write"
+default_permissions = ":workspace"
 allow_login_shell = false
 
 [tools]

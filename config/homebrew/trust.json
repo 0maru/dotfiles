@@ -4,5 +4,8 @@
   ],
   "trustedcasks": [
     "torico-tokyo/tap/ssm-run"
+  ],
+  "trustedformulae": [
+    "felixkratz/formulae/sketchybar"
   ]
 }
