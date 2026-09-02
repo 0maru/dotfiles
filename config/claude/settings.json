@@ -67,7 +67,7 @@
       "Bash(gh variable delete *)"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "claude-fable-5-1[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Stop": [
@@ -151,6 +151,7 @@
       "autoUpdate": true
     }
   },
+  "outputStyle": "Concise",
   "language": "japanese",
   "sandbox": {
     "enabled": true,
@@ -230,9 +231,9 @@
       "codex *"
     ]
   },
-  "outputStyle": "Concise",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "tui": "fullscreen",
   "autoMemoryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
@@ -245,6 +246,5 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim",
-  "tui": "fullscreen"
+  "editMode": "vim"
 }
