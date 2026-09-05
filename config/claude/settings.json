@@ -204,17 +204,8 @@
         "~/.mix",
         "~/.local/share/mise"
       ],
-      "denyRead": [
-        "~/.aws",
-        "~/.ssh",
-        "**/.env",
-        "**/.env.*",
-        "**/secrets/**"
-      ],
-      "allowRead": [
-        "~/.claude/plugins",
-        "/tmp/agent-review-*.txt"
-      ]
+      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"],
+      "allowRead": ["~/.claude/plugins", "/tmp/agent-review-*.txt"]
     },
     "excludedCommands": [
       "git commit *",
