@@ -53,7 +53,7 @@
 
 - Codex が PR を作成・更新する場合、PR タイトルに `[codex]`、codex:`、`Codex` などのエージェント識別子を含めない
 - PR タイトルは squash merge のコミットタイトルに使われる前提で、変更内容だけを簡潔に書く
-- Codex が作成する作業ブランチ名は `agent/codex/xxx` 形式にする
+- Codex が新規作成するブランチ名は `agent/codex/<変更内容>` 形式にする
 - 複数 PR をまとめて作成する場合、関連・依存のある変更は stacked PR を基本方針にする
 - stacked PR では後続 PR の base を直前の PR ブランチにし、完全に独立した変更のみ `main` などの共通ベースで並列 PR にする
 - PR レビューコメントの修正を依頼された場合、修正・検証後に対象の GitHub review thread へ必ず返信する
