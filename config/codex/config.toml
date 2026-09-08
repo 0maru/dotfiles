@@ -4,16 +4,24 @@ approvals_reviewer = "auto_review"
 model_reasoning_summary = "none"
 personality = "pragmatic"
 approval_policy = "on-request"
-default_permissions = ":workspace"
+default_permissions = "workspace-dev"
 allow_login_shell = false
 
 [tools]
 web_search = true
 
-[sandbox_workspace_write]
-network_access = true
-exclude_tmpdir_env_var = true
-exclude_slash_tmp = true
+[permissions.workspace-dev]
+extends = ":workspace"
+
+[permissions.workspace-dev.filesystem]
+":tmpdir" = "read"
+":slash_tmp" = "read"
+"~/.clasprc.json" = "write"
+"~/.docker" = "write"
+"~/.cache/uv" = "write"
+
+[permissions.workspace-dev.network]
+enabled = true
 
 [agents]
 max_threads = 6
