@@ -31,8 +31,8 @@ mcp__claude_ai_Atlassian__getJiraIssue を使って `$ARGUMENTS.ticket_id` の�
 ### 2. ブランチ名の決定
 
 チケットIDとタイトルから、ブランチ名を提案してください:
-- フォーマット: `{チケットID}-{英語の簡潔な説明（kebab-case）}`
-- 例: `BACK-302-multiple-product-images`
+- フォーマット: `agent/claude/{チケットID}-{英語の簡潔な説明（kebab-case）}`
+- 例: `agent/claude/BACK-302-multiple-product-images`
 
 AskUserQuestion でユーザーに確認を取ってください。
 

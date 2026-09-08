@@ -21,6 +21,10 @@ for config_path in "$REPO_DIR"/config/*; do
   ln -sfv "$config_path" "$XDG_CONFIG_HOME"
 done
 
+# ~/.gitconfig が残っている環境でも agent 用設定が後勝ちするようにする
+git config --file "$HOME/.gitconfig" --replace-all \
+  'includeIf.onbranch:agent/**.path' "$XDG_CONFIG_HOME/git/conf.d/agent.conf"
+
 # pnpm は既存ディレクトリを残して rc だけ管理する
 ln -sfv "$REPO_DIR/config/pnpm/rc" "$XDG_CONFIG_HOME/pnpm/rc"
 # シンボリックリンクを貼ったファイルからXDG_CONFIG_HOME 以外に配置しているファイルにもシンボリックリンクを貼る
