@@ -42,8 +42,13 @@ memories = false
 enabled = true
 
 [features.network_proxy.domains]
-"api.github.com" = "allow"
-"github.com" = "allow"
+"**.github.com" = "allow"
+"**.githubusercontent.com" = "allow"
+"**.githubassets.com" = "allow"
+"**.github.io" = "allow"
+"**.ghcr.io" = "allow"
+"**.github.dev" = "allow"
+"**.githubcopilot.com" = "allow"
 "npm.flatt.tech" = "allow"
 
 [[skills.config]]
