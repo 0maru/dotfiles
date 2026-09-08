@@ -4,3 +4,6 @@
   path = conf.d/ghq.conf
   path = conf.d/user.conf
   path = conf.d/credential.conf
+
+[includeIf "onbranch:agent/**"]
+  path = conf.d/agent.conf
