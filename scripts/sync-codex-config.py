@@ -208,6 +208,12 @@ def main() -> int:
     source_data = load_toml(source)
     dest_data = load_toml(dest) if dest.exists() else {}
     merged_data = deep_merge(dest_data, source_data)
+    # 新方式への移行時は、同期先に残った旧方式の設定を除去する。
+    if "default_permissions" in source_data and not (
+        {"sandbox_mode", "sandbox_workspace_write"} & source_data.keys()
+    ):
+        merged_data.pop("sandbox_mode", None)
+        merged_data.pop("sandbox_workspace_write", None)
     merged_text = dump_toml(merged_data)
 
     # 書き込み前に、生成した TOML を必ず検証する。
