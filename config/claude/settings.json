@@ -163,6 +163,7 @@
         "*.githubusercontent.com",
         "*.npmjs.org",
         "registry.npmjs.org",
+        "npm.flatt.tech",
         "nodejs.org",
         "pypi.org",
         "*.pypi.org",
