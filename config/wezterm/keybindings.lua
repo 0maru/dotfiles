@@ -533,7 +533,7 @@ function M.apply_to_config(config)
   config.disable_default_key_bindings = true
   -- リーダーキー: CTRL+;
   config.leader = {
-    key = ';',
+    key = 'l',
     mods = 'CTRL',
     timeout_milliseconds = 2000,
   }
