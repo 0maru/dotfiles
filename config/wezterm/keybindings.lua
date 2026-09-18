@@ -335,33 +335,31 @@ local keys = {
       pane:activate()
     end),
   },
-  -- 4paneレイアウトを一括作成し、各ペインでツールを起動
-  -- 左: codex / 中央: nvim / 右上: claude / 右下: shell
+  -- 横一列の等幅4ペインを作成し、各ペインでツールを起動
+  -- 左から: codex / codex / claude --worktree / zsh
   {
     key = 'a',
     mods = 'LEADER',
     action = wezterm.action_callback(function(window, pane)
       local cwd_url = pane:get_current_working_dir()
       local cwd = cwd_url and cwd_url.path or nil
-      -- 中央ペイン: nvim を起動
-      local center_pane = pane:split {
+      local second_pane = pane:split {
         direction = 'Right',
         size = 0.75,
         cwd = cwd,
-        args = { SHELL, '-lic', 'nvim .' },
+        args = { SHELL, '-lic', 'codex' },
       }
-      -- 右上ペイン: claude を起動
-      local right_top_pane = center_pane:split {
+      local third_pane = second_pane:split {
         direction = 'Right',
-        size = 0.33,
+        size = 2 / 3,
         cwd = cwd,
-        args = { SHELL, '-lic', 'claude' },
+        args = { SHELL, '-lic', 'claude --worktree' },
       }
-      -- 右下ペイン: シェルのまま
-      right_top_pane:split {
-        direction = 'Bottom',
-        size = 0.3,
+      third_pane:split {
+        direction = 'Right',
+        size = 0.5,
         cwd = cwd,
+        args = { '/bin/zsh', '-l' },
       }
       -- 左ペイン（元のペイン）で codex を起動
       pane:send_text('codex\n')

@@ -149,6 +149,12 @@
         "repo": "openai/codex-plugin-cc"
       },
       "autoUpdate": true
+    },
+    "firebase": {
+      "source": {
+        "source": "github",
+        "repo": "firebase/firebase-tools"
+      }
     }
   },
   "outputStyle": "Concise",
@@ -205,8 +211,17 @@
         "~/.mix",
         "~/.local/share/mise"
       ],
-      "denyRead": ["~/.aws", "~/.ssh", "**/.env", "**/.env.*", "**/secrets/**"],
-      "allowRead": ["~/.claude/plugins", "/tmp/agent-review-*.txt"]
+      "denyRead": [
+        "~/.aws",
+        "~/.ssh",
+        "**/.env",
+        "**/.env.*",
+        "**/secrets/**"
+      ],
+      "allowRead": [
+        "~/.claude/plugins",
+        "/tmp/agent-review-*.txt"
+      ]
     },
     "excludedCommands": [
       "git commit *",
