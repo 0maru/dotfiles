@@ -1,6 +1,6 @@
 ---------------------------------------------------------------
 -- キーバインド設定
--- リーダーキー: CTRL+;（2秒タイムアウト）
+-- リーダーキー: CTRL+q（2秒タイムアウト）
 -- ※ ALT キーは Aerospace が占有しているため使用禁止
 ---------------------------------------------------------------
 local wezterm = require('wezterm')
@@ -529,9 +529,9 @@ key_tables.search_mode = {
 function M.apply_to_config(config)
   -- WezTerm のデフォルトキーバインドを無効化（独自定義のみ使う）
   config.disable_default_key_bindings = true
-  -- リーダーキー: CTRL+;
+  -- リーダーキー: CTRL+q
   config.leader = {
-    key = 'l',
+    key = 'q',
     mods = 'CTRL',
     timeout_milliseconds = 2000,
   }
