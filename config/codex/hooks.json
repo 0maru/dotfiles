@@ -8,15 +8,6 @@
             "command": "/bin/bash \"$HOME/workspaces/github.com/0maru/wezterm-agent-dashboard/hook.sh\" codex session-start"
           }
         ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.agents/skills/validate-docs/scripts/check_docs.py\" --hook",
-            "timeout": 10
-          }
-        ]
       }
     ],
     "UserPromptSubmit": [
