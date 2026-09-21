@@ -19,6 +19,13 @@ extends = ":workspace"
 "~/.clasprc.json" = "write"
 "~/.docker" = "write"
 "~/.cache/uv" = "write"
+"~/.npm" = "write"
+"~/Library/pnpm" = "write"
+"~/Library/Caches/pip" = "write"
+"~/Library/Caches/go-build" = "write"
+"~/go/pkg" = "write"
+"~/.cargo/registry" = "write"
+"~/.cargo/git" = "write"
 
 [permissions.workspace-dev.network]
 enabled = true
@@ -58,6 +65,20 @@ enabled = true
 "**.github.dev" = "allow"
 "**.githubcopilot.com" = "allow"
 "npm.flatt.tech" = "allow"
+"**.npmjs.org" = "allow"
+"nodejs.org" = "allow"
+"**.pypi.org" = "allow"
+"files.pythonhosted.org" = "allow"
+"astral.sh" = "allow"
+"proxy.golang.org" = "allow"
+"sum.golang.org" = "allow"
+"index.golang.org" = "allow"
+"**.crates.io" = "allow"
+"static.rust-lang.org" = "allow"
+"**.hex.pm" = "allow"
+"deno.land" = "allow"
+"jsr.io" = "allow"
+"mise.jdx.dev" = "allow"
 
 [[skills.config]]
 enabled = true
