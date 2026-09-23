@@ -29,14 +29,6 @@ git config --file "$HOME/.gitconfig" --replace-all \
 ln -sfv "$REPO_DIR/config/pnpm/rc" "$XDG_CONFIG_HOME/pnpm/rc"
 # シンボリックリンクを貼ったファイルからXDG_CONFIG_HOME 以外に配置しているファイルにもシンボリックリンクを貼る
 ln -sfv "$XDG_CONFIG_HOME/zsh/.zshenv" "$HOME/.zshenv"
-ln -sfv "$XDG_CONFIG_HOME/ideavim/.ideavimrc" "$HOME/.ideavimrc"
-
-for editor in "Code" "Code - Insiders" "Cursor"; do
-  editor_user_dir="$HOME/Library/Application Support/$editor/User"
-  mkdir -p "$editor_user_dir"
-  ln -sfv "$XDG_CONFIG_HOME/vscode/keybindings.json" "$editor_user_dir/keybindings.json"
-  ln -sfv "$XDG_CONFIG_HOME/vscode/settings.json" "$editor_user_dir/settings.json"
-done
 
 # Claude Code
 ln -sfv "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
