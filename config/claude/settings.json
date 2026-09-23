@@ -67,7 +67,7 @@
       "Bash(gh variable delete *)"
     ]
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "claude-opu-5[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Stop": [
