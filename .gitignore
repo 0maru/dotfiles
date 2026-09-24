@@ -35,6 +35,7 @@ settings.local.json
 # Compiled binaries
 **/bin/
 
+.claude/worktrees
 # Claude Code local settings (in subdirectories)
 **/.claude/settings.local.json
 
