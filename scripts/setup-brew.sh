@@ -24,4 +24,4 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 
-brew bundle --file "$REPO_DIR/config/homebrew/Brewfile" --no-lock
+brew bundle --file "$REPO_DIR/config/homebrew/Brewfile"
