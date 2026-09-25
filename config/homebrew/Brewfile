@@ -8,7 +8,6 @@ brew "rust"
 brew "taplo"
 
 # Tools (macOS-specific / not in nixpkgs)
-brew "aerospace"
 brew "agent-browser"
 brew "awscli"
 brew "aws-cdk"
@@ -18,11 +17,13 @@ brew "k6"
 brew "k9s"
 brew "mas"
 brew "pngpaste"
-brew "sketchybar"
+# 外部 tap は利用するパッケージだけを明示的に信頼する。
+brew "felixkratz/formulae/sketchybar", trusted: true
 
 # Application
 cask "1password"
 cask "1password-cli"
+cask "nikitabobko/tap/aerospace", trusted: true
 cask "chatgpt"
 cask "claude"
 cask "figma"
