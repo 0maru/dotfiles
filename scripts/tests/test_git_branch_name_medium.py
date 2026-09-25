@@ -177,6 +177,93 @@ class TestAgentBranchName(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertIn("committed", (self.repo / ".git/hook-events").read_text())
 
+    def test_detached_worktree_commit_is_rejected_before_signing(self):
+        # Arrange: 調査用 worktree と、呼ばれた場合に記録を残す署名プログラムを用意する
+        worktree = self.root / "detached"
+        self.git("worktree", "add", "--detach", str(worktree))
+        signer = self.root / "signer"
+        signer.write_text("#!/bin/sh\ntouch signer-called\nexit 1\n")
+        signer.chmod(0o755)
+        before = self.git("rev-parse", "HEAD", cwd=worktree).stdout
+        commit_command = (
+            "-c", "commit.gpgsign=true", "-c", "gpg.format=openpgp",
+            "-c", f"gpg.program={signer}", "-c", "user.signingkey=test-key",
+            "commit", "--no-verify", "--allow-empty", "-m", "detached",
+        )
+        for agent in ("codex", "claude", "both"):
+            with self.subTest(agent=agent):
+                # Act: --no-verify でも署名処理に到達しないことを確かめる
+                result = self.git(
+                    *commit_command, agent=agent, cwd=worktree, check=False,
+                )
+                # Assert: ブランチの案内で停止し、署名もコミットも行われない
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("detached HEAD", result.stderr)
+                expected_agent = "claude" if agent == "claude" else "codex"
+                self.assertIn(f"agent/{expected_agent}/", result.stderr)
+                self.assertFalse((worktree / "signer-called").exists())
+                self.assertEqual(self.git("rev-parse", "HEAD", cwd=worktree).stdout, before)
+        # 対照: エージェント判定がなければ同じコマンドが署名処理に到達する
+        self.git(*commit_command, agent=None, cwd=worktree, check=False)
+        self.assertTrue((worktree / "signer-called").exists())
+
+    def test_named_worktree_loads_agent_config_and_commits(self):
+        # Arrange: detached worktree に作業ブランチを付け、実際の条件付き設定を読む
+        worktree = self.root / "named"
+        self.git("worktree", "add", "--detach", str(worktree))
+        self.git("switch", "-c", "agent/codex/worktree", cwd=worktree)
+        env = dict(self.env, CODEX_THREAD_ID="test-session",
+                   GIT_CONFIG_GLOBAL=str(CONFIG_DIR / "git/config"))
+        # Act: テスト用の作者・署名設定による上書きなしでコミットする
+        result = subprocess.run(
+            ["git", "commit", "--allow-empty", "-m", "named"],
+            cwd=worktree, env=env, text=True, capture_output=True,
+        )
+        # Assert: 条件付き設定だけで署名せずにエージェントの作者情報を使える
+        self.assertEqual(result.returncode, 0, result.stderr)
+        expected_name = self.git("config", "--file", str(CONFIG_DIR / "git/conf.d/agent.conf"),
+                                 "user.name").stdout.strip()
+        self.assertEqual(self.git("log", "-1", "--format=%an", cwd=worktree).stdout.strip(),
+                         expected_name)
+        self.assertEqual(self.git("log", "-1", "--format=%G?", cwd=worktree).stdout.strip(), "N")
+
+    def test_human_detached_commit_is_allowed(self):
+        self.git("switch", "--detach")
+        result = self.git("commit", "--allow-empty", "-m", "human", agent=None)
+        self.assertEqual(result.returncode, 0)
+
+    def test_detached_merge_commit_is_rejected(self):
+        self.git("switch", "-c", "agent/codex/topic")
+        self.git("commit", "--allow-empty", "-m", "topic")
+        self.git("switch", "--detach", "main")
+        before = self.git("rev-parse", "HEAD").stdout
+        result = self.git("merge", "--no-ff", "--no-edit", "agent/codex/topic", check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("detached HEAD", result.stderr)
+        self.assertEqual(self.git("rev-parse", "HEAD").stdout, before)
+
+    def test_named_branch_rebase_is_allowed(self):
+        # Git 内部の detached HEAD を拒否して通常の rebase を壊さない
+        self.git("switch", "-c", "agent/codex/rebase")
+        (self.repo / "topic").write_text("topic\n")
+        self.git("add", "topic")
+        self.git("commit", "-m", "topic")
+        for backend in ("--merge", "--apply"):
+            with self.subTest(backend=backend):
+                result = self.git("rebase", backend, "--no-update-refs", "--force-rebase", "main",
+                                  check=False)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(self.git("branch", "--show-current").stdout.strip(),
+                                 "agent/codex/rebase")
+
+    def test_commit_with_existing_repository_hook_runs_both(self):
+        hook = self.repo / ".git/hooks/prepare-commit-msg"
+        hook.write_text('#!/bin/sh\nprintf "called\\n" >> .git/commit-hook-events\n')
+        hook.chmod(0o755)
+        self.git("switch", "-c", "agent/codex/coexist")
+        self.git("commit", "--allow-empty", "-m", "coexist")
+        self.assertEqual((self.repo / ".git/commit-hook-events").read_text(), "called\n")
+
 
 if __name__ == "__main__":
     unittest.main()
