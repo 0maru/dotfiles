@@ -155,6 +155,7 @@
   "sandbox": {
     "enabled": true,
     "allowUnsandboxedCommands": false,
+    "enableWeakerNetworkIsolation": true,
     "network": {
       "allowedDomains": [
         "github.com",
