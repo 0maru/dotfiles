@@ -18,6 +18,14 @@ bash scripts/setup-brew.sh
 
 Apple Silicon の `/opt/homebrew`、Intel Mac の `/usr/local` にある Homebrew は、PATH が未設定でも検出する。
 
+Homebrew が作成した `$XDG_CONFIG_HOME/homebrew`（通常は `~/.config/homebrew`）は実ディレクトリのまま残し、`Brewfile` だけをリンクする。`trust.json` などの既存データは保持する。旧構成のディレクトリ単位のリンクは引き続き利用できる。
+
+リンク作成で止まった場合は、修正を取り込んだ後に次で再開できる。
+
+```bash
+bash scripts/setup-link.sh
+```
+
 外部 tap の SketchyBar と AeroSpace は Brewfile の `trusted: true` で個別に信頼する。AeroSpace は cask として導入する。仕様は [Homebrew の Tap Trust](https://docs.brew.sh/Tap-Trust) と [Brewfile の trusted](https://docs.brew.sh/Brew-Bundle-and-Brewfile#trusted) を参照。
 
 Brewfile 内の Mac App Store アプリには App Store へのサインインが必要になる。`mas "Xcode"` はフル版 Xcode の指定で、最初に確認する Command Line Tools とは別に扱う。
