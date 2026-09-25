@@ -22,9 +22,8 @@ Apple Silicon の `/opt/homebrew`、Intel Mac の `/usr/local` にある Homebre
 
 Brewfile 内の Mac App Store アプリには App Store へのサインインが必要になる。`mas "Xcode"` はフル版 Xcode の指定で、最初に確認する Command Line Tools とは別に扱う。
 
-スクリプトの回帰テストと静的チェックは次で実行する。回帰テストは実際の OS・パッケージ導入を行わない。
+スクリプトの静的チェックは次で実行する。
 
 ```bash
-python3 -B -m unittest discover -s scripts/tests -p 'test_*.py' -v
 shellcheck -x install.sh scripts/setup.sh scripts/setup-brew.sh
 ```
