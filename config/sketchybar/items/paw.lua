@@ -8,7 +8,6 @@ local app_icons = require("helpers.icon_map")
 
 local paw = sbar.add("item", {
 	background = {
-		align = "center",
 		color = colors.tn_black3,
 		border_width = 0,
 		corner_radius = 6,

@@ -14,7 +14,6 @@ sbar.default({
 		highlight = colors.background,
 		padding_left = 6,
 		padding_right = 2,
-		corner_radius = 6,
 		background = { image = { corner_radius = 12 } },
 	},
 	label = {
