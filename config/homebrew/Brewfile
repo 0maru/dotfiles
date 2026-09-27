@@ -8,42 +8,38 @@ brew "rust"
 brew "taplo"
 
 # Tools (macOS-specific / not in nixpkgs)
-brew "aerospace"
 brew "agent-browser"
 brew "awscli"
 brew "aws-cdk"
-brew "azookey"
-brew "codex"
 brew "k6"
 brew "k9s"
 brew "mas"
 brew "pngpaste"
-brew "sketchybar"
+# 外部 tap は利用するパッケージだけを明示的に信頼する。
+brew "felixkratz/formulae/sketchybar", trusted: true
 
 # Application
 cask "1password"
 cask "1password-cli"
+cask "azooKey"
+cask "nikitabobko/tap/aerospace", trusted: true
 cask "chatgpt"
 cask "claude"
 cask "figma"
 cask "google-chrome"
-cask "iterm2"
-cask "karabiner-elements"
+cask "google-chrome@canary"
 cask "keycastr"
 cask "linear-linear"
 cask "notion-calendar"
 cask "obsidian"
 cask "orbstack"
-cask "postman"
 cask "raycast"
 cask "slack"
 cask "visual-studio-code"
 cask "wezterm@nightly"
-cask "zoom"
 
 # Fonts
 cask "font-hack-nerd-font"
 cask "font-zen-kaku-gothic-new"
 
-mas "Messenger", id: 1480068668
 mas "Xcode", id: 497799835

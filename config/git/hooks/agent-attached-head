@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -n "${CODEX_THREAD_ID:-}" ]]; then
+  agent=codex
+elif [[ -n "${CLAUDECODE:-}" ]]; then
+  agent=claude
+else
+  exit 0
+fi
+
+git symbolic-ref --quiet HEAD >/dev/null && exit 0
+
+# 名前付きブランチの rebase 中は Git 自身が一時的に HEAD を切り離す。
+for state in rebase-merge rebase-apply; do
+  head_name=$(git rev-parse --git-path "$state/head-name")
+  if [[ -f "$head_name" && "$(cat "$head_name")" == refs/heads/* ]]; then
+    exit 0
+  fi
+done
+
+printf 'detached HEAD では agent/** の Git 設定が適用されません。\n' >&2
+printf '編集・コミット前に git switch -c agent/%s/<一意な作業名> でブランチを作成してください。\n' "$agent" >&2
+exit 1

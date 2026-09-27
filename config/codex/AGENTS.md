@@ -22,6 +22,9 @@
 
 - Git 管理されたリポジトリで実装・修正を依頼されたら、編集を始める前に専用の worktree と作業ブランチを用意する
 - 同じタスクの worktree・ブランチ・PR が存在する場合は再利用し、重複して作成しない
+- 実装用 worktree は `agent/codex/<変更内容>` の名前付きブランチで作業し、detached HEAD のまま編集・コミットしない。スキルや補助スクリプトが detached HEAD を作った場合も、編集前に `git switch -c agent/codex/<一意な作業名>` でブランチを付ける。調査・レビューのみなら detached HEAD を許容する
+- 既存 PR の対応では最新の PR head を起点にする。元ブランチを別 worktree が使用中なら専用の一時ブランチを作り、PR の head リポジトリとブランチを確認して `git push <headリポジトリのremote> HEAD:refs/heads/<PRのheadブランチ>` で更新する
+- コミット前に `git symbolic-ref --quiet --short HEAD` と `git config --show-origin --get commit.gpgsign` を確認する。`agent/**` 向けの条件付き設定が適用されていない場合は作業ブランチと設定元を直し、署名設定を一時的に無効化して回避しない
 - 実装と必要な検証後は、commit・push・Ready for review の PR 作成まで進める。既存 PR があれば更新する。これらは実装・修正依頼に含まれるものとして、追加の指示や確認を待たずに進める
 - 質問・調査・レビューのみの依頼は、このフローの対象外とする
 - ユーザーが作業場所や終了地点を指定した場合は、その指示を優先する

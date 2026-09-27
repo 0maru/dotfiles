@@ -17,9 +17,21 @@ ln -sfv "$SCRIPTS_DIR/update-playwright" "$HOME/.local/bin/update-playwright"
 # リポジトリの config ディレクトリにあるファイルを XDG_CONFIG_HOME にシンボリックリンクを貼る
 for config_path in "$REPO_DIR"/config/*; do
   config_name="$(basename "$config_path")"
-  [ "$config_name" = "pnpm" ] && continue
+  case "$config_name" in
+    pnpm | homebrew) continue ;;
+  esac
   ln -sfv "$config_path" "$XDG_CONFIG_HOME"
 done
+
+# Homebrew が作る trust.json などを残し、実ディレクトリには Brewfile だけ配置する。
+homebrew_config_dir="$XDG_CONFIG_HOME/homebrew"
+if [ -L "$homebrew_config_dir" ]; then
+  # 旧構成のリンク先で Brewfile 自体を上書きしないよう、ディレクトリのリンクを更新する。
+  ln -sfnv "$REPO_DIR/config/homebrew" "$homebrew_config_dir"
+else
+  mkdir -p "$homebrew_config_dir"
+  ln -sfv "$REPO_DIR/config/homebrew/Brewfile" "$homebrew_config_dir/Brewfile"
+fi
 
 # ~/.gitconfig が残っている環境でも agent 用設定が後勝ちするようにする
 git config --file "$HOME/.gitconfig" --replace-all \
