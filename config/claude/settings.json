@@ -203,7 +203,8 @@
         "~/.rustup",
         "~/.hex",
         "~/.mix",
-        "~/.local/share/mise"
+        "~/.local/share/mise",
+        "~/.codex"
       ],
       "denyRead": [
         "~/.aws",
