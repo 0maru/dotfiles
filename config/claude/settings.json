@@ -118,7 +118,8 @@
     "pyright-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "linear@claude-plugins-official": true
+    "linear@claude-plugins-official": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
@@ -146,8 +147,7 @@
       "source": {
         "source": "github",
         "repo": "openai/codex-plugin-cc"
-      },
-      "autoUpdate": true
+      }
     }
   },
   "outputStyle": "Concise",
@@ -155,7 +155,6 @@
   "sandbox": {
     "enabled": true,
     "allowUnsandboxedCommands": false,
-    "enableWeakerNetworkIsolation": true,
     "network": {
       "allowedDomains": [
         "github.com",
@@ -182,7 +181,10 @@
         "jsr.io",
         "mise.jdx.dev",
         "*.docker.io",
-        "*.docker.com"
+        "*.docker.com",
+        "chatgpt.com",
+        "api.openai.com",
+        "auth.openai.com"
       ],
       "allowUnixSockets": [
         "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -215,9 +217,11 @@
       ],
       "allowRead": [
         "~/.claude/plugins",
-        "/tmp/agent-review-*.txt"
+        "/tmp/agent-review-*.txt",
+        "~/.codex"
       ]
     },
+    "enableWeakerNetworkIsolation": true,
     "excludedCommands": [
       "git commit *",
       "git push*",
