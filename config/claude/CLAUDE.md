@@ -36,7 +36,7 @@
 - 複数 PR をまとめて作成する場合、関連・依存のある変更は stacked PR を基本方針にする
 
 ## Codex レビュー
-- **プランレビュー**: プランモードで ExitPlanMode を呼ぶ前に、`codex-plan-review` スキルを使って Codex CLI にプランをレビューさせること
+- **プランレビュー**: プランモードで ExitPlanMode を呼ぶ前に、`codex-plan-review` スキルを使って Codex にプランをレビューさせること（codex-plugin-cc の companion 経由。ジョブは `/codex:status` / `/codex:result` で確認できる）
 - **コードレビュー**: 実装タスク完了後、コミット前に `codex-code-review` スキルを使って `codex review --uncommitted` で変更をレビューさせること
 - Codex が SUGGEST_CHANGES / REJECT を返した場合は、指摘を検討して対応すること
 - Codex が利用できない場合（未インストール、認証切れ等）はスキップして続行
