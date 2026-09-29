@@ -67,6 +67,7 @@
       "Bash(gh variable delete *)"
     ]
   },
+  "model": "claude-opus-5-5",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Stop": [
@@ -239,6 +240,11 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "tui": "fullscreen",
   "autoMemoryEnabled": false,
   "showThinkingSummaries": true,
@@ -252,6 +258,5 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "editMode": "vim",
-  "model": "claude-opus-5-5"
+  "editMode": "vim"
 }
