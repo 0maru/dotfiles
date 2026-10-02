@@ -155,7 +155,7 @@
   "language": "japanese",
   "sandbox": {
     "enabled": true,
-    "allowUnsandboxedCommands": false,
+    "allowUnsandboxedCommands": true,
     "network": {
       "allowedDomains": [
         "github.com",
