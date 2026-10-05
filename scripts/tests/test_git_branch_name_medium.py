@@ -1,9 +1,11 @@
 """一時リポジトリで Git フックを検証する Medium テスト。"""
 
+import json
 import os
 from pathlib import Path
 import subprocess
 import tempfile
+import tomllib
 import unittest
 
 
@@ -226,6 +228,37 @@ class TestAgentBranchName(unittest.TestCase):
         self.assertEqual(self.git("log", "-1", "--format=%an", cwd=worktree).stdout.strip(),
                          expected_name)
         self.assertEqual(self.git("log", "-1", "--format=%G?", cwd=worktree).stdout.strip(), "N")
+
+    def test_agent_env_disables_signing_on_any_branch(self):
+        # Arrange: 署名を強制する設定と、呼ばれた場合に記録を残す署名プログラムを用意する
+        signer = self.root / "signer"
+        signer.write_text("#!/bin/sh\ntouch signer-called\nexit 1\n")
+        signer.chmod(0o755)
+        config = self.root / "signing.conf"
+        config.write_text(
+            "[user]\n  name = Test\n  email = test@example.com\n  signingkey = test-key\n"
+            "[commit]\n  gpgsign = true\n"
+            f"[gpg]\n  format = openpgp\n  program = {signer}\n"
+        )
+        claude_env = json.loads((CONFIG_DIR / "claude/settings.json").read_text())["env"]
+        codex_env = tomllib.loads((CONFIG_DIR / "codex/config.toml").read_text())[
+            "shell_environment_policy"]["set"]
+        command = ["git", "commit", "--allow-empty", "-m", "unsigned"]
+        for agent, agent_env in (("claude", claude_env), ("codex", codex_env)):
+            with self.subTest(agent=agent):
+                env = dict(self.env, GIT_CONFIG_GLOBAL=str(config), **agent_env)
+                # Act: agent/** ではない main でエージェントの環境変数を付けてコミットする
+                result = subprocess.run(
+                    command, cwd=self.repo, env=env, text=True, capture_output=True,
+                )
+                # Assert: 署名プログラムを呼ばずにコミットできる
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertFalse((self.repo / "signer-called").exists())
+                self.assertEqual(self.git("log", "-1", "--format=%G?").stdout.strip(), "N")
+        # 対照: 環境変数がなければ同じコマンドが署名処理に到達する
+        subprocess.run(command, cwd=self.repo, env=dict(self.env, GIT_CONFIG_GLOBAL=str(config)),
+                       text=True, capture_output=True)
+        self.assertTrue((self.repo / "signer-called").exists())
 
     def test_human_detached_commit_is_allowed(self):
         self.git("switch", "--detach")
