@@ -226,6 +226,7 @@
     "excludedCommands": [
       "git commit *",
       "git push*",
+      "git branch --set-upstream-to*",
       "git pull*",
       "git fetch*",
       "git clone *",
