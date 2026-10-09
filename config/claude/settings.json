@@ -204,6 +204,12 @@
         "~/.cache",
         "~/Library/Caches",
         "~/Library/pnpm",
+        "~/.local/share/pnpm/store",
+        "~/.local/state/pnpm",
+        "~/.bun/install/cache",
+        "~/.local/state/mise/tracked-configs",
+        "~/Library/org.swift.swiftpm",
+        "~/Library/Developer/Xcode/DerivedData",
         "~/go",
         "~/.cargo",
         "~/.rustup",
@@ -238,6 +244,9 @@
       "gh *",
       "docker *",
       "pnpm build*",
+      "swift build*",
+      "swift test*",
+      "xcodebuild *",
       "codex *"
     ]
   },
