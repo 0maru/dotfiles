@@ -204,8 +204,6 @@
         "~/.local/share/pnpm/store",
         "~/.local/state/pnpm",
         "~/.bun/install/cache",
-        "~/.local/share/uv/python",
-        "~/.local/share/uv/tools",
         "~/.local/state/mise/tracked-configs",
         "~/Library/org.swift.swiftpm",
         "~/Library/Developer/Xcode/DerivedData",
