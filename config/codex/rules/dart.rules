@@ -4,10 +4,14 @@ prefix_rule(
     decision = "allow",
 )
 prefix_rule(
-    pattern = ["flutter"],
-    decision = "allow",
-)
-prefix_rule(
     pattern = ["melos"],
     decision = "allow",
+)
+
+# Flutter SDK はキャッシュ更新やビルドで workspace 外への書き込みと
+# macOS サービスへのアクセスが必要なため sandbox 外で実行する。
+prefix_rule(
+    pattern = ["flutter"],
+    decision = "allow",
+    justification = "信頼済みリポジトリで Flutter コマンドを実行する。",
 )

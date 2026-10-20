@@ -248,6 +248,7 @@
       "swift build*",
       "swift test*",
       "xcodebuild *",
+      "flutter *",
       "codex *"
     ]
   },
