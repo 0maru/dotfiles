@@ -120,7 +120,9 @@
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "linear@claude-plugins-official": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "claude-security@claude-plugins-official": true,
+    "pstack@cursor-plugins": true
   },
   "extraKnownMarketplaces": {
     "0maru-private-agent-skills": {
@@ -148,6 +150,12 @@
       "source": {
         "source": "github",
         "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "cursor-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "cursor/plugins"
       }
     }
   },
@@ -231,6 +239,7 @@
       "git clone *",
       "git ls-remote*",
       "git lfs *",
+      "git worktree add *",
       "ghq get *",
       "gh *",
       "docker *",
@@ -249,6 +258,7 @@
   "autoMemoryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
   "preferredNotifChannel": "terminal_bell",
   "autoCompactEnabled": false,
@@ -258,5 +268,39 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(rm -rf:*) in /Users/4maru/workspaces/github.com/0maru/kakari — irreversible local destruction of project files beyond standard git-tracked cleanup",
+      "Bash(kubectl delete:*) — cluster mutation seen in shell history but not corroborated as routine for this project; keep as soft block pending confirmation"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: PUBLIC — 0maru/kakari (github.com/0maru/kakari) is a public repository; any push there is publishing",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Local .env files and a signing-keys file are gitignored (.env, .env.*, supabase/signing_keys.json); README also mentions optional 1Password CLI (op://) references for credentials — treat op:// references and these paths as sensitive, not secrets infrastructure to rely on blindly",
+      "**Default / protected branches**: main (default branch). No rulesets listed, no classic branch protection listed by gh — repo appears unprotected at the branch-protection layer; treat pushes to main as if ungated",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine with open internet",
+      "**Source control**: The trusted repo (0maru/kakari) and its origin remote (https://github.com/0maru/kakari) only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: Local Supabase instance (via `supabase start`, Docker) used for this project's DB/RLS/state — not a corroborated external internal service, scope trust to this repo's local dev usage only",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: packages/cli/src/secrets.ts (filename suggests secret handling — treat contents as sensitive); .env / .env.* files and supabase/signing_keys.json (gitignored, never commit); share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development, including self-hosted PR-review tooling (kakari) that uses gh to detect review requests and runs Claude Code (subscription auth) locally; read-only toward GitHub (no review submission, comments, or merges per README)",
+      "**Trusted repo**: 0maru/kakari (public) — the working directory's repo and its origin remote; since it's public, only this repo's own work is safe to push there, and confidential/secret material must never be committed regardless of visibility",
+      "**Org-specific CLIs**: None configured — user's shell history shows general dev tooling (gh, git, pnpm, kubectl, aws, terraform, firebase) but none are corroborated as org-specific to this project",
+      "Routine under 0maru/kakari worktree and branch conventions: work branches follow `agent/claude/xxx` naming with dedicated worktrees per CLAUDE.md global instructions; detached HEAD is acceptable only for investigation/review, not edits"
+    ]
+  },
   "editMode": "vim"
 }
