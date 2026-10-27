@@ -7,6 +7,12 @@ approval_policy = "on-request"
 default_permissions = "workspace-dev"
 allow_login_shell = false
 
+# エージェントのコミットにはブランチ名に関係なく署名しない
+[shell_environment_policy.set]
+GIT_CONFIG_COUNT = "1"
+GIT_CONFIG_KEY_0 = "commit.gpgsign"
+GIT_CONFIG_VALUE_0 = "false"
+
 [tools]
 web_search = true
 
@@ -21,6 +27,9 @@ extends = ":workspace"
 "~/.cache/uv" = "write"
 "~/.npm" = "write"
 "~/Library/pnpm" = "write"
+"~/.local/share/pnpm/store" = "write"
+"~/.local/state/pnpm" = "write"
+"~/.bun/install/cache" = "write"
 "~/Library/Caches/pip" = "write"
 "~/Library/Caches/go-build" = "write"
 "~/go/pkg" = "write"
@@ -91,10 +100,6 @@ enabled = true
 
 [plugins."browser-use@openai-bundled"]
 enabled = true
-
-[mcp_servers.context7]
-command = "npx"
-args = ["-y", "@upstash/context7-mcp@latest"]
 
 [mcp_servers.atlassian]
 enabled = true

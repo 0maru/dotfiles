@@ -17,6 +17,14 @@ export SHELDON_CONFIG_DIR="$ZDOTDIR"
 # git
 GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
 
+# Set signing before Git starts; hooks cannot change the parent Git process.
+# Append to preserve Git settings inherited from the caller.
+if [[ -n "${CODEX_THREAD_ID:-}" ]]; then
+  export "GIT_CONFIG_KEY_${GIT_CONFIG_COUNT:-0}=commit.gpgsign"
+  export "GIT_CONFIG_VALUE_${GIT_CONFIG_COUNT:-0}=false"
+  export GIT_CONFIG_COUNT=$(( ${GIT_CONFIG_COUNT:-0} + 1 ))
+fi
+
 # venv
 export PIPENV_VENV_IN_PROJECT=1
 

@@ -8,7 +8,10 @@
     "CLAUDE_CODE_NEW_INIT": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
-    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "0"
+    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "0",
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "commit.gpgsign",
+    "GIT_CONFIG_VALUE_0": "false"
   },
   "permissions": {
     "allow": [
@@ -104,7 +107,6 @@
     "command": "deno run --allow-run=git ~/.claude/statusline.ts"
   },
   "enabledPlugins": {
-    "context7@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "atlassian@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
@@ -113,7 +115,6 @@
     "plugin-dev@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "example-skills@anthropic-agent-skills": true,
-    "superpowers@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "torico-agent-skills@0maru-private-agent-skills": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -209,6 +210,12 @@
         "~/.cache",
         "~/Library/Caches",
         "~/Library/pnpm",
+        "~/.local/share/pnpm/store",
+        "~/.local/state/pnpm",
+        "~/.bun/install/cache",
+        "~/.local/state/mise/tracked-configs",
+        "~/Library/org.swift.swiftpm",
+        "~/Library/Developer/Xcode/DerivedData",
         "~/go",
         "~/.cargo",
         "~/.rustup",
@@ -234,6 +241,7 @@
     "excludedCommands": [
       "git commit *",
       "git push*",
+      "git branch --set-upstream-to*",
       "git pull*",
       "git fetch*",
       "git clone *",
@@ -244,6 +252,9 @@
       "gh *",
       "docker *",
       "pnpm build*",
+      "swift build*",
+      "swift test*",
+      "xcodebuild *",
       "codex *"
     ]
   },
