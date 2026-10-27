@@ -101,10 +101,6 @@ enabled = true
 [plugins."browser-use@openai-bundled"]
 enabled = true
 
-[mcp_servers.context7]
-command = "npx"
-args = ["-y", "@upstash/context7-mcp@latest"]
-
 [mcp_servers.atlassian]
 enabled = true
 url = "https://mcp.atlassian.com/v1/sse"
