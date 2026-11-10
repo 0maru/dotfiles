@@ -1,5 +1,6 @@
 {
   "trustedtaps": [
+    "hashicorp/tap",
     "torico-tokyo/tap"
   ],
   "trustedcasks": [
