@@ -45,3 +45,17 @@ Codex / Claude Code の実装用 worktree では、それぞれ `agent/codex/...
 Git 2.54 以降の設定フックで、新規ブランチの命名と detached HEAD でのコミットを検査する。`CODEX_THREAD_ID` または `CLAUDECODE` がある場合のみ動作し、既存のリポジトリフックと併用できる。署名処理前の [`prepare-commit-msg`](https://git-scm.com/docs/githooks#_prepare_commit_msg) で停止するため、案内に従って作業ブランチを作成してから再実行する。調査用の detached worktree と、名前付きブランチの rebase 中に Git が一時的に作る detached HEAD は許容する。
 
 共通指示は `config/codex/AGENTS.md` と `config/claude/CLAUDE.md` で管理する。スキルが detached worktree を作成する場合も、編集前に名前付きブランチへ切り替える。既存 PR への push は一時作業ブランチ名ではなく、確認した PR の head ブランチを明示する。
+
+## Rex のフォント
+
+`setup.sh` は `scripts/setup-rex-fonts.sh` で Rex のメインフォントを Berkeley Mono・12pt にし、フォールバックを Hack Nerd Font → Zen Kaku Gothic New の順に設定する。Hack Nerd Font と Zen Kaku Gothic New は既存の Brewfile から導入される。Berkeley Mono はライセンスに従って別途インストールする（フォント本体はこのリポジトリで配布しない）。
+
+フォントだけを再適用する場合は Rex アプリを終了してから実行し、その後アプリを開く。Rex サーバーを停止する必要はない。
+
+```bash
+bash scripts/setup-rex-fonts.sh
+```
+
+Rex のフォントは macOS アプリの環境設定 `com.superlogical.rex` に保存され、`~/.config/rex/init.lua` の再読み込みでは適用されない。スクリプトはフォント名・サイズ・フォールバックの3項目だけを更新する。既存のキー設定（cmd+k のセッション選択を含む）は維持する。
+
+これらは Rex Beta 0.1.0 (1956) の設定画面と保存値で確認した内部キーであり、将来のバージョンでは変更される可能性がある。適用後は Settings → Terminal → Typography と Advanced Font Settings で確認する。公式の [Mac Settings](https://www.superlogical.com/rex/docs/reference/mac-settings) も参照。
